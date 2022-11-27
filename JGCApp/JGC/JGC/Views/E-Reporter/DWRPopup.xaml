@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<popups:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:popups="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:TEffect="clr-namespace:JGC.UserControls.Touch"
+             x:Class="JGC.Views.E_Reporter.DWRPopup">
+
+    <Frame BackgroundColor="White" VerticalOptions="Center" HorizontalOptions="Center">
+        <StackLayout>
+            <StackLayout x:Name="StackInspectionResult">
+                <Label Text="Inspection Reslut" FontAttributes="Bold" HorizontalOptions="Center" TextColor="Black" FontSize="Medium" Margin="0,0,10,0"/>
+                <StackLayout Orientation="Horizontal" Spacing="10" WidthRequest="380">
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Label Text="VI" FontAttributes="Bold" TextColor="Black"/>
+                        <StackLayout Orientation="Horizontal" >
+                            <customControls:CustomPicker x:Name="VIDDL" HorizontalOptions="FillAndExpand" SelectedIndexChanged="VIDDL_Selection"/>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                                <Image x:Name="VIImage"  Source="cam.png" WidthRequest="30"/>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer  Tapped="CameraBtn" CommandParameter="VIImages"/>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </StackLayout>
+                        <Label Text="DI" FontAttributes="Bold" TextColor="Black"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <customControls:CustomPicker x:Name="DIDDL" HorizontalOptions="FillAndExpand" SelectedIndexChanged="DIDDL_Selection"/>
+                            <StackLayout Orientation="Horizontal">
+                                <Image x:Name="DIImage" Source="cam.png" WidthRequest="30"/>
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer  Tapped="CameraBtn" CommandParameter="DIImages"/>
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </StackLayout>
+                        <Label Text="Remark" FontAttributes="Bold" TextColor="Black"/>
+                        <Entry x:Name="RemarkTxt"/>
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Label Text="VI Comments" FontAttributes="Bold" TextColor="Black"/>
+                        <customControls:CustomPicker x:Name="VICommentDDL" HorizontalOptions="FillAndExpand" IsEnabled="False"/>
+                        <Label Text="DI Comments" FontAttributes="Bold" TextColor="Black"/>
+                        <Entry x:Name="DICommentTxt" IsEnabled="False"/>
+                        <Label/>
+                        <Button VerticalOptions="End" BackgroundColor="Red" Text="Back" Clicked="InspectResultClicked"  TextColor="White" />
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout x:Name="StackJointDetials" >
+                <Label Text="Joint Details" FontAttributes="Bold" HorizontalOptions="Center" TextColor="Black" FontSize="Medium" Margin="0,0,10,0"/>
+                <StackLayout Orientation="Horizontal" Spacing="10" WidthRequest="300">
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Label Text="Sheet no." FontAttributes="Bold" TextColor="Black" Margin="0,2,0,2"/>
+                        <Label x:Name="SheetNoTxt" FontAttributes="Bold" TextColor="Black" Margin="0,2,0,2"/>
+                        <BoxView HeightRequest="1" BackgroundColor="Gray" Margin="0,0,0,5"/>
+                        <!--<Entry x:Name="SheetNoTxt" IsEnabled="False"/>-->
+                        <Label Text="Size" FontAttributes="Bold" TextColor="Black" Margin="0,2,0,2"/>
+                        <Label x:Name="SizeTxt" FontAttributes="Bold" TextColor="Black" Margin="0,2,0,2"/>
+                        <BoxView HeightRequest="1" BackgroundColor="Gray" Margin="0,0,0,5"/>
+                        <!--<Entry x:Name="SizeTxt"  IsEnabled="False"/>-->
+                        <Label Text="Thickness" FontAttributes="Bold" TextColor="Black"  Margin="0,2,0,2"/>
+                        <Label x:Name="ThicknessTxt" FontAttributes="Bold" TextColor="Black"  Margin="0,2,0,2"/>
+                        <BoxView HeightRequest="1" BackgroundColor="Gray" Margin="0,0,0,5"/>
+                        <!--<Entry x:Name="ThicknessTxt"  IsEnabled="False"/>-->
+                    </StackLayout>
+
+                    <StackLayout HorizontalOptions="FillAndExpand">
+                        <Label Text="Spool no." FontAttributes="Bold" TextColor="Black" Margin="0,2,0,2"/>
+                        <Label x:Name="SpoolNoTxt" FontAttributes="Bold" TextColor="Black" Margin="0,2,0,2"/>
+                        <BoxView HeightRequest="1" BackgroundColor="Gray" Margin="0,0,0,5"/>
+                        <!--<Entry x:Name="SpoolNoTxt"  IsEnabled="False"/>-->
+                        <Label Text="Weld Type" FontAttributes="Bold" TextColor="Black" Margin="0,2,0,2"/>
+                        <Label x:Name="WeldtypeTxt" FontAttributes="Bold" TextColor="Black" Margin="0,2,0,2"/>
+                        <BoxView HeightRequest="1" BackgroundColor="Gray" Margin="0,0,0,5"/>
+                        <!--<Entry x:Name="WeldtypeTxt"  IsEnabled="False"/>-->
+                        <Label Text="Line Class" FontAttributes="Bold" TextColor="Black" Margin="0,2,0,2"/>
+                        <Label x:Name="LineClassTxt" FontAttributes="Bold" TextColor="Black" Margin="0,2,0,2"/>
+                        <BoxView HeightRequest="1" BackgroundColor="Gray"/>
+                        <!--<Entry x:Name="LineClassTxt"  IsEnabled="False"/>-->
+                    </StackLayout>
+                </StackLayout>
+                <Button Text="Close" Clicked="JointDetailClicked"  HorizontalOptions="Center" TextColor="White" BackgroundColor="Red"/>
+
+            </StackLayout>
+            <!-- Camera Grid -->
+            <Grid ColumnSpacing="10" x:Name="CameraGrid" RowSpacing="5" IsVisible="False" HorizontalOptions="Fill" VerticalOptions="End">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label  FontAttributes="Bold"
+                        HorizontalOptions="StartAndExpand"
+                        Text="List of photos" 
+                        TextColor="Black"
+                        VerticalTextAlignment="Center"/>
+                <Label FontAttributes="Bold"
+                        Grid.Column="1" 
+                        Grid.Row="0"  
+                        HorizontalOptions="StartAndExpand"
+                        Text="Select Camera" 
+                        TextColor="Black"
+                        VerticalTextAlignment="Center"/>
+
+                <customControls:CustomPicker
+                         x:Name="ListOfPhotoPicker"
+                         Grid.Column="0" 
+                         Grid.Row="1"
+                         SelectedIndexChanged="PhotoPickerSelection"
+                         HorizontalOptions="FillAndExpand">
+                </customControls:CustomPicker>
+                <customControls:CustomPicker
+                         x:Name="CameraPicker"
+                         Grid.Column="1" 
+                         Grid.Row="1"
+                         SelectedIndexChanged="CameraPickerSelection"
+                         HorizontalOptions="FillAndExpand">
+                </customControls:CustomPicker>
+                <Button BackgroundColor="#ff0000"  
+                        FontAttributes="Bold"
+                        Grid.Column="2" 
+                        Grid.Row="1"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Add From File" 
+                        Clicked="ClickedOn_AddFromFile"
+                        TextColor="#ffffff"/>
+
+                <Grid Grid.ColumnSpan="3" Grid.Row="2">
+                    <skia:SKCanvasView Grid.Row="0" x:Name="CameracanvasView" PaintSurface="OnCameraCanvasViewPaintSurface"/>
+                    <Grid.Effects Grid.Row="0" >
+                        <TEffect:TouchEffect Capture="True" TouchAction="OnCameraTouchEffectAction" />
+                    </Grid.Effects>
+                </Grid>
+
+                <StackLayout Grid.ColumnSpan="3" Grid.Row="3" Orientation="Horizontal">
+                    <Button BackgroundColor="Red" 
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Back"  
+                            TextColor="White"
+                            Clicked="CameraBackBtn"/>
+                    <Button BackgroundColor="Red"  
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Clear" 
+                            Clicked="ClickedOn_ClearImage"
+                            TextColor="White"/>
+                    <Button BackgroundColor="Red"  
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Clicked="ClickedOn_SaveImage"
+                            Text="Save"  
+                            TextColor="White"/>
+                </StackLayout>
+            </Grid>
+        </StackLayout>
+    </Frame>
+
+</popups:PopupPage>

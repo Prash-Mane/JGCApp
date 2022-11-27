@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Frame HasShadow="True"
+       xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       x:Class="JGC.UserControls.FooterUC"
+       xmlns:settings="clr-namespace:JGC.Common.Helpers"
+       Padding="0"
+       x:Name="Footer">
+
+    <Grid RowSpacing="0" ColumnSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+        </Grid.RowDefinitions>
+
+        <StackLayout Grid.Column="0" Spacing="0">
+            <!--<StackLayout.GestureRecognizers>
+                <TapGestureRecognizer CommandParameter="user" NumberOfTapsRequired="1" />
+            </StackLayout.GestureRecognizers>
+            <Image Source="user1.png" />
+            <Label FontAttributes="Bold"
+                       HorizontalOptions="Center" 
+                       Text="User" />-->
+            
+             <Image Aspect="AspectFit"
+					HorizontalOptions="Fill"
+                    HeightRequest="50"
+                    WidthRequest="50"
+					VerticalOptions="Fill" 
+                    Source="{Binding TestOnline}"/>
+        </StackLayout>
+
+        <StackLayout Grid.Column="1" Spacing="0">
+            <Image Source="download1.png" />
+            <Label FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       Text="Download"/>
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding FooterCommand}" CommandParameter="DownloadPage"/>
+            </StackLayout.GestureRecognizers>
+        </StackLayout>
+
+        <StackLayout Grid.Column="2" Spacing="0">
+            <Image Source="upload1.png" />
+            <Label FontAttributes="Bold"
+                       HorizontalOptions="Center" 
+                       Text="Upload"/>
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding FooterCommand}" CommandParameter="UploadPage"/>
+            </StackLayout.GestureRecognizers>
+        </StackLayout>
+
+        <StackLayout Grid.Column="3" Spacing="0">
+            <Image Source="logout1.png" />
+            <Label FontAttributes="Bold"
+                       HorizontalOptions="Center"    
+                       Text="Logout" />
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding FooterCommand}" CommandParameter="LoginPage"/>
+            </StackLayout.GestureRecognizers>
+        </StackLayout>
+
+        <StackLayout Grid.Column="4" Spacing="0">
+            <Image Source="setting1.png" />
+            <Label Text="Setting"   HorizontalOptions="Center"  FontAttributes="Bold" />
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="SettingPage"/>
+            </StackLayout.GestureRecognizers>
+        </StackLayout>
+    </Grid>
+</Frame>

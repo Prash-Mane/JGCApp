@@ -1,0 +1,10 @@
+D:\#Prashant\Work Project\xamarin\JGCApp\JGC\JGC.UWP\obj\x86\Debug\JGC.UWP.csproj.AssemblyReference.cache
+D:\#Prashant\Work Project\xamarin\JGCApp\JGC\JGC.UWP\obj\x86\Debug\App.g.i.cs
+D:\#Prashant\Work Project\xamarin\JGCApp\JGC\JGC.UWP\obj\x86\Debug\App.g.cs
+D:\#Prashant\Work Project\xamarin\JGCApp\JGC\JGC.UWP\obj\x86\Debug\MainPage.g.i.cs
+D:\#Prashant\Work Project\xamarin\JGCApp\JGC\JGC.UWP\obj\x86\Debug\MainPage.g.cs
+D:\#Prashant\Work Project\xamarin\JGCApp\JGC\JGC.UWP\obj\x86\Debug\App.xaml
+D:\#Prashant\Work Project\xamarin\JGCApp\JGC\JGC.UWP\obj\x86\Debug\MainPage.xaml
+D:\#Prashant\Work Project\xamarin\JGCApp\JGC\JGC.UWP\obj\x86\Debug\App.xbf
+D:\#Prashant\Work Project\xamarin\JGCApp\JGC\JGC.UWP\obj\x86\Debug\MainPage.xbf
+D:\#Prashant\Work Project\xamarin\JGCApp\JGC\JGC.UWP\obj\x86\Debug\XamlSaveStateFile.xml

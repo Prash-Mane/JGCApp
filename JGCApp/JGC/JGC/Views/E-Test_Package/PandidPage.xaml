@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JGC.Views.PandidPage"
+             ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:TEffect="clr-namespace:JGC.UserControls.Touch">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Pandid"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+
+            </Label>
+            <Image Source="searchbar.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="ETestPackageList"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <Grid IsVisible="{Binding MainGrid}" Margin="10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+                <customControls:CustomPicker x:Name="AttachmentList" 
+                                             HorizontalOptions="Fill"
+                                             Grid.Column="0"
+                                             Grid.ColumnSpan="3"
+                                             SelectedIndexChanged="SelectedAttacehed_Click">
+                </customControls:CustomPicker>
+            <Button BackgroundColor="#C4BB46"
+                            BorderColor="LightGray" 
+                            BorderWidth="1" 
+                            FontAttributes="Bold" 
+                            HorizontalOptions="FillAndExpand" 
+                            Grid.Row="0"
+                            Grid.Column="3"
+                            Text="Reset" 
+                            Clicked="Clicked_Reload"
+                            TextColor="White"/>
+               
+            <StackLayout Grid.Row="1" Grid.ColumnSpan="4">
+                <skia:SKCanvasView x:Name="canvasView" PaintSurface="OnCanvasViewPaintSurface" />
+                <StackLayout.Effects>
+                    <TEffect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction"/>
+                </StackLayout.Effects>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

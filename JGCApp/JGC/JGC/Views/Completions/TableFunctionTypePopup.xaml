@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="JGC.Views.Completions.TableFunctionTypePopup"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation   
+                      PositionIn="Center"  
+                      PositionOut="Center"  
+                      ScaleIn="1.2"  
+                      ScaleOut="0.8"  
+                      DurationIn="400"  
+                      DurationOut="300"  
+                      EasingIn="SinOut"  
+                      EasingOut="SinIn"  
+      HasBackgroundAnimation="False"/>
+    </pages:PopupPage.Animation>
+
+    <Frame Padding="0,0,0,20" CornerRadius="0" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="White" BorderColor="#006633" >
+        <Grid Padding="0" HorizontalOptions="CenterAndExpand"  >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="500"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <customControls:ValidationEntry x:Name="EntryInput" Margin="5" Text="{Binding TableFunctionComment, Mode=TwoWay}"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+            <customControls:RectangleDatePicker Date="{ Binding TableFunctionCommentDate}" Format="dd/MM/yyyy" x:Name="DatePickerInput" Margin="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+            <customControls:RectanglePicker x:Name="BooleanPickerInput" Margin="5" SelectedItem="{Binding TableFunctionBoolean, Mode=TwoWay}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" BackgroundColor="White"/>
+            <BoxView Grid.Row="1" HeightRequest="2" BackgroundColor="#006633"/>
+            <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions='EndAndExpand' VerticalOptions="CenterAndExpand">
+                <Button HorizontalOptions="StartAndExpand" Command="{Binding OKCommand}" TextColor="White" BackgroundColor="#006633" CornerRadius="7" Text="OK"/>
+                <Button Command="{Binding CancelCommand}" BackgroundColor="#EBF2FA" TextColor="#006633" Margin="0,0,5,0" CornerRadius="7" Text="CANCEL" BorderColor="#006633"/>
+            </StackLayout>
+        </Grid>
+    </Frame>
+
+</pages:PopupPage>

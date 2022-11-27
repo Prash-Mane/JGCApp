@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:UC="clr-namespace:JGC.UserControls"
+             x:Class="JGC.Views.ProjectListPage"
+             ControlTemplate="{StaticResource HeaderFooterPageTemplate}"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Content>
+
+            <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <StackLayout Margin="10,20,10,10" >
+                <Label Text="Please select a project:" FontAttributes="Bold" TextColor="#3a6b8b" />
+
+
+                <ListView x:Name="listView"   
+                          SeparatorVisibility="Default"
+                          SeparatorColor="Transparent"
+                          Margin="0,10,0,0"
+	                      RowHeight="30"
+                  ItemTapped="OnItemTapped"       
+                  SelectedItem="{Binding SelectedProject, Mode=TwoWay}"   
+                  HasUnevenRows="True"
+                 ItemsSource="{Binding UserProjects}" >
+
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell Height="30">
+                                <Frame  Padding="2" Margin="0,2,0,0" BackgroundColor="Transparent"  BorderColor="LightGray" HasShadow="False">
+                                    <StackLayout Margin="5,0,5,0"  VerticalOptions="Center">
+                                        <Label LineBreakMode="WordWrap">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span FontSize="15" Text="{Binding ProjectName}" TextColor="Black"/>
+                                                    <Span FontSize="15" Text="{Binding JobCode,StringFormat=' - {0}'}" TextColor="Black"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </StackLayout>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

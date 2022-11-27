@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:PDF="clr-namespace:JGC.UserControls.CustomControls"
+             x:Class="JGC.Views.PDFviever"
+             Title="PDF Full View"
+             NavigationPage.HasBackButton="False">
+    <ContentPage.Content>
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="9*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            
+            <PDF:CustomPDF x:Name="pdfView"
+                            HorizontalOptions="FillAndExpand"
+                            Uri="{Binding PdfUrl}"  
+                            VerticalOptions="FillAndExpand" />
+            <Button x:Name="close" Command="{Binding CloseCommand}" BackgroundColor="Black" Text="Close" TextColor="White" FontAttributes="Bold" Grid.Row="1" />
+            <!--Clicked="Close_Clicked"-->
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

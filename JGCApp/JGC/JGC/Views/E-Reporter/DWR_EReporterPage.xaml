@@ -1,0 +1,1202 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:UC="clr-namespace:JGC.UserControls"
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             ControlTemplate="{StaticResource HeaderFooterPageTemplate}"
+             xmlns:PDF="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:Pinch="clr-namespace:JGC.Common.Extentions"
+             xmlns:converters="clr-namespace:JGC.Common.Converters"
+             x:Class="JGC.Views.DWR_EReporterPage"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Resources>
+        <converters:BoolInvertConverter x:Key="BoolInvertConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content x:Uid="content1">      
+
+        <Grid >
+            <Grid x:Name="s" IsVisible="{Binding MainGrid}" RowSpacing="0" Margin="0,15,0,0" >
+                <Grid.RowDefinitions>
+                  
+                    <RowDefinition Height="0.5"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+
+                    <RowDefinition>
+                        <RowDefinition.Height>
+                            <OnPlatform x:TypeArguments="GridLength">
+                                <On Platform="Android, iOS" Value="60*" />
+                                <On Platform="UWP" Value="600*" />
+                            </OnPlatform>
+                        </RowDefinition.Height>
+                    </RowDefinition>
+                    <!--<RowDefinition Height="60*"/>-->
+                    <RowDefinition Height="Auto"/>
+                  
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>                
+
+                <Label FontAttributes="Bold" 
+                       Grid.Row="1" 
+                       Grid.ColumnSpan="2"
+                       HorizontalOptions="StartAndExpand"
+                       Margin="5,0,5,0"
+                       Text="{Binding DWRitem}" 
+                       TextColor="#3a6b8b"  
+                       VerticalTextAlignment="Center"/>
+                <!--Header Buttons-->
+                <Grid Grid.Row="2"  Grid.ColumnSpan="2" Margin="10,10,10,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button BackgroundColor="#FB1610"
+                        BorderColor="LightGray"
+                        BorderWidth="1"
+                        Command="{Binding BtnCommand}"
+                        CommandParameter="Details"
+                        FontAttributes="Bold"
+                        VerticalOptions="Center"
+                        Text="Details"
+                        TextColor="White"
+                        x:Name="BtnDetails"/>
+                    <Button BackgroundColor="#FB1610"
+                        BorderColor="LightGray"
+                        BorderWidth="1"
+                        Grid.Column="1"
+                        Text="Signature"
+                        Command="{Binding BtnCommand}"
+                        CommandParameter="Signatures"
+                        FontAttributes="Bold"
+                        Clicked="BtnClearListSelection"
+                        TextColor="White"
+                        HorizontalOptions="FillAndExpand"
+                        x:Name="BtnSignature"/>
+                    <Button BackgroundColor="#FB1610"
+                        BorderColor="LightGray"
+                        BorderWidth="1"
+                        Command="{Binding BtnCommand}"
+                        CommandParameter="Attachments"
+                        FontAttributes="Bold"
+                        Clicked="BtnClearListSelection"
+                        HorizontalOptions="FillAndExpand"
+                        Grid.Column="2"
+                        Text="Drawing"
+                        TextColor="White"
+                        x:Name="BtnDrawing"/>
+                </Grid>
+
+                <Grid Grid.Row="3"  Grid.ColumnSpan="2" Margin="10,-8,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image HorizontalOptions="Center"
+                       IsVisible="{Binding DetailsArrow}"
+                       Source="arrow.png"
+                       VerticalOptions="Start"/>
+
+                    <Image HorizontalOptions="Center"
+                       IsVisible="{Binding SignaturesArrow}"
+                       Grid.Column="1" Source="arrow.png"
+                       VerticalOptions="Start" />
+
+                    <Image HorizontalOptions="Center"
+                       IsVisible="{Binding AttachmentsArrow}"
+                       Grid.Column="2"
+                       Source="arrow.png"
+                       VerticalOptions="Start"/>
+                </Grid>
+                <!-- End Header Buttons-->
+
+                <!--1st step-->
+               
+                <StackLayout IsVisible="{Binding IsVisibleList}" Grid.Row="4"  Grid.ColumnSpan="2" Margin="10,0,10,10">
+                    <Label Text="Spool Drawing And Joint Number List" FontAttributes="Bold" TextColor="Black"/>
+                    <ListView 
+                      HasUnevenRows="True"
+                      ItemsSource="{Binding DWRRows}"
+                      SeparatorVisibility="Default"
+                      SeparatorColor="Transparent"
+                      ItemSelected="ListView_ItemSelected"
+                      
+                      x:Name="listView">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <UC:CustomViewCell SelectedItemBackgroundColor="LightGray">
+                                    <ViewCell.View>
+                                        <Frame BackgroundColor="Transparent"  
+                                               BorderColor="LightGray"
+                                               HasShadow="False"
+                                               Margin="0,2,0,0"
+                                               Padding="2" >
+                                            <StackLayout Margin="5,0,5,0"  VerticalOptions="Center">
+                                                <Label FontSize="15" TextColor="Black">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span FontSize="15" Text="{Binding Spool_Drawing_No}" TextColor="Black"/>
+                                                            <Span FontSize="15" Text="{Binding Joint_No,StringFormat=' - {0}'}" TextColor="Black"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                            </StackLayout>
+                                        </Frame>
+                                    </ViewCell.View>
+                                </UC:CustomViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+
+                <!--2nd step-->
+                <ContentView x:Name="popupLoginView"  Grid.Column ="1" BackgroundColor="Transparent" Padding="10, 0" Grid.Row="4" IsVisible="{Binding IsVisibleList2}" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                        <StackLayout Orientation="Vertical"  BackgroundColor="White">
+                            <Frame Grid.Row="4"  BorderColor="Gray" HasShadow="True">
+
+                            <ListView HasUnevenRows="True"
+                              ItemTapped="OnItemTapped"
+                              ItemsSource="{Binding ProjectDetails}"
+                              Margin="10,0,10,0"
+                              
+                              SeparatorVisibility="None"
+                              SeparatorColor="Transparent" >
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell  >
+                                                <StackLayout  VerticalOptions="Center">
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Updated, StringFormat='Updated : {0:N}'}"/>
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Spool_Drawing_No, StringFormat='Spool Drawing No: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Rev_No, StringFormat='Rev No: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Sheet_No, StringFormat='Sheet No: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Joint_No, StringFormat='Joint No: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Spool_No, StringFormat='Spool No: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Line_Class, StringFormat='Line Class: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Size, StringFormat='Size: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Thickness, StringFormat='Thickness: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding FitUp_Date,    StringFormat='FitUp Date: {0:dd-MMM-yyyy}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Welded_Date, StringFormat='Welded Date: {0:dd-MMM-yyyy}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Weld_Type, StringFormat='Weld Type: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Root_Welder_1, StringFormat='Root Welder 1: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Root_Welder_1_Production_Joint, StringFormat='Root Welder 1 Production Joint: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Root_Welder_2, StringFormat='Root Welder 2: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Root_Welder_2_Production_Joint, StringFormat='Root Welder 2 Production Joint: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Root_Welder_3, StringFormat='Root Welder 3: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Root_Welder_3_Production_Joint, StringFormat='Root Welder 3 Production Joint: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Root_Welder_4, StringFormat='Root Welder 4: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Root_Welder_4_Production_Joint, StringFormat='Root_Welder 4 Production Joint: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding FillCap_Weld_Process, StringFormat='FillCap Weld Process: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding FillCap_Welder_1, StringFormat='FillCap Welder 1: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding FillCap_Welder_1_Production_Joint, StringFormat='FillCap Welder 1 Production Joint: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding FillCap_Welder_2, StringFormat='FillCap Welder 2: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding FillCap_Welder_2_Production_Joint, StringFormat='FillCap Welder 2 Production Joint: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding FillCap_Welder_3, StringFormat='FillCap Welder 3: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding FillCap_Welder_3_Production_Joint, StringFormat='FillCap Welder 3 Production Joint: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding FillCap_Welder_4, StringFormat='FillCap Welder 4: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding FillCap_Welder_4_Production_Joint, StringFormat='FillCap Welder 4 Production Joint: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding WPS_No, StringFormat='WPS No: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Base_Metal_1, StringFormat='Base Metal 1: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Heat_No_1, StringFormat='Heat No 1: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Base_Metal_2, StringFormat='Base Metal 2: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Heat_No_2, StringFormat='Heat No 2: {0:N}'}" />
+                                                    <Label Style="{StaticResource GeneralLabelStyle}" Text="{Binding Work_Code, StringFormat='Work Code: {0:N}'}" />
+                                                </StackLayout>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Frame>
+                        </StackLayout>
+                    </StackLayout>
+                </ContentView>
+                  
+                <!--3rd step remark form-->
+                <ScrollView  Grid.ColumnSpan="2" Grid.Row="4" IsVisible="{Binding IsVisibleRemarkForm}" >
+                    <Grid                 
+                        ColumnSpacing="5"
+                        RowSpacing="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!--VI -->
+                        <Label FontSize="12"
+                               FontAttributes="Bold"
+                               HorizontalOptions="End"
+                               Text="VI"
+                               TextColor="#3a6b8b"
+                               VerticalTextAlignment="Center"/>
+                        <Button BackgroundColor="{Binding ViAccColor}"
+                                BorderColor="#FB1610"
+                                BorderWidth="2"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="ViAcc"
+                                FontSize="10"
+                                FontAttributes="Bold"
+                                Grid.Column="1"
+                                Grid.Row="0"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Acc"
+                                TextColor="#3a6b8b"  />
+                        <Button BackgroundColor="{Binding ViRejColor}"
+                                BorderColor="Red"
+                                BorderWidth="2"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="ViReject" 
+                                FontSize="10"
+                                FontAttributes="Bold"
+                                Grid.Column="2"
+                                Grid.Row="0"
+                                HorizontalOptions="FillAndExpand"
+                                Text="REJ"
+                                TextColor="#3a6b8b"   />
+                        <Button BackgroundColor="{Binding ViBlankColor}"
+                                BorderColor="LightGray" 
+                                BorderWidth="2"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="ViBlank"
+                                FontSize="10"
+                                FontAttributes="Bold"
+                                Grid.Column="3"
+                                Grid.Row="0"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Blank"
+                                TextColor="#3a6b8b" />
+                        <Image  HeightRequest="25"
+                                HorizontalOptions="Start"
+                                Grid.Column="4"
+                                Grid.Row="0"
+                                Margin="10"
+                                Source="{Binding ViCameraIcon}"
+                                WidthRequest="25" >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BtnCommand}" CommandParameter="ViCamera" />
+                            </Image.GestureRecognizers>
+                        </Image>
+
+                        <customControls:CustomPicker FontSize="Small"
+                                                     Grid.Column="1"
+                                                     Grid.ColumnSpan="3"
+                                                     Grid.Row="1" 
+                                                     IsVisible="{Binding IsVisibleViPicker}"
+                                                     ItemsSource="{Binding ViDefects}"
+                                                     ItemDisplayBinding="{Binding DefectsShow, Mode=TwoWay}"
+                                                     HorizontalOptions="FillAndExpand"
+                                                     SelectedItem="{Binding  ViComment}" >
+                        </customControls:CustomPicker>
+
+                        <!--DI -->
+                        <Label FontSize="12"
+                               FontAttributes="Bold"
+                               Grid.Column="0"
+                               Grid.Row="2"
+                               HorizontalOptions="End"
+                               Text="DI"
+                               TextColor="#3a6b8b"
+                               VerticalTextAlignment="Center"/>
+                        <Button BackgroundColor="{Binding DiAccColor}"
+                                BorderColor="#3a6b8b"
+                                BorderWidth="2"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="DiAcc"
+                                FontSize="10"
+                                FontAttributes="Bold"
+                                Grid.Column="1"
+                                Grid.Row="2"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Acc"
+                                TextColor="#3a6b8b" />
+                        <Button BackgroundColor="{Binding DiRejColor}"
+                                BorderColor="Red" 
+                                BorderWidth="2"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="DiReject"
+                                FontSize="10"
+                                FontAttributes="Bold"
+                                Grid.Column="2"
+                                Grid.Row="2"
+                                HorizontalOptions="FillAndExpand"
+                                Text="REJ"
+                                TextColor="#3a6b8b" />
+                        <Button BorderColor="LightGray" 
+                                BorderWidth="2"
+                                BackgroundColor="{Binding DiBlankColor}"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="DiBlank"
+                                FontSize="10"
+                                FontAttributes="Bold"
+                                Grid.Column="3"
+                                Grid.Row="2"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Blank"
+                                TextColor="#3a6b8b" />
+                        <Image  Grid.Column="4"
+                                Grid.Row="2"
+                                HeightRequest="25" 
+                                Margin="10"
+                                HorizontalOptions="Start"
+                                Source="{Binding DiCameraIcon}"
+                                WidthRequest="25" >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BtnCommand}" CommandParameter="DiCamera" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Entry IsVisible="{Binding IsVisibleDiPicker}"
+                               Text="{Binding DiComment, Mode=TwoWay}"
+                               Grid.Column="1"
+                               Grid.ColumnSpan="3"
+                               Grid.Row="3">
+                        </Entry>
+                        <!--Remark-->
+                        <Label FontSize="12" 
+                               FontAttributes="Bold" 
+                               Grid.Column="0"  
+                               Grid.Row="5" 
+                               HorizontalOptions="End" 
+                               Text="Remarks:" 
+                               TextColor="#3a6b8b" 
+                               VerticalTextAlignment="Center"/>
+                        <Editor Text="{Binding Remarks, Mode=TwoWay}"
+                                HorizontalOptions="Fill"
+                                Grid.Column="1"
+                                Grid.ColumnSpan="3"  
+                                Grid.Row="5"/>
+                    </Grid>
+                </ScrollView>
+
+                <ScrollView  Grid.ColumnSpan="2" Grid.Row="4" Margin="10,0,10,0"  IsVisible="{Binding IsVisibleEditForm}" Grid.RowSpan="2" >
+                    <Grid  RowSpacing="1"  ColumnSpacing="5">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                       
+                        <BoxView BackgroundColor="#99CCFF"
+                                 Grid.ColumnSpan="3"
+                                 Grid.Row="0" 
+                                 HeightRequest="40" />
+                         <Label Grid.ColumnSpan="3"
+                                HorizontalOptions="Center" 
+                                Text="Root" 
+                                VerticalOptions="Center" />
+                         <Label FontSize="12"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="2"
+                               Grid.Row="1"
+                               Text="Welder 1"
+                               TextColor="#1A5276"/>
+                        <customControls:CustomPicker FontSize="12"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Grid.Row="2"
+                                ItemsSource="{Binding WeldersList}" 
+                                ItemDisplayBinding="{Binding WelderDetail}"
+                                SelectedItem="{Binding Welder1, Mode=TwoWay}">
+                          
+                        </customControls:CustomPicker>
+                        <Button BorderColor="#FB1610" 
+                                BackgroundColor="{Binding Path=ProductionButtonColor.welder1}"
+                                BorderWidth="2"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="welder1"
+                                FontSize="12" 
+                                Grid.Column="2"
+                                Grid.Row="2"                           
+                                Text="Production" 
+                                TextColor="Black"  />
+                        <Label FontSize="12"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="2"
+                               Grid.Row="3"
+                               Text="Welder 2"
+                               TextColor="#1A5276"/>
+                        <customControls:CustomPicker FontSize="12"  
+                                Grid.Column="0" 
+                                Grid.ColumnSpan="2"
+                                Grid.Row="4"  
+                                ItemsSource="{Binding WeldersList}"  
+                                ItemDisplayBinding="{Binding WelderDetail}" 
+                                SelectedItem="{Binding Welder2, Mode=TwoWay}" >
+                               
+                        </customControls:CustomPicker>
+                        <Button BorderColor="#FB1610"
+                                BackgroundColor="{Binding Path=ProductionButtonColor.welder2}"
+                                BorderWidth="2"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="welder2"
+                                FontSize="12"
+                                Grid.Column="2"
+                                Grid.Row="4"
+                                Text="Production"
+                                TextColor="Black" />
+                        <Label FontSize="12"  
+                               Grid.Column="0" 
+                               Grid.ColumnSpan="2"
+                               Grid.Row="5"
+                               Text="Welder 3"
+                               TextColor="#1A5276"/>
+                        <customControls:CustomPicker FontSize="12"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Grid.Row="6" 
+                                ItemsSource="{Binding WeldersList}" 
+                                ItemDisplayBinding="{Binding WelderDetail}"
+                                SelectedItem="{Binding Welder3, Mode=TwoWay}" >
+                              
+                        </customControls:CustomPicker>
+                        <Button BorderColor="#FB1610"
+                                BackgroundColor="{Binding Path=ProductionButtonColor.welder3}"
+                                BorderWidth="2"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="welder3"
+                                FontSize="12" 
+                                Grid.Column="2" 
+                                Grid.Row="6" 
+                                Text="Production" 
+                                TextColor="Black" />
+                        <Label FontSize="12"  
+                               Grid.Column="0"
+                               Grid.ColumnSpan="2" 
+                               Grid.Row="7"
+                               Text="Welder 4"
+                               TextColor="#1A5276"/>
+                        <customControls:CustomPicker FontSize="12" 
+                                Grid.Column="0" 
+                                Grid.ColumnSpan="2"
+                                Grid.Row="8"
+                                ItemsSource="{Binding WeldersList}"
+                                ItemDisplayBinding="{Binding WelderDetail}"
+                                SelectedItem="{Binding Welder4, Mode=TwoWay}">
+                           
+                        </customControls:CustomPicker>
+                        <Button BorderColor="#FB1610"
+                                BackgroundColor="{Binding Path=ProductionButtonColor.welder4}"
+                                BorderWidth="2"
+                                CommandParameter="welder4"
+                                Command="{Binding BtnCommand}"
+                                FontSize="12"
+                                Grid.Column="2"
+                                Grid.Row="8" 
+                                Text="Production"
+                                TextColor="Black" />
+                        <Button FontSize="15"
+                                BackgroundColor="#FB1610"
+                                 Command="{Binding BtnCommand}" 
+                                 CommandParameter="EditFormNextBtn" 
+                                 Grid.ColumnSpan="3" 
+                                 Grid.Row="9"
+                                 Margin="0,10,0,0" 
+                                 Text="Next"
+                                 TextColor="White"
+                                 VerticalOptions="Center" />
+                    </Grid>
+                </ScrollView>
+           
+
+                <!--Edit Form 2 -->
+                <ScrollView  Grid.ColumnSpan="2" Grid.Row="4" IsVisible="{Binding IsVisibleEditForm2}" >
+                    <Grid Margin="10" RowSpacing="2" ColumnSpacing="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*"/>
+
+
+                        </Grid.ColumnDefinitions>
+                       
+                        <BoxView BackgroundColor="#99CCFF"
+                                 Grid.ColumnSpan="3" 
+                                 Grid.Row="0" 
+                                 HeightRequest="40"/>                                    
+                        <Label Grid.ColumnSpan="3"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Text="Fill/Cap"  />
+                        <Label FontSize="12"
+                               Grid.Column="0" 
+                               Grid.ColumnSpan="2"
+                               Grid.Row="1" 
+                               Text="Welder 1" 
+                               TextColor="#1A5276" />
+                        <customControls:CustomPicker FontSize="12"
+                                                     Grid.Column="0" 
+                                                     Grid.ColumnSpan="2"
+                                                     HorizontalOptions="FillAndExpand"  
+                                                     Grid.Row="2" 
+                                                     ItemsSource="{Binding WeldersList}"
+                                                     SelectedItem="{Binding Welder5, Mode=TwoWay}" 
+                                                     ItemDisplayBinding="{Binding WelderDetail}">
+                                                   
+                        </customControls:CustomPicker>
+                        <Button BorderColor="#ff0000" 
+                                BackgroundColor="{Binding Path=ProductionButtonColor.welder5}"
+                                BorderWidth="1"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="welder5"
+                                FontSize="12"
+                                Grid.Column="2"
+                                Grid.Row="2"  
+                                Text="Production" 
+                                TextColor="Black" />
+                        <Label FontSize="12"
+                               Grid.Column="0" 
+                               Grid.ColumnSpan="2" 
+                               Grid.Row="3" 
+                               Text="Welder 2"         
+                               TextColor="#1A5276"/>
+                        <customControls:CustomPicker FontSize="12"  
+                                                     Grid.Column="0" 
+                                                     Grid.ColumnSpan="2"
+                                                     Grid.Row="4" 
+                                                     HorizontalOptions="FillAndExpand"                                                   
+                                                     ItemsSource="{Binding WeldersList}"
+                                                     ItemDisplayBinding="{Binding  WelderDetail} "
+                                                     SelectedItem="{Binding Welder6, Mode=TwoWay}">  
+                                                   
+                        </customControls:CustomPicker>
+                        <Button BorderColor="#ff0000" 
+                                BackgroundColor="{Binding Path=ProductionButtonColor.welder6}" 
+                                BorderWidth="1"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="welder6"
+                                FontSize="12"
+                                Grid.Column="2" 
+                                Grid.Row="4" 
+                                Text="Production" 
+                                TextColor="Black"/>
+                        <Label FontSize="12"
+                               Grid.Column="0" 
+                               Grid.ColumnSpan="2" 
+                               Grid.Row="5" 
+                               Text="Welder 3"   
+                               TextColor="#1A5276"/>           
+                                <customControls:CustomPicker FontSize="12"
+                                                             Grid.Column="0" 
+                                                             Grid.ColumnSpan="2"  
+                                                             Grid.Row="6"
+                                                             HorizontalOptions="FillAndExpand"  
+                                                             ItemsSource="{Binding WeldersList}" 
+                                                             ItemDisplayBinding="{Binding WelderDetail}" 
+                                                             SelectedItem="{Binding Welder7, Mode=TwoWay}" >
+                                                            
+                                </customControls:CustomPicker>
+                        <Button BorderColor="#ff0000" 
+                                BackgroundColor="{Binding Path=ProductionButtonColor.welder7}" 
+                                BorderWidth="1"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="welder7"
+                                FontSize="12"
+                                Grid.Column="2" 
+                                Grid.Row="6"
+                                Text="Production" 
+                                TextColor="Black"  />
+                        <Label FontSize="12"
+                               Grid.Column="0" 
+                               Grid.ColumnSpan="2" 
+                               Grid.Row="7"                          
+                               Text="Welder 4" 
+                               TextColor="#1A5276"/>
+                        <customControls:CustomPicker FontSize="12" 
+                                                     Grid.Column="0"
+                                                     Grid.ColumnSpan="2"
+                                                     Grid.Row="8"  
+                                                     HorizontalOptions="FillAndExpand"  
+                                                     ItemsSource="{Binding WeldersList}"
+                                                     ItemDisplayBinding="{Binding WelderDetail}" 
+                                                     SelectedItem="{Binding Welder8, Mode=TwoWay}" >
+                                                    
+                        </customControls:CustomPicker>
+                        <Button BorderColor="#ff0000" 
+                                BackgroundColor="{Binding Path=ProductionButtonColor.welder8}" 
+                                BorderWidth="1" 
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="welder8"
+                                FontSize="12"
+                                Grid.Column="2" 
+                                Grid.Row="8" 
+                                Text="Production" 
+                                TextColor="Black" />
+                       
+                        <Grid Grid.Row="9" Grid.ColumnSpan="3">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="4*"/>
+                                <ColumnDefinition Width="2*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label FontSize="12"
+                                   Grid.Column="0" 
+                                   Grid.Row="0" 
+                                   Text="WPS NO." 
+                                   TextColor="#1A5276"/>
+                            <customControls:CustomPicker FontSize="12"
+                                                         Grid.Column="0" 
+                                                         Grid.ColumnSpan="4"
+                                                         Grid.Row="1" 
+                                                         HorizontalOptions="FillAndExpand"  
+                                                         ItemsSource="{Binding WPSNoList}"
+                                                         ItemDisplayBinding="{Binding WpsDescription}"
+                                                         SelectedItem="{Binding SelctedWpsNumber, Mode=TwoWay}">
+                            </customControls:CustomPicker>
+                            <Label FontSize="12" 
+                                   Grid.Column="0" 
+                                   Grid.Row="2" 
+                                   Text="Base Metal 1" 
+                                   TextColor="#1A5276"/>
+                            <customControls:CustomPicker FontSize="12"
+                                                         Grid.Column="0" 
+                                                         Grid.Row="3" 
+                                                         HorizontalOptions="FillAndExpand" 
+                                                         ItemsSource="{Binding BaseMetalItemSource1}"
+                                                        
+                                                         SelectedItem="{Binding SelectedBaseMetal1, Mode=TwoWay}"
+                                                         IsVisible="{Binding ShowBasemetal1 , Converter={StaticResource BoolInvertConverter}}">
+                                <!--ItemDisplayBinding="{Binding Base_Material}"-->
+                            </customControls:CustomPicker>
+                            <Entry
+                                 Text="{Binding SelectedBaseMetal1Text, Mode=TwoWay}"
+                                 Grid.Column="0"
+                                 Grid.Row="3" 
+                                 IsVisible="{Binding ShowBasemetal1}"
+                                />
+                            <Button 
+                                    Command="{Binding BtnCommand}"
+                                    CommandParameter="EditMetal1"
+                                    Grid.Column="1"
+                                    Grid.Row="3"
+                                    Text="{Binding BtnMetalText1}" 
+                                    FontSize="Micro"
+                                    TextColor="Black" />
+                            <Label FontSize="12"
+                                   Grid.Column="2" 
+                                   Grid.Row="2" 
+                                   Text="Heat No. 1"        
+                                   TextColor="#1A5276"/>
+                            <customControls:CustomPicker FontSize="12"
+                                                         Grid.Column="2"
+                                                         Grid.Row="3" 
+                                                         HorizontalOptions="FillAndExpand"  
+                                                         ItemsSource="{Binding HeatNosItemSource1}"
+                                                         ItemDisplayBinding="{Binding Heat_No}"
+                                                         SelectedItem="{Binding SelectedHeatNos1, Mode=TwoWay}"
+                                                         IsVisible="{Binding ShowHeatNos1 , Converter={StaticResource BoolInvertConverter}}">
+                            </customControls:CustomPicker>
+                            <Entry
+                                Text="{Binding SelectedHeatNos1Text, Mode=TwoWay}"
+                                 Grid.Column="2"
+                                  Grid.Row="3" 
+                                 IsVisible="{Binding ShowHeatNos1}"
+                                />
+                            <Button 
+                                    Command="{Binding BtnCommand}"
+                                    CommandParameter="EditHeatNos1"
+                                   FontSize="Micro"
+                                    Grid.Column="3"
+                                   Grid.Row="3"
+                                   Text="{Binding BtnHeatNosText1}"  
+                                    TextColor="Black" />
+                            <Label FontSize="12"
+                                   Grid.Column="0"
+                                   Grid.Row="4" 
+                                   Text="Base Metal 2" 
+                                   TextColor="#1A5276"/>
+                            <customControls:CustomPicker FontSize="12"
+                                                         Grid.Column="0"
+                                                         Grid.Row="5" 
+                                                         HorizontalOptions="FillAndExpand" 
+                                                         ItemsSource="{Binding BaseMetalItemSource2}"
+                                                         ItemDisplayBinding="{Binding Base_Material} "
+                                                         SelectedItem="{Binding SelectedBaseMetal2, Mode=TwoWay}"
+                                                         IsVisible="{Binding ShowBasemetal2 , Converter={StaticResource BoolInvertConverter}}">
+                            </customControls:CustomPicker>
+                            <Entry
+                                Text="{Binding SelectedBaseMetal2Text, Mode=TwoWay}"
+                                 Grid.Column="0"
+                                  Grid.Row="5" 
+                                 IsVisible="{Binding ShowBasemetal2}"
+                                />
+                            <Button 
+                                    Command="{Binding BtnCommand}"
+                                    CommandParameter="EditMetal2"
+                                    Grid.Column="1"
+                                    Grid.Row="5"
+                                FontSize="Micro"
+                                    Text="{Binding BtnMetalText2}" 
+                                    TextColor="Black" />
+                            <Label FontSize="12"
+                                   Grid.Column="2"
+                                   Grid.Row="4" 
+                                   Text="Heat No. 2" 
+                                   TextColor="#1A5276"/>   
+                            <customControls:CustomPicker FontSize="12"
+                                                         Grid.Column="2"
+                                                         Grid.Row="5" 
+                                                         HorizontalOptions="FillAndExpand" 
+                                                         ItemsSource="{Binding HeatNosItemSource2}"
+                                                         ItemDisplayBinding="{Binding Heat_No}"
+                                                         SelectedItem="{Binding SelectedHeatNos2, Mode=TwoWay}" 
+                                                         IsVisible="{Binding ShowHeatNos2 , Converter={StaticResource BoolInvertConverter}}">
+                            </customControls:CustomPicker>
+                            <Entry
+                                Text="{Binding SelectedHeatNos2Text, Mode=TwoWay}"
+                                 Grid.Column="2"
+                                  Grid.Row="5" 
+                                 IsVisible="{Binding ShowHeatNos2}"
+                                />
+                            <Button 
+                                    Command="{Binding BtnCommand}"
+                                    CommandParameter="EditHeatNos2"
+                                    Grid.Column="3"
+                                    Grid.Row="5"
+                                FontSize="Micro"
+                                    Text="{Binding BtnHeatNosText2}" 
+                                    TextColor="Black" />
+                            <Button BackgroundColor="#FB1610"
+                                    BorderColor="LightGray"
+                                    BorderWidth="1"
+                                    Command="{Binding BtnCommand}"
+                                    CommandParameter="EditForm2BackBtn"
+                                    FontAttributes="Bold"
+                                    Grid.Row="6"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="2"
+                                    Text="Back"
+                                    TextColor="White" />
+                            <Button BackgroundColor="#FB1610"
+                                    BorderColor="LightGray"
+                                    BorderWidth="1"
+                                    Command="{Binding BtnCommand}"
+                                    CommandParameter="SaveForm"
+                                    FontAttributes="Bold"
+                                    Grid.Column="2"
+                                    Grid.ColumnSpan="2"
+                                    Grid.Row="6"
+                                    Text="Save" 
+                                    TextColor="White" />
+                        </Grid>
+                    </Grid>
+                </ScrollView>
+                
+                <!--Signature-->
+                <Grid  Grid.ColumnSpan="2" Grid.Row="4" 
+                      IsVisible="{Binding SignaturesGrid}" 
+                      RowSpacing="0" >
+                    <dg:DataGrid ActiveRowColor="#8899AA"  
+                                 BorderColor="#CCCCCC" 
+                                 ColumnSpacing="1"
+                                 HeaderBackground="#FFFFFF"
+                                 HeaderBordersVisible="True" 
+                                 HeaderHeight="35" 
+                                 HeaderTextColor="#3a6b8b"
+                                 ItemsSource="{Binding SignatureList, Mode=TwoWay}"
+                                 Margin="0,10,0,0"                                  
+                                 SelectionEnabled="True"                                 
+                                 SelectedItem="{Binding SelectedSignatureItem}">
+                        <!--<dg:DataGrid.RowHeight>
+                            <OnPlatform Android="35" 
+                                        UWP="40"
+                                        x:DataType="x:Double">
+                            </OnPlatform>
+                        </dg:DataGrid.RowHeight>-->
+                        <x:Arguments>
+                            <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                        </x:Arguments>
+
+                        <dg:DataGrid.HeaderFontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>8</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.HeaderFontSize>
+                        <dg:DataGrid.FontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>8</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.FontSize>
+
+                        <dg:DataGrid.Columns>
+                            <dg:DataGridColumn Title="N/A" PropertyName="{Binding Signed}"  SortingEnabled="False">
+                                
+                                <dg:DataGridColumn.CellTemplate>
+                                
+                                    <DataTemplate>                                      
+                                        <Image Source="Grayradio.png" HorizontalOptions="Center" VerticalOptions="Start">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"  CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                            </Image.GestureRecognizers>
+                                            <Image.Triggers>
+                                                <DataTrigger TargetType="Image" Binding="{Binding Signed}" Value="True">
+                                                    <Setter Property="Source" Value="Greenradio.png" />
+                                                </DataTrigger>
+                                            </Image.Triggers>
+                                        </Image>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn HorizontalContentAlignment="CenterAndExpand" PropertyName="DisplaySignatureName" SortingEnabled="False" Title="Signature" VerticalContentAlignment="Center"/>
+                            <dg:DataGridColumn HorizontalContentAlignment="CenterAndExpand" PropertyName="SignedByFullName"  SortingEnabled="True" Title="Signed By" VerticalContentAlignment="Center"/>
+                            <dg:DataGridColumn HorizontalContentAlignment="CenterAndExpand" PropertyName="SignedOn" SortingEnabled="True"  StringFormat="{}{0:dd-MMM-yyyy HH:mm}" Title="Signed On" VerticalContentAlignment="Center"/>
+                        </dg:DataGrid.Columns>
+                        <dg:DataGrid.RowsBackgroundColorPalette>
+                            <dg:PaletteCollection>
+                                <Color>#FFFFFF</Color>
+                                <Color>#FFFFFF</Color>
+                            </dg:PaletteCollection>
+                        </dg:DataGrid.RowsBackgroundColorPalette>
+
+                    </dg:DataGrid>
+                </Grid>
+
+                <Button BackgroundColor="#FB1610" 
+                        BorderColor="LightGray"  
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" CommandParameter="Save"
+                        FontAttributes="Bold" 
+                        Grid.Row="5" 
+                        HorizontalOptions="FillAndExpand"  
+                        IsVisible="{Binding btnSave}"
+                        Text="Save" 
+                        TextColor="White" 
+                         Grid.ColumnSpan="2"/>
+
+
+                <!--Attachment  Grid -->
+                <Grid Grid.Row="4" 
+                     Grid.ColumnSpan="2"
+                      IsVisible="{Binding AttachmentsGrid}" 
+                      RowSpacing="0"
+                      Margin="10,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition>
+                            <RowDefinition.Height>
+                                <OnPlatform x:TypeArguments="GridLength">
+                                    <On Platform="Android, iOS" Value="*" />
+                                    <On Platform="UWP" Value="1000*" />
+                                </OnPlatform>
+                            </RowDefinition.Height>
+                        </RowDefinition>
+                        <!--<RowDefinition Height="9*"/>-->
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <customControls:CustomPicker HorizontalOptions="FillAndExpand"
+                                                 ItemsSource="{Binding AttachmentList}"                            
+                                                 SelectedItem="{Binding SelectedAttachedItem, Mode=TwoWay}">
+                    </customControls:CustomPicker>
+                    <Button BackgroundColor="Black"
+                            TextColor="White"
+                            Text="View in full screen"
+                            Command="{Binding BtnCommand}"
+                            CommandParameter="PdfFullScreen"
+                            Grid.Column="1"/>
+                    <StackLayout Grid.Row="1" Grid.ColumnSpan="2" >
+
+                    <PDF:CustomPDF HorizontalOptions="FillAndExpand"   VerticalOptions="FillAndExpand"
+                                   Uri="{Binding PdfUrl, Mode=TwoWay}"/>                      
+                              
+                    </StackLayout>
+                </Grid>
+               
+                <!--buttons for step1 -->
+                <Grid Grid.Row="5"  Grid.ColumnSpan="2" RowSpacing="0" IsVisible="{Binding IsVisibleButtons1}"  Margin="10,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--<Button BackgroundColor="#FB1610"
+                            BorderColor="LightGray"
+                            BorderWidth="1"
+                            Grid.ColumnSpan="2"
+                            Command="{Binding BtnCommand}"
+                            CommandParameter="BackToMain"
+                            Clicked="BtnNext_Clicked"
+                            FontAttributes="Bold"
+                            Text="Back"
+                            TextColor="White"
+                            x:Name="BtnEdit"/>-->
+
+                    <Button BackgroundColor="#FB1610"
+                            BorderColor="LightGray"
+                            BorderWidth="1"
+                            
+                            Command="{Binding BtnCommand}"
+                            CommandParameter="BackToMain"                       
+                            FontAttributes="Bold"
+                            Text="Back"
+                            TextColor="White"
+                          />
+
+
+                    <!--<Button Command="{Binding NextBtnCommand}"
+                            CommandParameter="Step1"
+                            FontAttributes="Bold"
+                            BackgroundColor="#3a6b8b"
+                            BorderColor="LightGray"
+                            BorderWidth="1"                       
+                            Grid.Column="1"
+                            Text="Next"                           
+                            TextColor="White"
+                            x:Name="BtnNext" 
+                            Clicked="BtnNext_Clicked"/>-->
+                </Grid>
+
+                <!--buttons for  step 2  -->
+                <Grid Grid.Row="5"  Grid.ColumnSpan="2" RowSpacing="0" IsVisible="{Binding IsVisibleButtons2}"  Margin="10,10,10,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button BackgroundColor="#FB1610"
+                            BorderColor="LightGray"
+                            BorderWidth="1"
+                            Command="{Binding BtnCommand}"
+                            CommandParameter="BackToList"                       
+                            FontAttributes="Bold"
+                            Text="Back"
+                            TextColor="White"
+                          />
+                    <Button Command="{Binding NextBtnCommand}"
+                            CommandParameter="Step2"
+                            FontAttributes="Bold"
+                            BackgroundColor="#FB1610"
+                            BorderColor="LightGray"
+                            BorderWidth="1"                       
+                            Grid.Column="1"
+                            Text="Next"                           
+                            TextColor="White"
+                            Clicked="BtnClearListSelection"
+                            />
+                </Grid>
+                <!--buttons for remarks   -->
+                <Grid Grid.Row="5"  Grid.ColumnSpan="2" IsVisible="{Binding IsVisibleRemarkForm}" Margin="10,10,10,10" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button BackgroundColor="#FB1610"
+                            BorderColor="LightGray"
+                            BorderWidth="1"
+                            Command="{Binding BtnCommand}"
+                            CommandParameter="BackToList"                       
+                            FontAttributes="Bold"
+                            Text="Back"
+                            TextColor="White"
+                          />
+                    <Button BackgroundColor="#FB1610" 
+                                BorderColor="LightGray"  
+                                BorderWidth="1"
+                                CommandParameter="SaveJoint"
+                                Command="{Binding BtnCommand}"
+                                FontAttributes="Bold"
+                                FontSize="12"                            
+                                Grid.Column="1"
+                                Text="Save Joint"                           
+                                TextColor="White" 
+                                x:Name="Btnjoint" />
+                    <Button BackgroundColor="#FB1610"
+                                BorderColor="LightGray" 
+                                BorderWidth="1"
+                                CommandParameter="Editdetails" 
+                                Command="{Binding BtnCommand}" 
+                                FontAttributes="Bold" 
+                                FontSize="12"                    
+                                Grid.Column="2" 
+                                Text="Edit Details"                      
+                                TextColor="White" 
+                                x:Name="Btneditdetails"  />
+                </Grid>
+            </Grid>
+        
+            <!-- Camera Grid -->
+            <Grid ColumnSpacing="10" 
+                  IsVisible="{Binding CameraGrid}" 
+                  Margin="10,0" 
+                  RowSpacing="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+            
+                <Label  FontAttributes="Bold"
+                        HorizontalOptions="StartAndExpand"
+                        Text="List of photos" 
+                        TextColor="#1A5276"
+                        VerticalTextAlignment="Center"/>
+                <Label 
+                        FontAttributes="Bold"
+                        Grid.Column="1" 
+                        Grid.Row="0"  
+                        HorizontalOptions="StartAndExpand"
+                        Text="Select Camera" 
+                        TextColor="#1A5276"
+                        VerticalTextAlignment="Center"/>
+
+                <customControls:CustomPicker
+                         Grid.Column="0" 
+                         Grid.Row="1"
+                         HorizontalOptions="FillAndExpand"
+                         ItemsSource="{Binding ImageFiles}"
+                         SelectedIndex="0"
+                         SelectedItem="{Binding SelectedImageFiles, Mode=TwoWay}">
+                </customControls:CustomPicker>
+                <customControls:CustomPicker
+                         Grid.Column="1" 
+                         Grid.Row="1"
+                         HorizontalOptions="FillAndExpand"
+                         ItemsSource="{Binding CameraItems}"
+                         SelectedItem="{Binding SelectedCameraItem, Mode=TwoWay}">
+                </customControls:CustomPicker>
+                <Button BackgroundColor="#ff0000" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="AddFromFile" 
+                        FontAttributes="Bold"
+                        Grid.Column="2" 
+                        Grid.Row="1"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Add From File"  
+                        TextColor="#ffffff"/>
+
+                <Grid ColumnSpacing="10" 
+                      Grid.ColumnSpan="3" 
+                      Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="900*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Image 
+                        Aspect="AspectFill" 
+                        HorizontalOptions="FillAndExpand"
+                        Source="{Binding CapturedImage}"   
+                        VerticalOptions="FillAndExpand"/>
+                    <StackLayout Grid.Row="1" Orientation="Horizontal" IsVisible="{Binding Showbuttons}">
+                        <Button BackgroundColor="#ff0000" 
+                            Command="{Binding BtnCommand}" 
+                            CommandParameter="Clear" 
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Clear"  
+                            TextColor="#ffffff"/>
+                        <!--<Button BackgroundColor="#ff0000" 
+                            Command="{Binding BtnCommand}" 
+                            CommandParameter="RenameImage" 
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            IsVisible="{Binding RenameImage}"
+                            Text="Rename Image"  
+                            TextColor="#ffffff"/>-->
+                        <Button 
+                            BackgroundColor="#ff0000" 
+                            Command="{Binding BtnCommand}" 
+                            CommandParameter="CaptureImageSave" 
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{Binding btnSaveDelete}"  
+                            TextColor="#ffffff"/>
+                        <Button 
+                            BackgroundColor="#ff0000" 
+                            Command="{Binding BtnCommand}" 
+                            CommandParameter="BackFromCameraGrid" 
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Back"  
+                            TextColor="#ffffff"/>
+                    </StackLayout>
+                    <Grid Grid.Row="1" IsVisible="{Binding ShowRename}">
+                        <customControls:CustomEntry Text="{Binding NewImageName, Mode=TwoWay}" Grid.ColumnSpan="2"/>
+                        <Button BackgroundColor="#ff0000" 
+                                Command="{Binding BtnCommand}" 
+                                CommandParameter="SaveRename" 
+                                FontAttributes="Bold"
+                                Grid.Column="2"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Save"  
+                                TextColor="#ffffff"/>
+                        <Button 
+                                BackgroundColor="#ff0000" 
+                                Command="{Binding BtnCommand}" 
+                                CommandParameter="CancelRename" 
+                                FontAttributes="Bold"
+                                Grid.Column="3"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Cancel"  
+                                TextColor="#ffffff"/>
+                    </Grid>
+                </Grid>
+
+                
+            </Grid>
+       
+    </Grid>
+
+      
+    </ContentPage.Content>    
+</ContentPage>

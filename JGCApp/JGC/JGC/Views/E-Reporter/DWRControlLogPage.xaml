@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="JGC.Views.E_Reporter.DWRControlLogPag"
+              ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}"
+   xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+            >
+
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Control Log"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+
+            </Label>
+
+            <Image Source="HomeHeadericon.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="EReportSelectionPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Source="searchbar.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="JointDetailsPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content x:Uid="content1">
+        <StackLayout Margin="10">
+            <StackLayout Orientation="Horizontal" Margin="10,0,0,0">
+
+                <Label Text="{Binding AFINO ,StringFormat='AFI No: {0}, '}" VerticalOptions="Start" HorizontalOptions="Start" TextColor="Black" FontAttributes="Bold"/>
+                <Label Text="{Binding ReportNO ,StringFormat='Report No: {0}'}" VerticalOptions="Start" HorizontalOptions="Start" TextColor="Black" FontAttributes="Bold"/>
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal" Margin="10,0,0,0">
+
+                <Label Text="{Binding SpoolNO ,StringFormat='Spool No: {0}, '}" VerticalOptions="Start" HorizontalOptions="Start" TextColor="Black" FontAttributes="Bold"/>
+                <Label Text="{Binding JointNO ,StringFormat='Joint No: {0}'}" VerticalOptions="Start" HorizontalOptions="Start" TextColor="Black" FontAttributes="Bold"/>
+            </StackLayout>
+
+            <StackLayout Margin="10,10,10,0">
+                <dg:DataGrid ActiveRowColor="#8899AA"  
+                                 BorderColor="#CCCCCC" 
+                                 ColumnSpacing="1"
+                                 HeaderBackground="#FFFFFF"
+                                 HeaderBordersVisible="True" 
+                                 HeaderHeight="35" 
+                                 HeaderTextColor="#3a6b8b"
+                                 ItemsSource="{Binding SignatureList, Mode=TwoWay}"
+                                 Margin="0,10,0,0"                                  
+                                 SelectionEnabled="True"                                 
+                                 SelectedItem="{Binding SelectedSignatureItem}">
+                    <!--<dg:DataGrid.RowHeight>
+                            <OnPlatform Android="35" 
+                                        UWP="40"
+                                        x:DataType="x:Double">
+                            </OnPlatform>
+                        </dg:DataGrid.RowHeight>-->
+                    <x:Arguments>
+                        <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                    </x:Arguments>
+
+                    <dg:DataGrid.HeaderFontSize>
+                        <OnIdiom  x:TypeArguments="x:Double">
+                            <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                            <OnIdiom.Phone>8</OnIdiom.Phone>
+                        </OnIdiom>
+                    </dg:DataGrid.HeaderFontSize>
+                    <dg:DataGrid.FontSize>
+                        <OnIdiom  x:TypeArguments="x:Double">
+                            <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                            <OnIdiom.Phone>8</OnIdiom.Phone>
+                        </OnIdiom>
+                    </dg:DataGrid.FontSize>
+
+                    <dg:DataGrid.Columns>
+                        <dg:DataGridColumn Title="N/A" PropertyName="{Binding Signed}" Width="1*"  SortingEnabled="False">
+
+                            <dg:DataGridColumn.CellTemplate>
+
+                                <DataTemplate>
+                                    <Image Source="Grayradio.png" HorizontalOptions="Center" VerticalOptions="Start">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"  CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                        </Image.GestureRecognizers>
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image" Binding="{Binding Signed}" Value="True">
+                                                <Setter Property="Source" Value="Greenradio.png" />
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                </DataTemplate>
+                            </dg:DataGridColumn.CellTemplate>
+                        </dg:DataGridColumn>
+                        <dg:DataGridColumn HorizontalContentAlignment="CenterAndExpand" Width="2*" PropertyName="DisplaySignatureName" SortingEnabled="False" Title="Signature" VerticalContentAlignment="Center"/>
+                        <dg:DataGridColumn HorizontalContentAlignment="CenterAndExpand" Width="3*" PropertyName="SignedByFullName"  SortingEnabled="True" Title="Signed By" VerticalContentAlignment="Center"/>
+                        <!--<dg:DataGridColumn HorizontalContentAlignment="CenterAndExpand" Width="3*" PropertyName="SignedOn" SortingEnabled="True"  StringFormat="{}{0:dd-MMM-yyyy HH:mm}" Title="Signed On" VerticalContentAlignment="Center"/>-->
+                        <dg:DataGridColumn SortingEnabled="True" Title="Signed On" HorizontalContentAlignment="CenterAndExpand" VerticalContentAlignment="Center">
+                            <dg:DataGridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Label Text="{Binding SignedOn, StringFormat='{}{0:dd-MMM-yyyy HH:mm}'}" IsVisible="{Binding Signed}" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                                </DataTemplate>
+                            </dg:DataGridColumn.CellTemplate>
+                        </dg:DataGridColumn>
+                    </dg:DataGrid.Columns>
+                    <dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:PaletteCollection>
+                            <Color>#FFFFFF</Color>
+                            <Color>#FFFFFF</Color>
+                        </dg:PaletteCollection>
+                    </dg:DataGrid.RowsBackgroundColorPalette>
+
+                </dg:DataGrid>
+                <Button Text="Close"  HeightRequest="40" Command="{Binding BtnCommand}" VerticalOptions="End" BackgroundColor="Red" TextColor="White"/>
+            </StackLayout>
+        </StackLayout>
+        
+    </ContentPage.Content>
+</ContentPage>

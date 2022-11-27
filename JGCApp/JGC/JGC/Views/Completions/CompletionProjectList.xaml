@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             BackgroundColor="#304D61"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False" 
+             x:Class="JGC.Views.Completions.CompletionProjectList">
+    <ContentPage.Content>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Frame Scale="{Binding Devicescale}" BackgroundColor="#EBF2FA" CornerRadius="10" VerticalOptions="Center">
+                <StackLayout >
+                    <Image Source="VME_nterprise.png" HeightRequest="70" HorizontalOptions="Start"/>
+                    <Label HorizontalOptions="Center" FontSize="Medium"  TextColor="#304D61" VerticalOptions="Center" Text="Please select the project you are working on."/>
+                    <Frame BorderColor="Black" HasShadow="True" BackgroundColor="#EBF2FA" >
+                        <ListView x:Name="listview" ItemsSource="{Binding UserProjects}" Margin="0,1" SelectedItem="{Binding SelectedProject, Mode=TwoWay}" SelectionMode="Single">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell x:Name="viewList" Tapped="ViewCell_Tapped">
+                                        <ViewCell.View>
+                                            <Label LineBreakMode="WordWrap" Text="{Binding ProjectName}" FontSize="15" FontAttributes="Bold" >
+                                                <Label.Triggers>
+                                                    <DataTrigger  TargetType="Label" Binding="{Binding Source={x:Reference viewList}, Path=View.BackgroundColor}" Value="#304D61">
+                                                        <Setter Property="TextColor" Value="White"/>
+                                                    </DataTrigger>
+                                                </Label.Triggers>
+                                                <Label.Padding>
+                                                    <OnPlatform x:TypeArguments="Thickness">
+                                                        <On Platform="Android" Value="10, 10, 0, 0"/>
+                                                    </OnPlatform>
+                                                </Label.Padding>
+                                            </Label>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Frame>
+                    <Button Text="Proceed" FontSize="Medium"  Command="{Binding BtnCommand}" CommandParameter="withclick" TextColor="White" BackgroundColor="#304D61"/>
+                </StackLayout>
+            </Frame>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

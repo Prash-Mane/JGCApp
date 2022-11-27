@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:converters="clr-namespace:JGC.Common.Converters"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             x:Class="JGC.Views.Completions.CompletionTestPack" NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:ImageFileToImageSourceConverter x:Key="ImageFileToImageSourceConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackLayout HorizontalOptions="Start" Grid.ColumnSpan="2" >
+                <Frame CornerRadius="15" HeightRequest="40" Margin="-15,0,0,0" BackgroundColor="White">
+                    <Image  Source="m_completions_logo.png" />
+                </Frame>
+            </StackLayout>
+            <StackLayout Spacing="0"  Margin="0" Grid.Row="1" >
+                <customControls:CustomPicker
+                    ItemsSource="{Binding ItemSourceTestPacks}" 
+                    WidthRequest="200" 
+                    SelectedItem="{Binding SelectedTestPack}">
+                </customControls:CustomPicker>
+            </StackLayout>
+            <CollectionView Grid.Row="2" Grid.ColumnSpan="2" SelectedItem="{Binding SelectedImageItem}" SelectionMode="Single"   HeightRequest="200" HorizontalOptions="Center" ItemsSource="{Binding ImageStatus}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="4" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="10,0">
+                            <StackLayout  Grid.Row="0" Margin="10,0">
+                                <Image Source="{Binding ImagePath, Converter={StaticResource ImageFileToImageSourceConverter}}" Grid.Row="0"
+                                   WidthRequest="130"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Center"
+                                   Aspect="AspectFill"
+                                   HeightRequest="130">
+
+                                </Image>
+                                <Label Text="{Binding ImageName}"
+                                       VerticalOptions="Start"
+                                        />
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="{Binding .}" />
+                                </StackLayout.GestureRecognizers>
+                            </StackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

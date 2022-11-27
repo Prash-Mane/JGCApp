@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JGC.Views.Work_Pack.SuccessorPage"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}"
+             xmlns:PDF="clr-namespace:JGC.UserControls.CustomControls">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Successor"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+
+            </Label>
+            <Image Source="searchbar.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="IWPSelectionPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+            <Grid IsVisible="{Binding SuccessorGrid}" 
+                  RowSpacing="0"
+                  Margin="10,0">
+                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition>
+                        <RowDefinition.Height>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android, iOS, UWP" Value="1000*" />
+                        </OnPlatform>
+                    </RowDefinition.Height>
+                    </RowDefinition>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackLayout Orientation="Horizontal" Grid.Row="0" >
+                <customControls:CustomPicker
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding SuccessorList}"                            
+                            SelectedItem="{Binding SelectedSuccessor, Mode=TwoWay}">
+                </customControls:CustomPicker>
+
+                <Button BackgroundColor="Black"
+                            TextColor="White"
+                            Text="View in full screen"
+                            Command="{Binding BtnCommand}"
+                            CommandParameter="PdfFullScreen"/>
+                </StackLayout>
+
+                <StackLayout Grid.Row="1">
+                <PDF:CustomPDF  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Uri="{Binding PdfUrl}" />
+                </StackLayout>
+            </Grid>
+    </ContentPage.Content>
+</ContentPage>

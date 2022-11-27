@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="JGC.Views.E_Reporter.AttachmentPage"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:PDF="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:TEffect="clr-namespace:JGC.UserControls.Touch"
+             ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Attachment"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+
+            </Label>
+
+            <Image Source="HomeHeadericon.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="EReportSelectionPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Source="searchbar.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="JointDetailsPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <StackLayout Margin="10,10" >
+        <StackLayout x:Name="outerStacklayout" IsVisible="{Binding IsVisibleAttachmentGrid}">
+            <StackLayout>
+                <Label Text="Add Attachment" TextColor="Black" FontAttributes="Bold"/>
+                <customControls:CustomEntry HorizontalOptions="FillAndExpand" Text="{Binding AttachmentName}"/>
+                <StackLayout Orientation="Horizontal">
+                        <Button Text="Add File" FontAttributes="Bold" TextColor="White" BackgroundColor="Red" BorderColor="LightGray" BorderWidth="1" HorizontalOptions="FillAndExpand"  Command="{Binding OnClickCommand}" CommandParameter="AddFromFiles"/>
+                        <Button Text="Camera" FontAttributes="Bold" TextColor="White" BackgroundColor="Red" BorderColor="LightGray" BorderWidth="1" HorizontalOptions="FillAndExpand" Clicked="ClickedOn_Camera"/>
+                </StackLayout>
+                <StackLayout x:Name="PDFListlayout">
+                    <Frame Padding="5" Margin="0,2,0,0" BackgroundColor="Transparent"  BorderColor="LightGray" HasShadow="False">
+                        <StackLayout Orientation="Horizontal">
+                                <ListView x:Name="listView" 
+                                          SeparatorVisibility="Default"
+                                          SeparatorColor="Transparent"
+	                                      RowHeight="30"      
+                                          SelectedItem="{Binding SelectedAttachment, Mode=TwoWay}"   
+                                          HasUnevenRows="True"
+                                          ItemsSource="{Binding AttachmentsFileList}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell Height="30">
+                                                <Frame  Padding="2" Margin="0,2,0,0" BackgroundColor="Transparent"  BorderColor="LightGray" HasShadow="False">
+                                                    <StackLayout Margin="5,0,5,0"  VerticalOptions="Center">
+                                                        <Label Text="{Binding Name}" TextColor="Black" FontAttributes="Bold"/>
+                                                    </StackLayout>
+                                                </Frame>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                                <StackLayout>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="End" Margin="0,10,0,30">
+                                        <Image Source="RenameIcon.png" WidthRequest="30"/>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer  Command="{Binding OnClickCommand}" CommandParameter="RenamePDF"/>
+                                        </StackLayout.GestureRecognizers>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+                                        <Image Source="dlt2.png" WidthRequest="30"/>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer  Command="{Binding OnClickCommand}" CommandParameter="DeletePDF"/>
+                                        </StackLayout.GestureRecognizers>
+                                    </StackLayout>
+                                </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </StackLayout>
+            
+            <StackLayout Margin="0,0,0,0">
+                <PDF:CustomPDF x:Name="AttachedPDF" HorizontalOptions="FillAndExpand" Margin="0,0,0,0"  Uri="{Binding PdfUrl}" VerticalOptions="FillAndExpand" />
+            </StackLayout>
+        </StackLayout>
+            
+        <!-- Camera Grid -->
+            <Grid ColumnSpacing="10" 
+                  IsVisible="{Binding IsVisibleCameraGrid}" 
+                  RowSpacing="5" HorizontalOptions="Fill">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label  FontAttributes="Bold"
+                        HorizontalOptions="StartAndExpand"
+                        Text="List of photos" 
+                        TextColor="Black"
+                        VerticalTextAlignment="Center"/>
+                <Label FontAttributes="Bold"
+                        Grid.Column="1" 
+                        Grid.Row="0"  
+                        HorizontalOptions="StartAndExpand"
+                        Text="Select Camera" 
+                        TextColor="Black"
+                        VerticalTextAlignment="Center"/>
+
+                <customControls:CustomPicker
+                         x:Name="ListOfPhotoPicker"
+                         Grid.Column="0" 
+                         Grid.Row="1"
+                         SelectedIndexChanged="PhotoPickerSelection"
+                         HorizontalOptions="FillAndExpand">
+                </customControls:CustomPicker>
+                <customControls:CustomPicker
+                         x:Name="CameraPicker"
+                         Grid.Column="1" 
+                         Grid.Row="1"
+                         SelectedIndexChanged="CameraPickerSelection"
+                         HorizontalOptions="FillAndExpand">
+                </customControls:CustomPicker>
+                
+                <Grid Grid.ColumnSpan="3" Grid.Row="2">
+                    <skia:SKCanvasView Grid.Row="0" x:Name="CameracanvasView" PaintSurface="OnCameraCanvasViewPaintSurface"/>
+                    <Grid.Effects Grid.Row="0" >
+                        <TEffect:TouchEffect Capture="True" TouchAction="OnCameraTouchEffectAction" />
+                    </Grid.Effects>
+                </Grid>
+
+                <StackLayout Grid.ColumnSpan="3" Grid.Row="3" Orientation="Horizontal">
+                    <Button BackgroundColor="Red" 
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Back"  
+                            TextColor="White"
+                            Clicked="CameraBackBtn"/>
+                    <Button BackgroundColor="Red"  
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Clear" 
+                            Clicked="ClickedOn_ClearImage"
+                            TextColor="White"/>
+                    <Button BackgroundColor="Red"  
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Clicked="ClickedOn_SaveImage"
+                            Text="Save"  
+                            TextColor="White"/>
+                </StackLayout>
+
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

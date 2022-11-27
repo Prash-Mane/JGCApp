@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="JGC.Views.Completions.NewPunchPage"
+             xmlns:converter="clr-namespace:JGC.Common.Converters"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             BackgroundColor="#1AA3B3"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls" NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Resources>
+        <converter:BooleanToBackGroundColorConverter x:Key="BooleanToBackGroundColorConverter" />
+        <converter:BooleanToTextColorConverter x:Key="BooleanToTextColorConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <ScrollView Margin="20">
+            <Grid>
+                <StackLayout Grid.Row="0">
+                    <Frame BackgroundColor="#EBF2FA" Margin="20" CornerRadius="10" VerticalOptions="FillAndExpand">
+                        <StackLayout>
+
+                            <Label Text="New Punch List Item" FontSize="Medium" HorizontalOptions="Center" TextColor="#006633"/>
+                            
+                            <!--Step1-->
+                            <StackLayout x:Name="Step1" IsVisible="{Binding IsVisibleStep1}" >
+
+                                <Grid>
+                                    <!--left side-->
+                                    <StackLayout HorizontalOptions="FillAndExpand"  Margin="0,0,10,0">
+                                        <Label Text="Basic Information" TextColor="#006633" TextDecorations="Underline" FontAttributes="Bold"/>
+
+                                        <StackLayout Orientation="Horizontal"  Margin="0,10,0,10">
+                                            <Label VerticalOptions="Center" Text="System:" HorizontalOptions="Start" TextColor="#006633"/>
+                                            <Label VerticalOptions="Start" Text="*" HorizontalOptions="Start" TextColor="Red" Margin="0,-5,0,0"/>
+                                            <StackLayout HorizontalOptions="FillAndExpand">
+                                                <Label  VerticalOptions="Center" Text="{Binding LblSystem, TargetNullValue='Select a System'}" TextColor="Black"/>
+                                                <BoxView HeightRequest="1" BackgroundColor="#1AA3B3"/>
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer CommandParameter="SelectSystem"  Command="{Binding TappedGestureCommand}"/>
+                                                </StackLayout.GestureRecognizers>
+                                            </StackLayout>
+                                        </StackLayout>
+
+                                        <StackLayout Orientation="Horizontal"  Margin="0,10,0,10">
+                                            <Label VerticalOptions="Center" Text="PCWBS:" HorizontalOptions="Start" TextColor="#006633"/>
+                                            <Label VerticalOptions="Start" Text="*" HorizontalOptions="Start" TextColor="Red" Margin="0,-5,0,0"/>
+                                            <StackLayout VerticalOptions="Center" HorizontalOptions="FillAndExpand" >
+                                                <Label  VerticalOptions="Center" Text="{Binding LblPCWBS, TargetNullValue='Select a PCWBS'}" TextColor="Black"/>
+                                                <BoxView HeightRequest="1" BackgroundColor="#1AA3B3"/>
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer CommandParameter="SelectPCWBS" Command="{Binding TappedGestureCommand}" />
+                                                </StackLayout.GestureRecognizers>
+                                            </StackLayout>
+                                        </StackLayout>
+
+                                        <StackLayout Orientation="Horizontal"  Margin="0,10,0,0">
+                                            <Label VerticalOptions="Center" HorizontalOptions="Start" Text="Punch FWBS:" TextColor="#006633"/>
+                                            <Label VerticalOptions="Start" Text="*" HorizontalOptions="Start" TextColor="Red" Margin="0,-5,0,0"/>
+                                            <StackLayout HorizontalOptions="FillAndExpand">
+                                                <Label  VerticalOptions="Center" Text="{Binding LblFWBS, TargetNullValue='Select a FWBS'}" TextColor="Black"/>
+                                                <BoxView HeightRequest="1" BackgroundColor="#1AA3B3"/>
+                                                <StackLayout.GestureRecognizers>
+                                                    <TapGestureRecognizer CommandParameter="SelectFWBS"  Command="{Binding TappedGestureCommand}"/>
+                                                </StackLayout.GestureRecognizers>
+                                            </StackLayout>
+                                        </StackLayout>
+
+                                    </StackLayout>
+
+                                    <!--right side-->
+                                    <StackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="FillAndExpand" Margin="10,0,0,0">
+
+                                        <Label Text="Punch Information" TextColor="#006633" TextDecorations="Underline" FontAttributes="Bold"/>
+
+                                        <StackLayout HorizontalOptions="FillAndExpand" Margin="0,10,0,10">
+                                            <Label  VerticalOptions="Center" Text="{Binding LblComponentCategory, TargetNullValue='Select Description Level 1'}" TextColor="Black"/>
+                                                <BoxView HeightRequest="1" BackgroundColor="#1AA3B3"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectComponentCategory"  Command="{Binding TappedGestureCommand}"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+
+                                        <StackLayout HorizontalOptions="FillAndExpand"  Margin="0,10,0,10">
+                                            <Label  VerticalOptions="Center" Text="{Binding LblComponent, TargetNullValue='Select Description Level 2'}" TextColor="Black"/>
+                                                <BoxView HeightRequest="1" BackgroundColor="#1AA3B3"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectComponent"  Command="{Binding TappedGestureCommand}"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+
+                                    <StackLayout HorizontalOptions="FillAndExpand"  Margin="0,10,0,10">
+                                            <Label  VerticalOptions="Center" Text="{Binding LblAction, TargetNullValue='Select Description Level 3'}" TextColor="Black"/>
+                                                <BoxView HeightRequest="1" BackgroundColor="#1AA3B3"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectAction" Command="{Binding TappedGestureCommand}"/>
+                                            </StackLayout.GestureRecognizers>
+                                    </StackLayout>
+
+                                        <StackLayout HorizontalOptions="FillAndExpand" Margin="0,10,0,0">
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label  VerticalOptions="Center" Text="{Binding LblPunchCategory, TargetNullValue='Select a Punch Category'}" TextColor="Black"/>
+                                                <Label VerticalOptions="Start" Text="*" HorizontalOptions="Start" TextColor="Red" Margin="0,-5,0,0"/>
+                                            </StackLayout>
+                                            <BoxView HeightRequest="1" BackgroundColor="#1AA3B3"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectPunchCategory" Command="{Binding TappedGestureCommand}"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+                                       
+                                    </StackLayout>
+                                </Grid>
+
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="Punch Description" TextColor="#006633" TextDecorations="Underline" FontAttributes="Bold"/>
+                                    <Label VerticalOptions="Start" Text="*" HorizontalOptions="Start" TextColor="Red" Margin="0,-5,0,0"/>
+                                </StackLayout>
+                                <Editor BackgroundColor="LightGray" Text="{Binding PunchDescription}" TextColor="Black" HeightRequest="100"/>
+                                <Label Text="Remarks" TextColor="#006633" TextDecorations="Underline" FontAttributes="Bold"/>
+                                <Editor BackgroundColor="LightGray" Text="{Binding PunchComment}" TextColor="Black" HeightRequest="100"/>
+                            </StackLayout>
+
+                            <!--Step 2-->
+                            <StackLayout x:Name="Step2" IsVisible="{Binding IsVisibleStep2}" >
+                                <Grid>
+                                    <!--left side-->
+                                    <StackLayout HorizontalOptions="FillAndExpand" Margin="0,0,15,0">
+                                        <StackLayout Orientation="Horizontal">
+                                            <Label  VerticalOptions="Center" Text="Responsible Section" TextColor="Black"/>
+                                            <Label VerticalOptions="Start" Text="*" HorizontalOptions="Start" TextColor="Red" Margin="0,-5,0,0"/>
+                                        </StackLayout>
+                                        <StackLayout HorizontalOptions="FillAndExpand" Margin="0,0,0,10" >
+                                            <Label  VerticalOptions="Center" Text="{Binding LblResponsibleSection, TargetNullValue='Select a Responsible Section'}" TextColor="Black"/>
+                                            <BoxView HeightRequest="1" BackgroundColor="#1AA3B3"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectResponsibleSection"  Command="{Binding TappedGestureCommand}"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+
+                                        <!--<StackLayout HorizontalOptions="FillAndExpand" Margin="0,0,0,10">
+                                            <Label  VerticalOptions="Center" Text="{Binding LblResponsiblePosition, TargetNullValue='Select a Responsible Position'}" TextColor="Black"/>
+                                            <BoxView HeightRequest="1" BackgroundColor="#1AA3B3"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectResponsiblePosition"  Command="{Binding TappedGestureCommand}"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>-->
+
+                                        <Label Grid.Row="0" Grid.Column="0" Text="Tag/ITR Information" Margin="0,20,0,5" TextColor="#006633" TextDecorations="Underline" FontAttributes="Bold"/>
+
+                                        <StackLayout HorizontalOptions="FillAndExpand" Margin="0,0,0,10">
+                                            <Label  VerticalOptions="Center" Text="Tag No" TextColor="Black"/>
+                                            <Label x:Name="TagNo" VerticalOptions="Center" Text="{Binding LblTagNo, TargetNullValue='Select an Tag No'}" TextColor="Black"/>
+                                            <BoxView HeightRequest="1" BackgroundColor="#1AA3B3"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectTagNo" Command="{Binding TappedGestureCommand}"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+                                        <StackLayout HorizontalOptions="FillAndExpand" Margin="0,0,0,10">
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label  VerticalOptions="Center" Text="Location" TextColor="Black"/>
+                                                <Label VerticalOptions="Start" Text="*" HorizontalOptions="Start" TextColor="Red" Margin="0,-5,0,0"/>
+                                            </StackLayout>
+                                            <Entry PlaceholderColor="Black" HorizontalOptions="FillAndExpand" Margin="-5,0,-5,10"  Placeholder="Enter Location" Text="{Binding LblLocation}"
+                                               TextColor="Black" FontSize="{Binding Source={x:Reference TagNo},Path=FontSize}" FontFamily="{Binding Source={x:Reference TagNo},Path=FontFamily}" BackgroundColor="Transparent"/>
+                                        </StackLayout>
+                                        
+                                        <StackLayout HorizontalOptions="FillAndExpand" Margin="0,0,0,10">
+                                            <Label  VerticalOptions="Center" Text="ITR No" TextColor="Black"/>
+                                            <Label  VerticalOptions="Center" Text="{Binding LblITRNo, TargetNullValue='Select an ITR No'}" TextColor="Black"/>
+                                            <BoxView HeightRequest="1" BackgroundColor="#1AA3B3"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectITRNo" Command="{Binding TappedGestureCommand}"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+
+                                        <StackLayout HorizontalOptions="FillAndExpand" Margin="0,0,0,10">
+                                            <Label  VerticalOptions="Center" Text="Punch Type" TextColor="Black"/>
+                                            <Label  VerticalOptions="Center" Text="{Binding LblPunchType, TargetNullValue='Select Punch Type'}" TextColor="Black"/>
+                                            <BoxView HeightRequest="1" BackgroundColor="#1AA3B3"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectPunchType" Command="{Binding TappedGestureCommand}"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+
+                                        <StackLayout HorizontalOptions="FillAndExpand" Margin="0,0,0,10">
+                                            <Label  VerticalOptions="Center" Text="Issue Owner" TextColor="Black"/>
+                                            <Label  VerticalOptions="Center" Text="{Binding LblIssuerOwner, TargetNullValue='Select Issuer Owner'}" TextColor="Black"/>
+                                            <BoxView HeightRequest="1" BackgroundColor="#1AA3B3"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectIssueOwner" Command="{Binding TappedGestureCommand}"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+                                    </StackLayout>
+
+                                    <!--right side-->
+                                    <StackLayout Grid.Row="0" Grid.Column="1" HorizontalOptions="FillAndExpand" Margin="0,20">
+                                        <Frame Padding="0" CornerRadius="0" BorderColor="Black" >
+                                        <Image HeightRequest="300" Aspect="AspectFill" HorizontalOptions="FillAndExpand"
+                                               Source="{Binding CapturedImage}" VerticalOptions="Start"/>
+                                        </Frame>
+                                        <Button FontAttributes="Bold" Clicked="AddFileFromGallry" HorizontalOptions="FillAndExpand"
+                                                VerticalOptions="End" Text="Add Photo" TextColor="#006633" BorderColor="#006633" BackgroundColor="#EBF2FA" BorderWidth="2" CornerRadius="7"/>
+                                      </StackLayout>
+                                </Grid>
+                            </StackLayout>
+
+                            <!--Step 3-->
+                            <StackLayout IsVisible="{Binding IsVisibleStep3}" >
+                                <Grid Margin="50,50,50,0" RowSpacing="20">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <!--<RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>-->
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="7*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--<Label Text="Sign Off Comments:" TextColor="#006633" TextDecorations="Underline" FontAttributes="Bold"/>
+                                    <Editor Grid.RowSpan="6" Grid.Row="1" BackgroundColor="LightGray" Text="{Binding SignOffComments}"  Grid.Column="0" TextColor="Black"/>-->
+
+                                    <Label Grid.Column="0"  Grid.Row="0"  Text="Sign Off: Sub Contractor" TextColor="#006633" Margin="0,0,0,5" />
+                                    <Frame Style="{StaticResource TagFrameStyle}"  Grid.Column="1" Grid.Row="0" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="0,0,0,10">
+                                        <Label  VerticalOptions="Center" Text="{Binding LblSignartureSubContractor}" TextColor="Black"/>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="SubContractorTapped" Command="{Binding TappedGestureCommand}" />
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+
+                                    <Label Grid.Column="0" Grid.Row="1" Text="Sign Off: Contractor" TextColor="#006633" Margin="0,0,0,5"/>
+                                    <Frame Style="{StaticResource TagFrameStyle}"  Grid.Column="1" Grid.Row="1" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Margin="0,0,0,10">
+                                        <Label  VerticalOptions="Center" Text="{Binding LblSignartureContractor}" TextColor="Black"/>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="ContractorTapped" Command="{Binding TappedGestureCommand}" />
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+
+                                    <Label Grid.Column="0" Grid.Row="2" Text="Sign Off: Client/Owner" TextColor="#006633" Margin="0,0,0,5"/>
+                                    <Frame Style="{StaticResource TagFrameStyle}"  Grid.Column="1" Grid.Row="2" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
+                                        <Label  VerticalOptions="Center" Text="{Binding LblSignartureClient}" TextColor="Black"/>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer CommandParameter="ClientTapped" Command="{Binding TappedGestureCommand}" />
+                                        </Frame.GestureRecognizers>
+                                    </Frame>
+                                </Grid>
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="EndAndExpand">
+                                <Button BackgroundColor="#EBF2FA" Text="Previous" Command="{Binding ButtonClickedCommand}" CommandParameter="PrviousButton" BorderColor="#006633"
+						        TextColor="#006633" Margin="10"  HorizontalOptions="Start"  BorderWidth="2" CornerRadius="7"/>
+                                <Button BackgroundColor="#EBF2FA" Text="Cancel" Command="{Binding ButtonClickedCommand}" CommandParameter="CancelButton" BorderColor="#006633"
+						        TextColor="#006633" Margin="10"  HorizontalOptions="Start"  BorderWidth="2" CornerRadius="7"/>
+                                <Button BackgroundColor="#EBF2FA" Text="{Binding NextButtonText}" Command="{Binding ButtonClickedCommand}" CommandParameter="NextButton" BorderColor="#006633"
+						        TextColor="#006633" Margin="10"  HorizontalOptions="Start"  BorderWidth="2" CornerRadius="7"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

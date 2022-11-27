@@ -1,0 +1,302 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             x:Class="JGC.Views.E_Reporter.InspectJointPage"
+             ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}">
+
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Inspect Joints"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+            </Label>
+
+            <Image Source="HomeHeadericon.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="EReportSelectionPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Source="searchbar.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="JointDetailsPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <Grid Margin="10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <ScrollView>
+                <StackLayout>
+                    <StackLayout x:Name="TopLayout" Orientation="Horizontal">
+
+                        <StackLayout HorizontalOptions="FillAndExpand" Margin="0,10,0,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" TextColor="Black" Text="AFI Number"/>
+                                <Label Grid.Row="0" Grid.Column="1" TextColor="Black" Text="Revision No."/>
+                                <Label Grid.Row="0" Grid.Column="2" TextColor="Black" Text="Welded Date"/>
+
+                                <Entry Grid.Row="1" Grid.Column="0" Placeholder="Input" Text="{Binding AFI_Number}"/>
+                                <Entry Grid.Row="1" Grid.Column="1" Placeholder="Auto" Text="{Binding Revision_No}" IsEnabled="False"/>
+                                <!--<Entry Grid.Row="1" Grid.Column="2" Placeholder="Calender" Text="{Binding Welded_Date1, StringFormat='{0:dd-MMM-yyyy}'}"/>-->
+                                <DatePicker Grid.Row="1" Grid.Column="2" Date="{Binding Welded_Date}" Format="dd-MMM-yyyy" MinimumDate="01/01/2000"/>
+
+                                <Label Grid.Row="2" Grid.Column="0" TextColor="Black" Text="Spool Drawing Number"/>
+                                <Label Grid.Row="2" Grid.Column="1" TextColor="Black" Text="Joint No."/>
+                                <Label Grid.Row="2" Grid.Column="2" TextColor="Black" Text="Fit Up Date"/>
+
+                                <Entry Grid.Row="3" Grid.Column="0" Placeholder="Input" Text="{Binding Spool_Drawing_Number}" IsEnabled="False"/>
+                                <Entry Grid.Row="3" Grid.Column="1" Placeholder="Auto" Text="{Binding Joint_No}" IsEnabled="False"/>
+                                <!--<Entry Grid.Row="3" Grid.Column="2" Placeholder="Calender" Text="{Binding Welded_Date2, StringFormat='{0:dd-MMM-yyyy}'}"/>-->
+                                <DatePicker Grid.Row="3" Grid.Column="2" Date="{Binding FitUpDate}" Format="dd-MMM-yyyy" MinimumDate="01/01/2000"/>
+                            </Grid>
+                        </StackLayout>
+                        <StackLayout HorizontalOptions="FillAndExpand" Margin="0,10,0,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" TextColor="Black" />
+                                <Label Grid.Row="0" Grid.Column="1" TextColor="Black" />
+                                <Button Grid.Row="1" Grid.Column="0" Text="Back" FontAttributes="Bold" Command="{Binding OnBtnClickCommand}" CommandParameter="BackBtn"
+                                        TextColor="White" BackgroundColor="Red" BorderColor="LightGray" BorderWidth="1" HorizontalOptions="FillAndExpand"/>
+                                <Button Grid.Row="1" Grid.Column="1" Text="View Drawing" Command="{Binding OnBtnClickCommand}" CommandParameter="ViewDrawingBtn" 
+                                        FontAttributes="Bold" TextColor="White" BackgroundColor="Red" BorderColor="LightGray" BorderWidth="1" HorizontalOptions="FillAndExpand"/>
+
+                                <Label Grid.Row="2" Grid.Column="0" TextColor="Black" />
+                                <Label Grid.Row="2" Grid.Column="1" TextColor="Black" />
+                                <Button Grid.Row="3" Grid.Column="0" Text="Joint Details" FontAttributes="Bold" Command="{Binding OnBtnClickCommand}" CommandParameter="JointDetailsBtn"
+                                        TextColor="White" BackgroundColor="Red" BorderColor="LightGray" BorderWidth="1" HorizontalOptions="FillAndExpand"/>
+                                <Button Grid.Row="3" Grid.Column="1" Text="Inspection Result" Command="{Binding OnBtnClickCommand}" CommandParameter="InspectionResultBtn" 
+                                        FontAttributes="Bold" TextColor="White" BackgroundColor="Red" BorderColor="LightGray" BorderWidth="1" HorizontalOptions="FillAndExpand"/>
+                            </Grid>
+                        </StackLayout>
+
+                    </StackLayout>
+                    <StackLayout x:Name="BottomLayout" Orientation="Horizontal">
+
+                        <StackLayout  x:Name="RootGrid" HorizontalOptions="FillAndExpand" Margin="0,10,0,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" FontSize="Medium" FontAttributes="Bold"  HorizontalTextAlignment="Start" Text="Root" TextColor="Black"/>
+
+                                <Label Grid.Row="1" Grid.Column="0" Text="Welder 1" TextColor="Black"/>
+                                <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                                    <Image Source="{Binding RootProdWelder1Image}" WidthRequest="20"/>
+                                    <Label Text="Production Joint" TextColor="Black"/>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer  Command="{Binding OnBtnClickCommand}" CommandParameter="RootProdWelder1"/>
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                                <customControls:CustomPicker Grid.Row="2" Grid.Column="0" HorizontalOptions="FillAndExpand" ItemsSource="{Binding RootWelderList}" SelectedItem="{Binding SelectedRootWelder1, Mode=TwoWay}"/>
+
+                                <Label Grid.Row="3" Grid.Column="0" Text="Welder 2" TextColor="Black"/>
+                                <StackLayout Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                                    <Image Source="{Binding RootProdWelder2Image}" WidthRequest="20"/>
+                                    <Label Text="Production Joint" TextColor="Black"/>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer  Command="{Binding OnBtnClickCommand}" CommandParameter="RootProdWelder2"/>
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                                <customControls:CustomPicker Grid.Row="4" Grid.Column="0" HorizontalOptions="FillAndExpand" ItemsSource="{Binding RootWelderList}" SelectedItem="{Binding SelectedRootWelder2, Mode=TwoWay}"/>
+
+                                <Label Grid.Row="5" Grid.Column="0" Text="Welder 3" TextColor="Black"/>
+                                <StackLayout Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+                                    <Image Source="{Binding RootProdWelder3Image}" WidthRequest="20"/>
+                                    <Label Text="Production Joint" TextColor="Black"/>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer  Command="{Binding OnBtnClickCommand}" CommandParameter="RootProdWelder3"/>
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                                <customControls:CustomPicker Grid.Row="6" Grid.Column="0" HorizontalOptions="FillAndExpand" ItemsSource="{Binding RootWelderList}" SelectedItem="{Binding SelectedRootWelder3, Mode=TwoWay}"/>
+
+                                <Label Grid.Row="7" Grid.Column="0" Text="Welder 4" TextColor="Black"/>
+                                <StackLayout Grid.Row="7" Grid.Column="1" Orientation="Horizontal">
+                                    <Image Source="{Binding RootProdWelder4Image}" WidthRequest="20"/>
+                                    <Label Text="Production Joint" TextColor="Black"/>
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer  Command="{Binding OnBtnClickCommand}" CommandParameter="RootProdWelder4"/>
+                                    </StackLayout.GestureRecognizers>
+                                </StackLayout>
+                                <customControls:CustomPicker Grid.Row="8" Grid.Column="0" HorizontalOptions="FillAndExpand" ItemsSource="{Binding RootWelderList}" SelectedItem="{Binding SelectedRootWelder4, Mode=TwoWay}"/>
+
+                                <Label Grid.Row="9" Grid.Column="0" Text="Weld Process" TextColor="Black"/>
+                                <customControls:CustomPicker Grid.Row="10" Grid.Column="0" HorizontalOptions="FillAndExpand" ItemsSource="{Binding RootWeldProcess}" SelectedItem="{Binding SelectedRootWeldProcess, Mode=TwoWay}"/>
+
+                            </Grid>
+                        </StackLayout>
+                        <StackLayout  x:Name="FillCapGrid" HorizontalOptions="FillAndExpand" Margin="0,10,0,0">
+                            <Label FontSize="Medium" FontAttributes="Bold"  HorizontalTextAlignment="Start" Text="Fill Cap" TextColor="Black"/>
+
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout x:Name="LeftFillCapGrid" HorizontalOptions="FillAndExpand">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Label Grid.Row="0" Grid.Column="0" Text="Welder 1" TextColor="Black"/>
+                                        <StackLayout Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                                            <Image Source="{Binding FillCapProdWelder1Image}" WidthRequest="20"/>
+                                            <Label Text="Production Joint" TextColor="Black"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer  Command="{Binding OnBtnClickCommand}" CommandParameter="FillCapProdWelder1"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+                                        <customControls:CustomPicker Grid.Row="1" Grid.Column="0" HorizontalOptions="FillAndExpand" ItemsSource="{Binding FillCapWelderList}" SelectedItem="{Binding SelectedFillCapWelder1, Mode=TwoWay}"/>
+
+                                        <Label Grid.Row="2" Grid.Column="0" Text="Welder 2" TextColor="Black"/>
+                                        <StackLayout Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                                            <Image Source="{Binding FillCapProdWelder2Image}" WidthRequest="20"/>
+                                            <Label Text="Production Joint" TextColor="Black"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer  Command="{Binding OnBtnClickCommand}" CommandParameter="FillCapProdWelder2"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+                                        <customControls:CustomPicker Grid.Row="3" Grid.Column="0" HorizontalOptions="FillAndExpand" ItemsSource="{Binding FillCapWelderList}" SelectedItem="{Binding SelectedFillCapWelder2, Mode=TwoWay}"/>
+
+                                        <Label Grid.Row="4" Grid.Column="0" Text="Welder 3" TextColor="Black"/>
+                                        <StackLayout Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                                            <Image Source="{Binding FillCapProdWelder3Image}" WidthRequest="20"/>
+                                            <Label Text="Production Joint" TextColor="Black"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer  Command="{Binding OnBtnClickCommand}" CommandParameter="FillCapProdWelder3"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+                                        <customControls:CustomPicker Grid.Row="5" Grid.Column="0" HorizontalOptions="FillAndExpand" ItemsSource="{Binding FillCapWelderList}" SelectedItem="{Binding SelectedFillCapWelder3, Mode=TwoWay}"/>
+
+                                        <Label Grid.Row="6" Grid.Column="0" Text="Welder 4" TextColor="Black"/>
+                                        <StackLayout Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
+                                            <Image Source="{Binding FillCapProdWelder4Image}" WidthRequest="20"/>
+                                            <Label Text="Production Joint" TextColor="Black"/>
+                                            <StackLayout.GestureRecognizers>
+                                                <TapGestureRecognizer  Command="{Binding OnBtnClickCommand}" CommandParameter="FillCapProdWelder4"/>
+                                            </StackLayout.GestureRecognizers>
+                                        </StackLayout>
+                                        <customControls:CustomPicker Grid.Row="7" Grid.Column="0" HorizontalOptions="FillAndExpand" ItemsSource="{Binding FillCapWelderList}" SelectedItem="{Binding SelectedRootWelder4, Mode=TwoWay}"/>
+
+                                        <Label Grid.Row="8" Grid.Column="0" Text="Weld Process" TextColor="Black"/>
+                                        <customControls:CustomPicker Grid.Row="9" Grid.Column="0" HorizontalOptions="FillAndExpand" ItemsSource="{Binding FillCapWeldProcess}" SelectedItem="{Binding SelectedFillCapWeldProcess, Mode=TwoWay}"/>
+
+                                    </Grid>
+                                </StackLayout>
+                                <StackLayout x:Name="RightFillCapGrid" HorizontalOptions="FillAndExpand">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Text="WPS No" TextColor="Black"/>
+                                        <customControls:CustomPicker Grid.Row="1" HorizontalOptions="FillAndExpand" ItemsSource="{Binding WPSNoList}" SelectedItem="{Binding SelectedWPSNo, Mode=TwoWay}"/>
+
+                                        <Label Grid.Row="2" Text="Base Metal 1" TextColor="Black"/>
+                                        <!--<customControls:CustomPicker Grid.Row="3" HorizontalOptions="FillAndExpand" ItemsSource="{Binding BaseMetal1}" SelectedItem="{Binding SelectedBaseMetal1, Mode=TwoWay}"/>-->
+                                        <Frame Grid.Row="3" Style="{StaticResource TagFrameStyle}" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                                            <Label  VerticalOptions="Center" Text="{Binding SelectedBaseMetal1.Base_Material, TargetNullValue='- Select -'}" TextColor="Black"/>
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectBaseMetal1" Command="{Binding TappedGestureCommand}"/>
+                                            </Frame.GestureRecognizers>
+                                        </Frame>
+
+                                        <Label Grid.Row="4" Text="Base Metal 2" TextColor="Black"/>
+                                        <!--<customControls:CustomPicker Grid.Row="5" Grid.Column="0" HorizontalOptions="FillAndExpand" ItemsSource="{Binding BaseMetal2}" SelectedItem="{Binding SelectedBaseMetal2, Mode=TwoWay}"/>-->
+                                        <Frame Grid.Row="5" Style="{StaticResource TagFrameStyle}" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                                            <Label  VerticalOptions="Center" Text="{Binding SelectedBaseMetal2.Base_Material, TargetNullValue='- Select -'}" TextColor="Black"/>
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectBaseMetal2" Command="{Binding TappedGestureCommand}"/>
+                                            </Frame.GestureRecognizers>
+                                        </Frame>
+                                        <Label Grid.Row="6" Text="Heat No 1" TextColor="Black"/>
+                                        <!--<customControls:CustomPicker Grid.Row="7" HorizontalOptions="FillAndExpand" ItemsSource="{Binding HeatNo1}" SelectedItem="{Binding SelectedHeatNo1, Mode=TwoWay}"/>-->
+                                        <Frame Grid.Row="7" Style="{StaticResource TagFrameStyle}" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                                            <Label  VerticalOptions="Center" Text="{Binding SelectedHeatNo1.Heat_No, TargetNullValue='- Select -'}" TextColor="Black"/>
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectHeatNo1" Command="{Binding TappedGestureCommand}"/>
+                                            </Frame.GestureRecognizers>
+                                        </Frame>
+
+                                        <Label Grid.Row="8" Text="Heat No 2" TextColor="Black"/>
+                                        <!--<customControls:CustomPicker Grid.Row="9" HorizontalOptions="FillAndExpand" ItemsSource="{Binding HeatNo2}" SelectedItem="{Binding SelectedHeatNo2, Mode=TwoWay}"/>-->
+                                        <Frame Grid.Row="9" Style="{StaticResource TagFrameStyle}" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                                            <Label  VerticalOptions="Center" Text="{Binding SelectedHeatNo2.Heat_No, TargetNullValue='- Select -'}" TextColor="Black"/>
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer CommandParameter="SelectHeatNo2" Command="{Binding TappedGestureCommand}"/>
+                                            </Frame.GestureRecognizers>
+                                        </Frame>
+
+                                    </Grid>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <StackLayout Orientation="Horizontal" Grid.Row="1">
+                <Button Text="Save" FontAttributes="Bold" Command="{Binding OnBtnClickCommand}" CommandParameter="SaveBtn"
+                        TextColor="White" BackgroundColor="Red" BorderColor="LightGray" BorderWidth="1" HorizontalOptions="FillAndExpand"/>
+                <Button Text="Save &amp; Next" Command="{Binding OnBtnClickCommand}" CommandParameter="SaveNextBtn" 
+                        FontAttributes="Bold" TextColor="White" BackgroundColor="Red" BorderColor="LightGray" BorderWidth="1" HorizontalOptions="FillAndExpand"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="JGC.Views.Completions.CompletionSetting"
+             ControlTemplate="{StaticResource HeaderFooterPageTemplate}"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Content>
+        <StackLayout  Margin="10,0">
+            <ScrollView>
+                <StackLayout>
+                    <StackLayout>
+                            <Label
+                                   FontAttributes="Bold"
+                                   FontSize="Medium"
+                                   HorizontalOptions="FillAndExpand"
+                                   Text="Clear Saved Data"                           
+                                   TextColor="#1AA3B3"/>
+                            <Label 
+                                   FontAttributes="Bold" 
+                                   FontSize="10" 
+                                   Grid.Column="0"
+                                   HorizontalOptions="FillAndExpand"
+                                   Text="Clearing saved data will remove all downnloaded and update data for this project on this device" 
+                                   TextColor="#1AA3B3"/>
+                            <Button BackgroundColor="#1AA3B3"
+                                BorderColor="LightGray"  
+                                BorderWidth="1"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="ClearSaveData"
+                                FontSize="12"
+                                FontAttributes="Bold" 
+                                Text="Clear Save Data"    
+                                TextColor="White"
+                                VerticalOptions="FillAndExpand" />                        
+                    </StackLayout>               
+                    <StackLayout IsVisible="{Binding IsVisibleFactoryReset}">
+                        <Label  FontAttributes="Bold" 
+                                FontSize="Medium"
+                                Text="Factory Reset"                                    
+                                TextColor="#1AA3B3" />
+                        <Label  FontAttributes="Bold" 
+                                FontSize="10"    
+                                Text="This feature is MODS only,used to do a factory reset on the software" 
+                                TextColor="#1AA3B3"/>
+                        <Button BackgroundColor="#1AA3B3"
+                                BorderColor="LightGray"  
+                                BorderWidth="1"
+                                Command="{Binding BtnCommand}" 
+                                CommandParameter="FactoryReset"
+                                FontSize="12" 
+                                FontAttributes="Bold"
+                                Text="Factory Reset" 
+                                TextColor="white"                               
+                              VerticalOptions="FillAndExpand"/>
+                    </StackLayout>
+                    <Label Text="Privacy Policy" TextColor="#1AA3B3" TextDecorations="Underline"  FontSize="Medium" Margin="5,0">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BtnCommand}" CommandParameter="PrivacyPolicy" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

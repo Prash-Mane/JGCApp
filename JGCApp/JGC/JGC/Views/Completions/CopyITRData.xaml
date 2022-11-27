@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="JGC.Views.Completions.CopyITRData"
+              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+			 prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+			 BackgroundColor="#1AA3B3" NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Content>
+        <Grid Margin="10">
+            <StackLayout>
+                <Frame BackgroundColor="#EBF2FA" Margin="20" CornerRadius="10" VerticalOptions="FillAndExpand">
+                    <StackLayout>
+
+                        <Label TextColor="DarkSlateGray" HorizontalOptions="Center" Text="Copy ITR Data to other ITR's" FontAttributes="Bold" FontSize="Medium"/>
+
+                        <customControls:CustomPicker HorizontalOptions="FillAndExpand" ItemsSource="{Binding SystemList}" ItemDisplayBinding="{Binding name}" SelectedItem="{Binding SelectedSystem}"/>
+
+                        <StackLayout Orientation="Horizontal">
+                            <!--<Label TextColor="DarkSlateGray" HorizontalOptions="Start"  Text="Tag List" FontSize="Medium"/>-->
+                            <Frame BorderColor="Black" HasShadow="True" BackgroundColor="#EBF2FA" >
+                                <ListView x:Name="TagList" SeparatorColor="White" ItemsSource="{Binding TagList}" SelectedItem="{Binding SelectedTag}" HeightRequest="250" BackgroundColor="White" Margin="20,0,0,0">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell x:Name="TagViewList" Tapped="TagViewCell_Tapped">
+                                                <ViewCell.View>
+                                                    <Label LineBreakMode="WordWrap">
+                                                        <Label.FormattedText>
+                                                            <FormattedString>
+                                                                <Span Text="{Binding name}" FontSize="15" FontAttributes="Bold"/>
+                                                                <Span Text="{Binding description,StringFormat=',{0}'}" FontSize="15" FontAttributes="Bold"/>
+                                                            </FormattedString>
+                                                        </Label.FormattedText>
+                                                        <Label.Triggers>
+                                                            <DataTrigger  TargetType="Label" Binding="{Binding Source={x:Reference TagViewList}, Path=View.BackgroundColor}" Value="#304D61">
+                                                                <Setter Property="TextColor" Value="White"/>
+                                                            </DataTrigger>
+                                                        </Label.Triggers>
+                                                        <Label.Padding>
+                                                            <OnPlatform x:TypeArguments="Thickness">
+                                                                <On Platform="Android" Value="10, 10, 0, 0"/>
+                                                            </OnPlatform>
+                                                        </Label.Padding>
+                                                    </Label>
+                                                </ViewCell.View>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Frame>
+                            <Button x:Name="GetITRListBtn" BackgroundColor="#006633" Text="Get ITR(s)" Command="{Binding ClickCommand}" CommandParameter="GetITRList" IsVisible="{Binding IsVisibleGetITRbtn}"
+                                    VerticalOptions="End" BorderColor="#006633" TextColor="White" BorderWidth="2" CornerRadius="7"  HorizontalOptions="End" />
+                        </StackLayout>
+
+                        <StackLayout Orientation="Horizontal">
+                            <!--<Label TextColor="DarkSlateGray" HorizontalOptions="Start"  Text="ITR List" FontSize="Medium"/>-->
+                            <Frame BorderColor="Black" HasShadow="True" BackgroundColor="#EBF2FA" >
+                                <ListView x:Name="ITRList" SeparatorColor="White" ItemsSource="{Binding ITRList}" SelectedItem="{Binding SelectedITR}" HeightRequest="250" BackgroundColor="White" Margin="20,0,0,0">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell x:Name="ITRViewList" Tapped="ITRViewCell_Tapped">
+                                                <ViewCell.View>
+                                                    <Label LineBreakMode="WordWrap" Text="{Binding .}" FontSize="15" FontAttributes="Bold" >
+                                                        <Label.Triggers>
+                                                            <DataTrigger  TargetType="Label" Binding="{Binding Source={x:Reference ITRViewList}, Path=View.BackgroundColor}" Value="#304D61">
+                                                                <Setter Property="TextColor" Value="White"/>
+                                                            </DataTrigger>
+                                                        </Label.Triggers>
+                                                        <Label.Padding>
+                                                            <OnPlatform x:TypeArguments="Thickness">
+                                                                <On Platform="Android" Value="10, 10, 0, 0"/>
+                                                            </OnPlatform>
+                                                        </Label.Padding>
+                                                    </Label>
+                                                </ViewCell.View>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Frame>
+                            <Button x:Name="CopyITRBtn" BackgroundColor="#006633" Text="Copy ITR(s)" Command="{Binding ClickCommand}" CommandParameter="CopyITRData" IsVisible="{Binding IsVisibleCopyITRbtn}"
+                                    VerticalOptions="End" BorderColor="#006633" TextColor="White" BorderWidth="2" CornerRadius="7"  HorizontalOptions="End" />
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

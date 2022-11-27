@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        x:Class="JGC.Views.MasterPage.MainMasterDetailPage"
+        xmlns:pages="clr-namespace:JGC.Views.MasterPage"
+        xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+        prism:ViewModelLocator.AutowireViewModel="True"
+        IsGestureEnabled="{Binding IsGestureEnabled}"
+	    IsPresented="{Binding IsPresentedMenu}"
+        MasterBehavior="Popover">
+    <MasterDetailPage.Master>
+        <ContentPage Title="JGC Connect" prism:ViewModelLocator.AutowireViewModel="True">
+            <Grid
+                Margin="0,20,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid  Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image
+                        HeightRequest="30"
+                        WidthRequest="30"
+						Margin="5,0,0,0"
+						Aspect="AspectFit"
+						HorizontalOptions="Start"
+						Source="{Binding ArrowIcon}"
+						VerticalOptions="Center">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding TapBackCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                    <Image Grid.Row="0"
+                           Grid.Column="1"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+					    Source="{Binding SomeImage}"
+                        Margin="0,0,0,0">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding TapIconCommand}" />
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                </Grid>
+
+                <ListView x:Name="listView"
+					        Grid.Row="1"
+					        BackgroundColor="Transparent"
+					        HasUnevenRows="True"
+					        ItemsSource="{Binding MenuList}"
+					        SelectedItem="{Binding SelectedMenuItem}"					    
+                            VerticalOptions="FillAndExpand">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout
+                                    BackgroundColor="{Binding SubMenuBGColor}"
+									Margin="0"
+									Padding="0"
+									HeightRequest="50"
+									MinimumHeightRequest="50"
+									Spacing="0">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.MenuSelectedItemCommand, Source={x:Reference listView}}" CommandParameter="{Binding .}" />
+                                    </StackLayout.GestureRecognizers>
+                                    <StackLayout 
+										Margin="0,0,0,2"
+										Padding="0"
+										Spacing="0"
+										VerticalOptions="CenterAndExpand">
+                                        <Grid >
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="32"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0"
+											FontSize="Medium"
+											HorizontalOptions="CenterAndExpand"
+											LineBreakMode="TailTruncation"
+											Style="{StaticResource GeneralLabelStyle}"
+											Text="{Binding Title}"
+											TextColor="{Binding ActiveTextColor, Mode=TwoWay}"
+											VerticalOptions="EndAndExpand"
+											VerticalTextAlignment="End" />
+                                            <Image Source="{Binding IconSource}" Grid.Column="1" Margin="0,0,10,0" 
+                                                   HorizontalOptions="EndAndExpand" Rotation ="{Binding IconRotation}"
+                                                   HeightRequest="20"  WidthRequest="20"/>
+                                        </Grid>
+                                    </StackLayout>
+                                    <StackLayout
+										Margin="0,-2,0,0"
+										Padding="0"
+										HeightRequest="{Binding ContentHeight}"
+										IsEnabled="{Binding IsContentVisible, Mode=TwoWay}"
+										IsVisible="{Binding IsContentVisible, Mode=TwoWay}"
+										Spacing="0"
+										VerticalOptions="StartAndExpand">
+                                        <Label
+											FontSize="Micro"
+											HorizontalOptions="CenterAndExpand"
+											IsVisible="{Binding IsCragVisible, Mode=TwoWay}"
+											Style="{StaticResource GeneralLabelStyle}"
+											Text="{Binding Contents}"
+											TextColor="{Binding ActiveTextColor, Mode=TwoWay}"
+											VerticalTextAlignment="Center" />
+                                    </StackLayout>
+                                    <BoxView BackgroundColor="#3F3F3F" HeightRequest="1" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </ContentPage>
+    </MasterDetailPage.Master>
+</MasterDetailPage>
+  

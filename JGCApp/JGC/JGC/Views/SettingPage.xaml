@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JGC.Views.SettingPage"
+             xmlns:UC="clr-namespace:JGC.UserControls" 
+             ControlTemplate="{StaticResource HeaderFooterPageTemplate}"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Content>
+        <StackLayout  Margin="10,0">
+            <ScrollView>
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout>
+                            <Label BackgroundColor="{Binding BackgroundColorQc}"
+                                   FontAttributes="Bold"
+                                   FontSize="Medium"
+                                   HorizontalOptions="FillAndExpand"
+                                   Text="Clear Saved Data"                           
+                                   TextColor="#3a6b8b"/>
+                            <Label BackgroundColor="{Binding BackgroundColorQc}"
+                                   FontAttributes="Bold" 
+                                   FontSize="10" 
+                                   Grid.Column="0"
+                                   HorizontalOptions="FillAndExpand"
+                                   Text="Clearing saved data will remove all downnloaded and update data for this project on this device" 
+                                   TextColor="#3a6b8b"/>
+                        </StackLayout>
+                        <Button BackgroundColor="{Binding Button_BGColor}"
+                                BorderColor="LightGray"  
+                                BorderWidth="1"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="ClearSaveData"
+                                FontSize="10"
+                                FontAttributes="Bold"
+                                HorizontalOptions="EndAndExpand" 
+                                Text="Clear Save Data"    
+                                TextColor="White"
+                                VerticalOptions="FillAndExpand" />
+                    </StackLayout>                   
+                    <StackLayout>
+                        <Label BackgroundColor="{Binding BackgroundColorQc}"
+                               FontAttributes="Bold"
+                               FontSize="Medium"
+                               HorizontalOptions="FillAndExpand" 
+                               Text="Camera" 
+                               TextColor="#3a6b8b"/>
+                        <Label BackgroundColor="{Binding BackgroundColorQc}"
+                               FontAttributes="Bold" 
+                               FontSize="12" 
+                               HorizontalOptions="FillAndExpand"
+                               Text="Default Camera"  
+                               TextColor="#3a6b8b" />
+                        <customControls:CustomPicker HorizontalOptions="FillAndExpand"
+                                                     ItemsSource="{Binding CameraNames}"
+                                                     SelectedItem="{Binding SelectedCamera, Mode=TwoWay}">
+                        </customControls:CustomPicker>
+
+                        <StackLayout Orientation="Horizontal" >
+                            <Label FontAttributes="Bold" 
+                                   FontSize="12" 
+                                   HorizontalOptions="FillAndExpand"
+                                   Text="Photo Width" 
+                                   TextColor="#3a6b8b"/>
+                            <Label FontAttributes="Bold"
+                                   FontSize="12"                            
+                                   HorizontalOptions="FillAndExpand" 
+                                   Text="Photo Height" 
+                                   TextColor="#3a6b8b"/>
+                        </StackLayout>
+
+                        <StackLayout Orientation="Horizontal">
+                            <customControls:CustomEntry Text="{Binding Height}"  HorizontalOptions="FillAndExpand"/>
+                            <customControls:CustomEntry Text="{Binding Width}" HorizontalOptions="FillAndExpand"/>
+                        </StackLayout>
+                        <Button Command="{Binding BtnCommand}"
+                            CommandParameter="SaveCameraSetting"
+                            BackgroundColor="{Binding Button_BGColor}"
+                            BorderColor="LightGray"  
+                            BorderWidth="1"
+                            FontSize="10"
+                            FontAttributes="Bold"
+                            Text="Save Camera Setting"                                               
+                            TextColor="White"     
+                            HeightRequest="{Binding Source={x:Reference SaveUnitID},Path=Height}"
+                            VerticalOptions="FillAndExpand"/>
+
+                        <Label FontAttributes="Bold"
+                           FontSize="12"
+                           HorizontalOptions="FillAndExpand" 
+                           Text="* The Best Photo size setting for A4 is 640 x 480."
+                           TextColor="#3a6b8b"/>
+                    </StackLayout>                    
+                    <StackLayout>
+                        <Label BackgroundColor="{Binding BackgroundColorQc}"
+                               FontAttributes="Bold"
+                               FontSize="Medium"
+                               HorizontalOptions="FillAndExpand"
+                               Text="Unit ID"
+                               TextColor="#3a6b8b"/>
+                        <Label BackgroundColor="{Binding BackgroundColorQc}"
+                               FontAttributes="Bold" 
+                               FontSize="10"
+                               HorizontalOptions="FillAndExpand"
+                               Text="Do not include following character(?/\`'#) "                                             
+                               TextColor="#3a6b8b"/>
+                        <StackLayout Orientation="Horizontal" >
+                            <customControls:CustomEntry Text="{Binding UnitID, Mode=TwoWay}" HorizontalOptions="FillAndExpand"/>
+                            <Button BackgroundColor="{Binding Button_BGColor}"
+                                BorderColor="LightGray"  
+                                BorderWidth="1"
+                                Command="{Binding BtnCommand}"  
+                                CommandParameter="SaveUnitID" 
+                                FontSize="10"
+                                FontAttributes="Bold"
+                                Text="Save Unit ID"                                                                
+                                TextColor="White"
+                                x:Name="SaveUnitID"
+                                VerticalOptions="FillAndExpand"/>
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout IsVisible="{Binding IsVisibleFactoryReset}">
+                        <Label BackgroundColor="{Binding BackgroundColorQc}"
+                                FontAttributes="Bold" 
+                                FontSize="Medium"
+                                Text="Factory Reset"                                    
+                                TextColor="#3a6b8b" />
+                        <Label BackgroundColor="{Binding BackgroundColorQc}"   
+                                FontAttributes="Bold" 
+                                FontSize="10"    
+                                Text="This feature is MODS only,used to do a factory reset on the software" 
+                                TextColor="#3a6b8b"/>
+                        <Button BackgroundColor="{Binding Button_BGColor}"
+                                BorderColor="LightGray"  
+                                BorderWidth="1"
+                                Command="{Binding BtnCommand}" 
+                                CommandParameter="FactoryReset"
+                                FontSize="10" 
+                                FontAttributes="Bold"
+                                Text="Factory Reset" 
+                                TextColor="White"
+                                HeightRequest="{Binding Source={x:Reference SaveUnitID},Path=Height}"                                
+                              VerticalOptions="FillAndExpand"/>
+                    </StackLayout>
+
+                    <Label Text="Privacy Policy" TextColor="#3a6b8b" TextDecorations="Underline"  FontSize="Medium" Margin="5,0">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BtnCommand}" CommandParameter="PrivacyPolicy" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

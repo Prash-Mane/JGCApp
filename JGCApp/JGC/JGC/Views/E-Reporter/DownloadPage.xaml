@@ -1,0 +1,616 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:UC="clr-namespace:JGC.UserControls"
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+             xmlns:conv="clr-namespace:JGC.Common.Converters"
+             ControlTemplate="{StaticResource HeaderFooterPageTemplate}"
+             x:Class="JGC.Views.DownloadPage"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Resources>
+        <conv:BoolInvertConverter x:Key="BoolInvertConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Margin="10,0">           
+            
+            
+             <!--EReporter -->
+
+            <Grid IsVisible="{Binding EReporterGrid, Mode=TwoWay}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <StackLayout Orientation="Horizontal" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+                    <customControls:CustomEntry  Placeholder="Search..." Text="{Binding SearchText, Mode=TwoWay}" HorizontalOptions="FillAndExpand"/>
+                    <Button Text="Search" Command="{Binding SearchBtnCommand}" BackgroundColor="#FB1610" HorizontalOptions="End" TextColor="White"/>
+                </StackLayout>
+
+
+                <dg:DataGrid ItemsSource="{Binding EReports, Mode=TwoWay}" ItemSelected="DataGrid_ItemSelected" Grid.Row="1"
+                             SelectedItem="{Binding SelectedReport, Mode=TwoWay}" SelectionEnabled="True" RowHeight="40"
+                             HeaderHeight="45" BorderColor="#CCCCCC" HeaderBackground="#FFFFFF" ActiveRowColor="#8899AA"  
+                             HeaderTextColor="#3a6b8b" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                        <x:Arguments>
+                            <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                        </x:Arguments>
+                        <dg:DataGrid.HeaderFontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>8</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.HeaderFontSize>
+                        <dg:DataGrid.FontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>8</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.FontSize>
+                        <dg:DataGrid.Columns>
+
+                            <dg:DataGridColumn Title="Report Type" PropertyName="ReportType" HorizontalContentAlignment="Center" />
+                            <dg:DataGridColumn Title="AFI NO" PropertyName="AFINo" HorizontalContentAlignment="Center" />
+                            <dg:DataGridColumn Title="Report No" PropertyName="ReportNo" HorizontalContentAlignment="Center"  />
+                            <dg:DataGridColumn Title="Report Date" PropertyName="ReportDate" StringFormat="{}{0:dd-MMM-yyyy}" HorizontalContentAlignment="Center"  />
+                            <dg:DataGridColumn Title="Priority" PropertyName="Priority"  SortingEnabled="False">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="priority.png" Margin="10,10,10,10" IsVisible="{Binding}" HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit" />
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+
+                        </dg:DataGrid.Columns>
+                        <dg:DataGrid.RowsBackgroundColorPalette>
+                            <dg:PaletteCollection>
+                                <Color>#FFFFFF</Color>
+                                <Color>#FFFFFF</Color>
+                            </dg:PaletteCollection>
+                        </dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:DataGrid.Resources>
+                            <ResourceDictionary>
+                                <conv:StreakToColorConverter x:Key="StreakToColorConverter"/>
+                            </ResourceDictionary>
+                        </dg:DataGrid.Resources>
+                 </dg:DataGrid>
+                <BoxView Margin="0,-7,0,0" Grid.Row="1" VerticalOptions="End" HeightRequest="1" BackgroundColor="#CCCCCC"/>
+                <!--<Label Grid.Row="1" IsVisible="{Binding NoDataIsVisible}" FontSize="Medium" FontAttributes="Bold" TextColor="Black" Text="No found E-Report data for download"/>-->
+
+                <StackLayout IsVisible="{Binding NoDataIsVisible, Converter={StaticResource BoolInvertConverter}}" Orientation="Horizontal" HeightRequest="50" VerticalOptions="End" HorizontalOptions="FillAndExpand" Grid.Row="2">
+                    <Button x:Name="BtnAddall" Text="Add All" FontAttributes="Bold"   TextColor="White" BackgroundColor="#FB1610" 
+                                        Command="{Binding AllDownloadCommand}" HorizontalOptions="FillAndExpand"/>
+                    <Button x:Name="BtnAddtoList" Command="{Binding AddToListCommand}" CommandParameter="AddtoList" Grid.Column="1"
+                                    Text="Add to download list" FontAttributes="Bold"  TextColor="White" BackgroundColor="#FB1610" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+            </Grid>
+
+
+            <!--E-Test Package -->
+                <Grid RowSpacing="0" IsVisible="{Binding ETestPackageGrid}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="3.5*"/>
+                        <RowDefinition Height="6*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                <Frame BackgroundColor="Transparent" Padding="5" Grid.ColumnSpan="3" BorderColor="#A0A0A0" HasShadow="True">
+                    <ScrollView >
+                        <Grid BackgroundColor="#DCDCDC">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.ColumnSpan="3">
+                                <Label Text="PCWBS" />
+                                <Label Grid.Column="1" Grid.Row="0" Text="Test Package" />
+                            </Grid>
+                            <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1">
+                                <Entry Text="{Binding PCWBS}" />
+                                <Entry Grid.Column="1" Grid.Row="0" Text="{Binding TestPackage}" />
+                            </Grid>
+                            <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
+                                <Label Text="Action By" />
+                                <Label Grid.Column="1" Grid.Row="0" Text="Pending Action"/>
+                            </Grid>
+                            <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3">
+                                <customControls:CustomPicker ItemsSource="{Binding ActionByList}" SelectedItem="{Binding SelectedActionBy, Mode=TwoWay}"/>
+                                <customControls:CustomPicker Grid.Column="1" Grid.Row="0" ItemsSource="{Binding PendingActionList}" 
+                                                         SelectedItem="{Binding SelectedPendingAction, Mode=TwoWay}"/>
+                            </Grid>
+
+                            <Label Text="Priority" 
+                                Grid.Column="0"
+                                Grid.Row="4"/>
+                            <Label Text="Sub Contractor"
+                               Grid.Column="1"
+                               Grid.Row="4"/>
+                            <Label Text="Test Method"
+                               Grid.Column="2"
+                               Grid.Row="4"/>
+
+                            <customControls:CustomPicker 
+                               Grid.Column="0"
+                               Grid.Row="5"
+                               ItemsSource="{Binding PriorityList}" 
+                               SelectedItem="{Binding SelectedPriority, Mode=TwoWay}"/>
+                            <customControls:CustomPicker 
+                                Grid.Column="1"
+                                Grid.Row="5"
+                                ItemsSource="{Binding SubContractorList}" 
+                                SelectedItem="{Binding SelectedSubContractor, Mode=TwoWay}"/>
+                            <customControls:CustomPicker 
+                               Grid.Column="2"
+                               Grid.Row="5"
+                               ItemsSource="{Binding TestMethodList}" 
+                               SelectedItem="{Binding SelectedTestMethod, Mode=TwoWay}"/>
+
+                            <Grid Grid.Row="6" Grid.ColumnSpan="3">
+                                <Button BackgroundColor="#C4BB46"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="ShowAll"
+                                Grid.Column="0"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                Text="Show All"/>
+                                <Button Grid.Row="0"
+                                Command="{Binding BtnCommand}"
+                                CommandParameter="Search"
+                                Text="Search"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                BackgroundColor="#C4BB46"
+                                Grid.Column="1"/>
+                            </Grid>
+                        </Grid>
+                    </ScrollView>
+                </Frame>
+
+                <dg:DataGrid ItemsSource="{Binding ETestPackages, Mode=TwoWay}" ItemSelected="DataGrid_ItemSelected"  SelectedItem="{Binding SelectedETP, Mode=TwoWay}" SelectionEnabled="True"
+						     RowHeight="40" HeaderHeight="45" BorderColor="#CCCCCC" HeaderBackground="#FFFFFF"
+						     ActiveRowColor="#8899AA"  HeaderTextColor="#3a6b8b" Grid.ColumnSpan="3"  Grid.Row="1" Margin="0,10,0,0"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                        <x:Arguments>
+                            <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                        </x:Arguments>
+                    <dg:DataGrid.HeaderFontSize>
+                        <OnIdiom  x:TypeArguments="x:Double">
+                            <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                            <OnIdiom.Phone>8</OnIdiom.Phone>
+                        </OnIdiom>
+                    </dg:DataGrid.HeaderFontSize>
+                    <dg:DataGrid.FontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>8</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.FontSize>
+                        <dg:DataGrid.Columns>
+                        <dg:DataGridColumn 
+                                Title="PCWBS"
+                                PropertyName="PCWBS"
+                                HorizontalContentAlignment="Center" 
+                                VerticalContentAlignment="Center" >
+                            <dg:DataGridColumn.Width>
+                                <OnIdiom x:TypeArguments="GridLength" Phone="14*" Tablet="18*" Desktop="*"/>
+                            </dg:DataGridColumn.Width>
+                        </dg:DataGridColumn>
+                        <dg:DataGridColumn 
+                                Title="Test Package"
+                                PropertyName="TestPackage" 
+                                HorizontalContentAlignment="Center" 
+                                VerticalContentAlignment="Center" >
+                            <dg:DataGridColumn.Width>
+                                <OnIdiom x:TypeArguments="GridLength" Phone="45*" Tablet="57*" Desktop="3*" />
+                            </dg:DataGridColumn.Width>
+                        </dg:DataGridColumn>
+                        <dg:DataGridColumn
+                                Title="Action By"
+                                PropertyName="ActionBy"
+                                HorizontalContentAlignment="Center">
+                            <dg:DataGridColumn.Width>
+                                <OnIdiom x:TypeArguments="GridLength" Phone="8*" Tablet="15*" Desktop="*" />
+                            </dg:DataGridColumn.Width>
+                        </dg:DataGridColumn>
+                        <dg:DataGridColumn
+                                Title="Pending Action"
+                                PropertyName="Status"
+                                HorizontalContentAlignment="Center">
+                            <dg:DataGridColumn.Width>
+                                <OnIdiom x:TypeArguments="GridLength" Phone="11*" Tablet="24*" Desktop="*" />
+                            </dg:DataGridColumn.Width>
+                        </dg:DataGridColumn>
+                        <!--<dg:DataGridColumn
+                                Title="Priority"
+                                PropertyName="Priority"
+                                HorizontalContentAlignment="Center"/>-->
+                            <dg:DataGridColumn Title="Priority" PropertyName="Priority"  SortingEnabled="False">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Text="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="Micro">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding }" Value="True">
+                                                    <Setter Property="Text" Value="1" />
+                                                    <Setter Property="FontSize" Value="Micro" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            <dg:DataGridColumn.Width>
+                                <OnIdiom x:TypeArguments="GridLength" Phone="8*" Tablet="10*" Desktop="*" />
+                            </dg:DataGridColumn.Width>
+                        </dg:DataGridColumn>
+                        <dg:DataGridColumn
+                                Title="Sub Contractor"
+                                PropertyName="SubContractor"
+                                HorizontalContentAlignment="Center">
+                            <dg:DataGridColumn.Width>
+                                <OnIdiom x:TypeArguments="GridLength" Phone="10*" Tablet="17*" Desktop="*" />
+                            </dg:DataGridColumn.Width>
+                        </dg:DataGridColumn>
+                        <dg:DataGridColumn
+                                Title="Test Method"
+                                PropertyName="TestMedia"
+                                HorizontalContentAlignment="Center">
+                            <dg:DataGridColumn.Width>
+                                <OnIdiom x:TypeArguments="GridLength" Phone="8*" Tablet="13*" Desktop="*" />
+                            </dg:DataGridColumn.Width>
+                        </dg:DataGridColumn>
+                    </dg:DataGrid.Columns>
+                        <dg:DataGrid.RowsBackgroundColorPalette>
+                            <dg:PaletteCollection>
+                                <Color>#FFFFFF</Color>
+                                <Color>#FFFFFF</Color>
+                            </dg:PaletteCollection>
+                        </dg:DataGrid.RowsBackgroundColorPalette>
+                    </dg:DataGrid>
+                    
+                    <Grid Grid.ColumnSpan="3" Grid.Row="2" VerticalOptions="End">
+                    <Button Text="Add All" FontAttributes="Bold"   TextColor="White" BackgroundColor="#C4BB46" Command="{Binding ETPAllDownloadCommand}"/>
+                    <Button Command="{Binding ETPAddToListCommand}" CommandParameter="AddtoList" Grid.Column="1" Grid.Row="0" Text="Add to download list" FontAttributes="Bold"  TextColor="White" BackgroundColor="#C4BB46" />
+                    </Grid>
+                </Grid>
+
+            <!--JobSetting-->
+            <Grid IsVisible="{Binding JobSettingGrid}" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!--<RowDefinition Height="250*"/>-->
+                        <!--<RowDefinition>
+                            <RowDefinition.Height>
+                                <OnPlatform x:TypeArguments="GridLength">
+                                    <On Platform="Android, iOS" Value="250*" />
+                                    <On Platform="UWP" Value="auto" />
+                                </OnPlatform>
+                            </RowDefinition.Height>
+                        </RowDefinition>-->
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="1000*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Frame BackgroundColor="Transparent" Padding="5" BorderColor="#A0A0A0" HasShadow="True">
+                        <ScrollView x:Name="SearchGrid">
+                            <Grid BackgroundColor="#DCDCDC">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid>
+                                    <Label Text="PCWBS" />
+                                    <Label Grid.Column="1" Grid.Row="0" Text="FWBS" />
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <Entry Text="{Binding JBSPCWBS}" />
+                                    <Entry Grid.Column="1" Grid.Row="0" Text="{Binding JBSFWBS}"/>
+                                </Grid>
+                                <Grid Grid.Row="2">
+                                    <Label Text="IWP" />
+                                    <Label Grid.Column="1" Grid.Row="0" Text="Discipline"/>
+                                </Grid>
+                                <Grid Grid.Row="3">
+                                    <Entry Text="{Binding JBSIWP}" />
+                                    <Entry Grid.Column="1" Grid.Row="0" Text="{Binding JBSDiscipline}"/>
+                                </Grid>
+                                <Grid Grid.Row="4">
+                                    <Button Text="Search"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                Command="{Binding JBSSearchBtnCommand}"
+                                BackgroundColor="#3B87C7"/>
+                                </Grid>
+
+                            </Grid>
+                        </ScrollView>
+                    </Frame>
+
+
+                    <dg:DataGrid ItemsSource="{Binding JobSetting, Mode=TwoWay}" SelectedItem="{Binding SelectedJobSetting, Mode=TwoWay}" SelectionEnabled="True"
+						     RowHeight="40" HeaderHeight="45" BorderColor="#CCCCCC" HeaderBackground="#FFFFFF"
+						     ActiveRowColor="#8899AA"  HeaderTextColor="#3a6b8b" Margin="0,5,0,0" Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                        <x:Arguments>
+                            <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                        </x:Arguments>
+                        <dg:DataGrid.HeaderFontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>8</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.HeaderFontSize>
+                        <dg:DataGrid.FontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>8</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.FontSize>
+                        <dg:DataGrid.Columns>
+                            <dg:DataGridColumn 
+                                Title="PCWBS"
+                                PropertyName="PCWBS"
+                                HorizontalContentAlignment="Center" 
+                                SortingEnabled="False"
+                                VerticalContentAlignment="Center"/>
+                            <dg:DataGridColumn 
+                                Title="FWBS" 
+                                PropertyName="FWBS" 
+                                HorizontalContentAlignment="Center" 
+                                VerticalContentAlignment="Center" />
+                            <dg:DataGridColumn
+                                Title="IWP"
+                                PropertyName="Title"
+                                HorizontalContentAlignment="Center"
+                                SortingEnabled="False"/>
+                            <dg:DataGridColumn
+                                Title="Discipline"
+                                PropertyName="Discipline"
+                                SortingEnabled="False"
+                                HorizontalContentAlignment="Center"/>
+                            <dg:DataGridColumn
+                                Title="IWP Description"
+                                PropertyName="Description"
+                                HorizontalContentAlignment="Center"
+                                SortingEnabled="False"/>
+                        </dg:DataGrid.Columns>
+                        <dg:DataGrid.RowsBackgroundColorPalette>
+                            <dg:PaletteCollection>
+                                <Color>#FFFFFF</Color>
+                                <Color>#FFFFFF</Color>
+                            </dg:PaletteCollection>
+                        </dg:DataGrid.RowsBackgroundColorPalette>
+                    </dg:DataGrid>
+
+                    <Grid Grid.Row="2" VerticalOptions="EndAndExpand">
+                        <Button Text="Add All" FontAttributes="Bold"   TextColor="White" BackgroundColor="#3B87C7" Command="{Binding JobSettingOnClickCommand}" CommandParameter="AddAlltoList"/>
+                        <Button BackgroundColor="#3B87C7"  Grid.Column="1" Grid.Row="0" Text="Add to download list" FontAttributes="Bold"  TextColor="White" 
+                                Command="{Binding JobSettingOnClickCommand}" CommandParameter="AddtoList" />
+                    </Grid>
+
+                </Grid>
+            </Grid>
+
+                <!--EReporter DownloadList -->
+                <Grid RowSpacing="0" IsVisible="{Binding EReporterVisibleList}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="9*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ListView SelectionMode="None" SeparatorVisibility="Default" ItemsSource="{Binding DownloadList}" SeparatorColor="Transparent" Margin="0,10,0,0" RowHeight="30" HasUnevenRows="True"  >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <UC:CustomViewCell SelectedItemBackgroundColor="#FB1610">
+                                    <ViewCell.View>
+
+                                        <Frame  Padding="2" Margin="0,2,0,0" HeightRequest="30" BackgroundColor="Transparent"  BorderColor="LightGray" HasShadow="False">
+                                            <StackLayout Margin="5,0,5,0"  VerticalOptions="Center">
+                                                <Label LineBreakMode="WordWrap">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span FontSize="15" Text="{Binding ReportNo, Mode=TwoWay}" TextColor="Black"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                            </StackLayout>
+                                        </Frame>
+                                    </ViewCell.View>
+                                </UC:CustomViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <Grid Grid.Row="1" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+
+                        </Grid.ColumnDefinitions>
+                        <Button Command="{Binding DownloadCommand}" IsEnabled="{Binding IsEnableDownloadbtn}"  Text="Download" FontAttributes="Bold"   TextColor="White" BackgroundColor="#FB1610" />
+                        <Button Command="{Binding AddToListCommand}"  CommandParameter="AddMore"  Grid.Column="1" Text="Add More" FontAttributes="Bold"  TextColor="White" BackgroundColor="#FB1610" />
+                    </Grid>
+
+                </Grid>
+
+                <!--E-Test Package DownloadList -->
+                <Grid RowSpacing="0" IsVisible="{Binding ETPVisibleList}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="9*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ListView SelectionMode="None" SeparatorVisibility="Default" ItemsSource="{Binding ETPDownloadList}" SeparatorColor="Transparent" Margin="0,10,0,0" RowHeight="30" HasUnevenRows="True"  >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <UC:CustomViewCell SelectedItemBackgroundColor="#FB1610">
+                                    <ViewCell.View>
+
+                                        <Frame  Padding="2" Margin="0,2,0,0" HeightRequest="30" BackgroundColor="Transparent"  BorderColor="LightGray" HasShadow="False">
+                                            <StackLayout Margin="5,0,5,0"  VerticalOptions="Center">
+                                                <Label LineBreakMode="WordWrap">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span FontSize="15" Text="{Binding TestPackage, Mode=TwoWay}" TextColor="Black"/>
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                            </StackLayout>
+                                        </Frame>
+                                    </ViewCell.View>
+                                </UC:CustomViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <Grid Grid.Row="1" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+
+                        </Grid.ColumnDefinitions>
+                    <Button Command="{Binding ETPDownloadCommand}" IsEnabled="{Binding IsEnableDownloadbtn}"  Text="Download" FontAttributes="Bold"   TextColor="White" BackgroundColor="#C4BB46" />
+                    <Button Command="{Binding ETPAddToListCommand}"  CommandParameter="AddMore"  Grid.Column="1" Text="Add More" FontAttributes="Bold"  TextColor="White" BackgroundColor="#C4BB46" />
+                    </Grid>
+
+                </Grid>
+            
+                <!--Job Setting DownloadList -->
+            <Grid RowSpacing="0" IsVisible="{Binding JobsettingVisibleList}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="9*"/>                    
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Button BackgroundColor="{Binding BGAttachments}"
+                                    BorderColor="LightGray" 
+                                    BorderWidth="1" 
+                                    FontAttributes="Bold"
+                                    Text="Include Attachments" 
+                                    TextColor="White"
+                                    Command="{Binding BGColorChangeCommand}"  
+                                    CommandParameter="Attachments"
+                                    HorizontalOptions="FillAndExpand"/>
+                    <Button BackgroundColor="{Binding BGDrawings}"
+                                    BorderColor="LightGray" 
+                                    BorderWidth="1"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    FontAttributes="Bold"
+                                    Text="Include Drawings" 
+                                    TextColor="White"
+                                    Command="{Binding BGColorChangeCommand}"  
+                                    CommandParameter="Drawings"
+                                    HorizontalOptions="FillAndExpand"/>
+
+                    <Button BackgroundColor="{Binding BGPredecessors}"
+                                    BorderColor="LightGray"
+                                    BorderWidth="1"              
+                                    Grid.Row="1"
+                                    Grid.Column="0"                
+                                    FontAttributes="Bold" 
+                                    Text="Include Predecessors" 
+                                    TextColor="White"
+                                    Command="{Binding BGColorChangeCommand}"  
+                                    CommandParameter="Predecessors"
+                                    HorizontalOptions="FillAndExpand"/>
+                    <Button BackgroundColor="{Binding BGSuccessors}"
+                                    BorderColor="LightGray" 
+                                    BorderWidth="1" 
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    FontAttributes="Bold" 
+                                    Text="Include Successors" 
+                                    TextColor="White"
+                                    Command="{Binding BGColorChangeCommand}"  
+                                    CommandParameter="Successors"
+                                    HorizontalOptions="FillAndExpand"/>
+                    <Button BackgroundColor="{Binding BGCWPTags}"
+                                    BorderColor="LightGray" 
+                                    BorderWidth="1" 
+                                    Grid.Row="2"
+                                    Grid.ColumnSpan="2"
+                                    FontAttributes="Bold" 
+                                    Text="Include CWP Tags" 
+                                    TextColor="White"
+                                    Command="{Binding BGColorChangeCommand}"  
+                                    CommandParameter="CWPTags"
+                                    HorizontalOptions="FillAndExpand"/>
+
+                </Grid>
+
+                <ListView Grid.Row="1" SelectionMode="None" SeparatorVisibility="Default" ItemsSource="{Binding JobSDownloadList}" SeparatorColor="Transparent" Margin="0,10,0,0" 
+                          RowHeight="30" HasUnevenRows="True"  >
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                           <ViewCell Height="30">
+                                        <Frame  Padding="2" Margin="0,2,0,0" HeightRequest="30" BackgroundColor="Transparent"  BorderColor="LightGray" HasShadow="False">
+                                        <StackLayout Margin="5,0,5,0"  VerticalOptions="Center">
+                                            <Label LineBreakMode="WordWrap">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span FontSize="15" Text="{Binding Title, Mode=TwoWay}" TextColor="Black"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </StackLayout>
+                                    </Frame>
+                                </ViewCell>                           
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+               
+                <StackLayout Grid.Row="2" Orientation="Horizontal" >                    
+                    <Button Command="{Binding JobSettingOnClickCommand}"  CommandParameter="Download" Text="Download" FontAttributes="Bold" 
+                            TextColor="White" BackgroundColor="#3B87C7" HorizontalOptions="FillAndExpand" />
+                    <Button Command="{Binding JobSettingOnClickCommand}"  CommandParameter="AddMore" Text="Add More" FontAttributes="Bold"  
+                            TextColor="White" BackgroundColor="#3B87C7" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+
+            </Grid>
+
+            <Grid RowSpacing="0" IsVisible="{Binding IsVisibleDownlaodProgress}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="9*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                
+                    <Frame Margin="0,0,0,10">
+                        <StackLayout>
+                        <Label Text="{Binding DownloadingFor ,StringFormat='Downloading {0}'}" TextColor="#3a6b8b" FontAttributes="Bold"/>
+                        <ListView SelectionMode="None" SeparatorVisibility="None" ItemsSource="{Binding DownloadingProgressList}"  SeparatorColor="White"   HasUnevenRows="True"  >                       
+                            <ListView.ItemTemplate>
+                                <DataTemplate>                              
+                                        <ViewCell>
+                                            <StackLayout Margin="0,10,0,10"  VerticalOptions="Center">
+                                                <Label LineBreakMode="WordWrap" Text="{Binding .}"  FontAttributes="Bold" TextColor="Black"/>
+                                                <!--<Label LineBreakMode="WordWrap" Text="{Binding StringFormat=' {0:.}Downloaded. '}"  FontAttributes="Bold" TextColor="LightGray"/>-->
+                                            </StackLayout>
+                                        </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                        </StackLayout>
+                    </Frame>
+
+                <Button x:Name="Close" IsVisible="{Binding Close_IsVisible}" Command="{Binding CloseCommand}" Grid.Row="1" Text="Close" FontAttributes="Bold"  TextColor="White" BackgroundColor="{Binding CloseBtnColor}" />
+                <ProgressBar HorizontalOptions="FillAndExpand" IsVisible="{Binding ProgressBarIsVisible}" Grid.Row="1" Progress="{Binding ProgressValue}" ProgressColor="{Binding CloseBtnColor}" />
+                </Grid>
+            
+            <!--</Grid>-->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

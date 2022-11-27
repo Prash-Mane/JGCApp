@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JGC.Views.ModulesPage"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False" >
+        <ContentPage.Content>
+
+            <Grid ColumnSpacing="10" HorizontalOptions="Center" Margin="10,100,10,0" RowSpacing="5" VerticalOptions="Start">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition>
+                    <ColumnDefinition.Width>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android, iOS" Value="*" />
+                            <On Platform="UWP" Value="auto" />
+                        </OnPlatform>
+                    </ColumnDefinition.Width>
+                </ColumnDefinition>
+                <ColumnDefinition>
+                    <ColumnDefinition.Width>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android, iOS" Value="*" />
+                            <On Platform="UWP" Value="auto" />
+                        </OnPlatform>
+                    </ColumnDefinition.Width>
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+                
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition>
+                    <RowDefinition.Height>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android, iOS" Value="*" />
+                            <On Platform="UWP" Value="auto" />
+                        </OnPlatform>
+                    </RowDefinition.Height>
+                </RowDefinition>             
+            </Grid.RowDefinitions>
+           
+            <Label Grid.ColumnSpan="2" Text="Please select module:" HorizontalOptions="FillAndExpand" FontAttributes="Bold" FontSize="Medium" TextColor="#3a6b8b" />
+
+            <Frame Grid.Column="0" Grid.Row="1" HeightRequest="40" BackgroundColor="Transparent"  BorderColor="LightGray" HasShadow="True">
+                <Image HorizontalOptions="Center"
+                           Source="EReporter_logo.png"
+                           VerticalOptions="Center"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding BtnCommand}" CommandParameter="EReporter"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+
+            <Frame Grid.Column="1" Grid.Row="1" HeightRequest="40" BackgroundColor="Transparent" BorderColor="LightGray" HasShadow="False">               
+                <Image HorizontalOptions="Center"
+                          Source="TestPackage_logo.png"
+                          VerticalOptions="Center"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding BtnCommand}" CommandParameter="TestPackage"/>
+                </Frame.GestureRecognizers> 
+            </Frame>
+
+            <Frame Grid.Column="0" Grid.Row="2" HeightRequest="40" BackgroundColor="Transparent"  BorderColor="LightGray" HasShadow="False">
+                <Image HorizontalOptions="Center"
+                          Source="WorkPackage_logo.png"
+                          VerticalOptions="Center"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding BtnCommand}" CommandParameter="JobSetting"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+            <Frame Grid.Column="1" Grid.Row="2" HeightRequest="40" BackgroundColor="Transparent"  BorderColor="LightGray" HasShadow="False" IsVisible="{Binding IsVisibleCompletion}">
+                <Image HorizontalOptions="Center"
+                          Source="Completions_logo.png"
+                          VerticalOptions="Center"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding BtnCommand}" CommandParameter="Completions"/>
+                </Frame.GestureRecognizers>
+            </Frame>
+
+
+        </Grid>
+        </ContentPage.Content>
+</ContentPage>

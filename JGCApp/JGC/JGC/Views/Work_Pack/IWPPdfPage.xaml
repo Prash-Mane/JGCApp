@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JGC.Views.Work_Pack.IWPPdfPage"
+             ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}"
+              xmlns:PDF="clr-namespace:JGC.UserControls.CustomControls">
+
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="IWP PDF"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+
+            </Label>
+            <Image Source="searchbar.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="IWPSelectionPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+
+
+    <ContentPage.Content>
+        <StackLayout Margin="10,0">
+            <Grid IsVisible="{Binding IWPPdfGrid}" RowSpacing="0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <!--<RowDefinition Height="9*"/>-->
+                    <RowDefinition>
+                        <RowDefinition.Height>
+                            <OnPlatform x:TypeArguments="GridLength">
+                                <On Platform="Android, iOS, UWP" Value="1000*" />
+                            </OnPlatform>
+                        </RowDefinition.Height>
+                    </RowDefinition>
+                </Grid.RowDefinitions>
+                <Button BackgroundColor="Black"
+                            Grid.Row="0"
+                            TextColor="White"
+                            Text="View in full screen"
+                            HorizontalOptions="End"
+                            Command="{Binding BtnCommand}"
+                            CommandParameter="PdfFullScreen"/>
+
+                <PDF:CustomPDF x:Name="pdfView" Grid.Row="1"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  Uri="{Binding PdfUrl}"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

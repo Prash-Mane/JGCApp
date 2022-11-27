@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JGC.Viwes.LoginPage"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">   
+
+    <Grid Margin="10,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="1.5*"/>
+        </Grid.RowDefinitions>
+
+        <StackLayout>            
+            <Image Source="vmlogo.png"/>            
+        </StackLayout>        
+            
+        <StackLayout Margin="0,0,0,0" Grid.Row="1">
+                <StackLayout Orientation="Horizontal"> 
+                    <Label Text="Please select a server:" FontAttributes="Bold" FontSize="Small" TextColor="#3a6b8b" VerticalOptions="Center" />                   
+
+                    <Label HorizontalOptions="EndAndExpand"  VerticalOptions="Center" Text="{Binding Version,StringFormat='Version {0}'}"/>
+                </StackLayout>
+
+            <customControls:CustomPicker
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding CompletionServerList}"
+                            SelectedItem="{Binding CompletionSelectedServer, Mode=TwoWay}">
+            </customControls:CustomPicker>
+                <Entry Placeholder="User Id" Text="{Binding CompletionLoginModel.UserName}" FontSize="Small"/>
+                <Entry Placeholder="Password" Text="{Binding CompletionLoginModel.Password}" IsPassword="True" FontSize="Small"/>
+                <!--<Label Text="Forgot Password?" FontSize="Small" TextColor="#3a6b8b" />-->
+                <Button Text="Login" FontSize="Small"  Command="{Binding LoginCommand}" CommandParameter="withclick" TextColor="White" BackgroundColor="#FB1610"/>
+                
+            </StackLayout>
+        
+        <StackLayout Grid.Row="2">           
+            <Image WidthRequest="130" Source="mods.png"/>
+        </StackLayout>
+
+    </Grid>
+
+</ContentPage>

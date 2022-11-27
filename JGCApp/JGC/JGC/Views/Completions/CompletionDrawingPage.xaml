@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+              prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:TEffect="clr-namespace:JGC.UserControls.Touch"
+             xmlns:converters="clr-namespace:JGC.Common.Converters"
+             xmlns:PDF="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             x:Class="JGC.Views.Completions.CompletionDrawingPage"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Resources>
+        <converters:ConverterBase64ImageSource x:Key="ConverterBase64ImageSource" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+
+        <Grid>
+
+            <Grid IsVisible="{Binding Mainpage}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackLayout HorizontalOptions="Start" Grid.ColumnSpan="2" >
+                    <Frame CornerRadius="15" HeightRequest="40" Margin="-15,0,0,0" BackgroundColor="White">
+                        <Image  Source="m_completions_logo.png" />
+                    </Frame>
+                </StackLayout>
+
+                <StackLayout Spacing="0"  Margin="10" Grid.Row="1">
+                    <Label Text="Drawings" FontSize="Medium" HorizontalOptions="FillAndExpand" />
+                    <customControls:CustomPicker>
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Filter Type</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                        <Picker.SelectedIndex>0</Picker.SelectedIndex>
+                    </customControls:CustomPicker>
+                    <StackLayout >
+                        <ListView ItemsSource="{Binding DrawingList}" SelectedItem="{Binding SelectedDrawingList}" SelectionMode="Single" Grid.Row="1" HasUnevenRows="True">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="400*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label LineBreakMode="WordWrap" HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span FontSize="20" Text="{Binding name}" TextColor="Black"/>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout HorizontalOptions="FillAndExpand" Grid.Column="1" Grid.Row="1"  VerticalOptions="FillAndExpand">
+                    <Button BackgroundColor="#1AA3B3"
+                            Command="{Binding BtnCommand}"
+                            CommandParameter="FullScreen"
+                            FontAttributes="Bold"
+                            Clicked="Button_ClickedFullScreen"
+                            Text="Full Screen View"
+                            TextColor="White"/>
+
+                    <!--<Image x:Name="DrawingImage" Source="{Binding DrawingImage}" WidthRequest="200" HeightRequest="200"
+                        Aspect="AspectFit"/>-->
+                    <!--<StackLayout  WidthRequest="200" HeightRequest="200">
+                        <skia:SKCanvasView Grid.Row="0" x:Name="canvasView" PaintSurface="OnCanvasViewPaintSurface"/>
+                        <StackLayout.Effects Grid.Row="0" >
+                        <TEffect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
+                    </StackLayout.Effects>
+                    </StackLayout>-->
+
+                    <PDF:CustomPDF x:Name="Pdf" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  Uri="{Binding PdfUrl}"  />
+                </StackLayout>
+            </Grid>
+
+
+            <Grid IsVisible="{Binding FullScreenView}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition>
+                        <RowDefinition.Height>
+                            <OnPlatform x:TypeArguments="GridLength">
+                                <On Platform="Android, iOS" Value="9*" />
+                                <On Platform="UWP" Value="900*" />
+                            </OnPlatform>
+                        </RowDefinition.Height>
+                    </RowDefinition>
+                </Grid.RowDefinitions>
+                <ActivityIndicator
+                           IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           Color="Black" />
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="25*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="BtnGreenLine"  BackgroundColor="#1AA3B3"
+                            Grid.Column="1"
+                            FontAttributes="Bold"
+                            Text="Add Green Line"
+                            Clicked="Clicked_AddGreenLinePopup"
+                            TextColor="White"/>
+                    <Button x:Name="BtnRedLine" BackgroundColor="#1AA3B3"
+                            Grid.Column="2"
+                            FontAttributes="Bold"
+                            Text="Add Red Line"
+                            Clicked="Clicked_AddRedLinePopup"
+                            TextColor="White"/>
+                </Grid>
+                <Grid Grid.Row="1" >
+                    <skia:SKCanvasView Grid.Row="0" x:Name="canvasFullView" PaintSurface="OnCanvasFullViewPaintSurface" />
+                    <Grid.Effects Grid.Row="0" >
+                        <TEffect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
+                    </Grid.Effects>
+                </Grid>
+
+                <!--<PDF:CustomPDF x:Name="FullPdf" Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  Uri="{Binding FullPdfUrl}"  />-->
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

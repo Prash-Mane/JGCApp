@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="JGC.Views.Completions.SyncPage"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             BackgroundColor="#AA000000" 
+             xmlns:local="clr-namespace:JGC.Common.Helpers"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <Grid>
+        <!--Sync Selection Popup-->
+        <Frame  IsVisible="{Binding IsVisibleSyncPopup}" Scale="{Binding Devicescale}" CornerRadius="0" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#EBF2FA" >
+            <Grid x:Name="SyncMainGrid"  ColumnSpacing="50" RowSpacing="20" Padding="10" HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <StackLayout Grid.Column="0" HorizontalOptions="Fill">
+                    <Image HeightRequest="70" WidthRequest="60" Source="folder_image_aqua.png"/>
+                    <Label Style="{StaticResource SyncLabelStyle}" Text="TAGs" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ClickCommand}" CommandParameter="PunchList"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout  Grid.Column="1" HorizontalOptions="Fill">
+                    <Image HeightRequest="70"  WidthRequest="60" Source="document_stack_image_aqua.png"/>
+                    <Label Style="{StaticResource SyncLabelStyle}" Text="Handovers" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ClickCommand}" CommandParameter="Handovers"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Grid.Column="2" HorizontalOptions="Fill">
+                    <Image HeightRequest="70"  WidthRequest="60" Source="checkbox_image_aqua.png"/>
+                    <Label Style="{StaticResource SyncLabelStyle}" Text="Test Packs" />
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ClickCommand}" CommandParameter="TestPacks"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Grid.Column="3" HorizontalOptions="Fill">
+                    <Image HeightRequest="70"  WidthRequest="60" Source="ITR.png"/>
+                    <Label Style="{StaticResource SyncLabelStyle}" Text="ITR" />
+                    <!--<StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ClickCommand}" CommandParameter="ITR"/>
+                    </StackLayout.GestureRecognizers>-->
+                </StackLayout>
+                <Button  Grid.ColumnSpan="4" Grid.Row="1" HorizontalOptions="Center" Command="{Binding ClickCommand}" Style="{StaticResource CompletionGeneralButtonStyle}" CommandParameter="close" Text="Close"/>
+            </Grid>
+        </Frame>
+        <!--Itr Sync Filters popup-->
+        <Frame x:Name="FrameTagPopup" Scale="{Binding Devicescale}" IsVisible="{Binding IsVisibleTagPopup}" Margin="10,0,10,0"  Padding="10" CornerRadius="0" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="#EBF2FA" >
+            <Grid RowSpacing="4" HorizontalOptions="Center" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <StackLayout Orientation="Horizontal">
+                    <Button IsVisible="{Binding IsVisibleBtnSyncType}"  HorizontalOptions="FillAndExpand" Command="{Binding ClickCommand}" CommandParameter="{Binding SyncBy}" Style="{StaticResource CompletionGeneralButtonStyle}" Text="{Binding BtnSyncTypeTxt}"/>
+                    <Button IsVisible="{Binding IsVisibleWBSBtnSyncType}"  HorizontalOptions="FillAndExpand" Command="{Binding ClickCommand}" CommandParameter="SyncbyPCWBS" Style="{StaticResource CompletionGeneralButtonStyle}" Text="Press to sync by PCWBS"/>
+                    <Button IsVisible="{Binding IsVisibleWBSBtnSyncType}"  HorizontalOptions="FillAndExpand" Command="{Binding ClickCommand}" CommandParameter="SyncbyFWBS" Style="{StaticResource CompletionGeneralButtonStyle}" Text="Press to sync by FWBS"/>
+                </StackLayout>
+
+                <Grid Grid.Row="1" HorizontalOptions="Center" RowSpacing="0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <CheckBox WidthRequest="40" IsVisible="{Binding IsVisibleCheckReview}" IsChecked="{Binding CheckUnderReviews}" Grid.Column="0"  ></CheckBox>
+                    <Label IsVisible="{Binding IsVisibleCheckReview}" Grid.Column="1" VerticalOptions="Center" HorizontalTextAlignment="Start"  Text="Workpacks Under Reviews Only"/>
+                    <Button Grid.Column="2" HeightRequest="40" Command="{Binding ClickCommand}" CommandParameter="SelectAll" Style="{StaticResource CompletionGeneralButtonStyle}" Text="Select All"/>
+                    <Button Grid.Column="3" HeightRequest="40" Command="{Binding ClickCommand}"  CommandParameter="RemoveAll" Style="{StaticResource CompletionGeneralButtonStyle}" Text="Remove All"/>
+                    <CheckBox WidthRequest="40" IsChecked="{Binding CheckSyncAllUsers}"  Grid.Row="1" ></CheckBox>
+                    <Label  Grid.Row="1" Grid.Column="1"  VerticalOptions="Center"  Text="Sync All User Accounts"/>
+
+                </Grid>
+
+
+                <Entry Grid.Row="3" HorizontalOptions="CenterAndExpand" Text="{Binding TxtFilter}" Placeholder="{Binding PlaceHolderText}" WidthRequest="200"></Entry>
+                <StackLayout  HorizontalOptions="Center" Orientation="Horizontal" Grid.Row="4" >
+                    <Frame Padding="2" BorderColor="Black">
+                        <ListView  HasUnevenRows="True"  ItemTapped="ListView_ItemTapped" HeightRequest="180" ItemsSource="{Binding ItemSourceRunnableSyncList}" WidthRequest="300"  SeparatorColor="Black" SelectedItem="{Binding SelectedProject, Mode=TwoWay}" BackgroundColor="#EBF2FA" SelectionMode="Single" >
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label LineBreakMode="WordWrap" HorizontalOptions="EndAndExpand" Text="{Binding name}" VerticalOptions="Center" Margin="2,0,0,0" TextColor="Black"/>
+                                                <Button Clicked="AddButton_Clicked" HeightRequest="40" CommandParameter="{Binding ., Mode=TwoWay}" Style="{StaticResource CompletionGeneralButtonStyle}" Text="Add" HorizontalOptions="End" >
+                                                    <Button.Margin>
+                                                        <OnPlatform x:TypeArguments="Thickness">
+                                                            <On Platform="UWP">0,0,20,0</On>
+                                                            <On Platform="Android" >2</On>
+                                                        </OnPlatform>
+                                                    </Button.Margin>
+                                                </Button>
+                                            </StackLayout>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+
+                        </ListView>
+                    </Frame>
+                    <Frame Padding="2" BorderColor="Black">
+                        <ListView HeightRequest="180" WidthRequest="300" ItemTapped="ListView_ItemTapped" ItemsSource="{Binding ItemSourceAddedSyncList}"  SeparatorColor="Black" SelectedItem="{Binding SelectedProject, Mode=TwoWay}" BackgroundColor="#EBF2FA" SelectionMode="Single" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <Label LineBreakMode="WordWrap" Text="{Binding name}" VerticalOptions="Center" Margin="10,0,0,0" TextColor="Black"/>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.Footer>
+                                <Label />
+                            </ListView.Footer>
+                        </ListView>
+                    </Frame>
+                </StackLayout>
+                <Grid Grid.Row="5" HorizontalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Command="{Binding ClickCommand}" VerticalOptions="StartAndExpand" HorizontalOptions="Center" Style="{StaticResource CompletionGeneralButtonStyle}" CommandParameter="ShowSyncPopup" Text="Sync"/>
+                    <Button Grid.Column="1" Command="{Binding ClickCommand}" HorizontalOptions="Center" Style="{StaticResource CompletionGeneralButtonStyle}" Text="Cancel" CommandParameter="close" />
+                </Grid>
+            </Grid>
+        </Frame>
+        <!--Sync Progress Popup-->
+        <Frame IsVisible="{Binding IsVisibleSyncProgressPopup}" Scale="{Binding Devicescale}" CornerRadius="10"  VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#EBF2FA" >
+            <Grid HorizontalOptions="CenterAndExpand" RowSpacing="0" ColumnSpacing="20" Padding="10" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label HorizontalOptions="Start" Grid.Row="0" Text="{Binding Source={x:Static local:SyncProgressLogs.UpdateLogs}, Path=ItrLogs, Mode=OneWay}"/>
+                    <StackLayout  Orientation="Horizontal" Grid.Row="1" HorizontalOptions="Start">
+                        <CheckBox Style="{StaticResource CheckBoxStyle}" IsEnabled="{Binding IsSyncCheckBoxEnable}" IsChecked="{Binding IsCheckedSyncITRs}" />
+                        <ProgressBar Progress="{Binding ProgressITRs}" Style="{StaticResource SyncProgressBarStyle}" />
+                    </StackLayout>
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.ColumnSpan="3" HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label HorizontalOptions="Start" Grid.Row="0" Text="{Binding Source={x:Static local:SyncProgressLogs.UpdateLogs},  Path=PunchListLogs, Mode=OneWay}"/>
+                    <!--Text="Sync Punch Lists"/>-->
+                    <StackLayout Grid.Row="1"  Orientation="Horizontal">
+                        <CheckBox Style="{StaticResource CheckBoxStyle}" IsEnabled="{Binding IsSyncCheckBoxEnable}" IsChecked="{Binding IsCheckedSyncPunchList}"  />
+                        <ProgressBar  Progress="{Binding ProgressPunchList}" Style="{StaticResource SyncProgressBarStyle}" />
+
+                    </StackLayout>
+
+                </Grid>
+
+                <Grid Grid.Row="2" Grid.ColumnSpan="3" HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Text="Sync Drawings" Grid.Row="0"/>
+                    <StackLayout Grid.Row="1" Orientation="Horizontal">
+                        <CheckBox Style="{StaticResource CheckBoxStyle}" IsEnabled="{Binding IsSyncCheckBoxEnable}" IsChecked="{Binding IsCheckedSyncDrawings}" />
+                        <ProgressBar  Progress="{Binding ProgressDrawing}" Style="{StaticResource SyncProgressBarStyle}" />
+
+                    </StackLayout>
+                </Grid>
+
+                <Grid Grid.Row="3" IsVisible="False" Grid.ColumnSpan="3" HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Text="Sync Joints" Grid.Row="0"/>
+                    <StackLayout Orientation="Horizontal" Grid.Row="1">
+                        <CheckBox Style="{StaticResource CheckBoxStyle}" IsEnabled="{Binding IsSyncCheckBoxEnable}" IsChecked="{Binding IsCheckedSyncJoints}" />
+                        <ProgressBar  Progress="{Binding ProgressJoints}" Style="{StaticResource SyncProgressBarStyle}" />
+                    </StackLayout>
+                </Grid>
+
+                <Grid Grid.Row="4" IsVisible="False" Grid.ColumnSpan="3" HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Text="Sync Joint Punch List" Grid.Row="0"/>
+                    <StackLayout  Orientation="Horizontal" Grid.Row="1">
+                        <CheckBox Style="{StaticResource CheckBoxStyle}" IsEnabled="{Binding IsSyncCheckBoxEnable}" IsChecked="{Binding IsCheckedSyncJointPunchList}" />
+                        <ProgressBar  Progress="{Binding ProgressJointPunchList}" Style="{StaticResource SyncProgressBarStyle}" />
+                    </StackLayout>
+                </Grid>
+
+
+                <Grid Grid.Row="5" Grid.ColumnSpan="3" IsVisible="{Binding CheckSyncAllUsers}" HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Text="Sync All Users" Grid.Row="0"/>
+                    <StackLayout  Orientation="Horizontal" Grid.Row="1">
+                        <CheckBox Style="{StaticResource CheckBoxStyle}" IsEnabled="{Binding IsSyncCheckBoxEnable}" IsChecked="{Binding IsCheckedSyncAllUSers}" />
+                        <ProgressBar  Progress="{Binding ProgressUserAccount}" Style="{StaticResource SyncProgressBarStyle}" />
+                    </StackLayout>
+                </Grid>
+
+
+                <StackLayout Grid.Row="6"  Grid.Column="1" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" Orientation="Horizontal">
+                    <Button IsVisible="{Binding IsVisibleSyncButton}" HorizontalOptions="CenterAndExpand" Command="{Binding ClickCommand}" Style="{StaticResource CompletionGeneralButtonStyle}" CommandParameter="SyncClicked" Text="Sync"/>
+                    <Button IsEnabled="{Binding SyncCancelButtonText}" HorizontalOptions="CenterAndExpand" Command="{Binding ClickCommand}" Style="{StaticResource CompletionGeneralButtonStyle}" CommandParameter="close" Text="{Binding SyncCancelButtonText}"/>
+                </StackLayout>
+
+            </Grid>
+        </Frame>
+        <!--Handover Sync Progress Popup-->
+        <Frame IsVisible="{Binding IsVisibleHandoverSyncProgressPopup}" Scale="{Binding Devicescale}" CornerRadius="10"  VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#EBF2FA" >
+            <Grid   HorizontalOptions="CenterAndExpand" RowSpacing="0" ColumnSpacing="20" Padding="10" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Text="Sync Handover(All Workpacks/System)" Grid.Row="0"/>
+                    <StackLayout  Orientation="Horizontal" Grid.Row="1">
+                        <CheckBox Style="{StaticResource CheckBoxStyle}" IsEnabled="{Binding IsSyncCheckBoxEnable}" IsChecked="{Binding IsCheckedSyncITRs}" />
+                        <ProgressBar Progress="{Binding ProgressITRs}" Style="{StaticResource SyncProgressBarStyle}" />
+                    </StackLayout>
+                </Grid>
+
+
+                <Grid Grid.Row="1" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Text="Sync Punch Lists" Grid.Row="0"/>
+                    <StackLayout   Orientation="Horizontal" Grid.Row="1">
+                        <CheckBox Style="{StaticResource CheckBoxStyle}" IsEnabled="{Binding IsSyncCheckBoxEnable}" IsChecked="{Binding IsCheckedSyncPunchList}"  />
+                        <ProgressBar  Progress="{Binding ProgressPunchList}" Style="{StaticResource SyncProgressBarStyle}" />
+
+                    </StackLayout>
+
+                </Grid>
+
+                <StackLayout Grid.Row="2"  Grid.Column="1" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" Orientation="Horizontal">
+                    <Button IsVisible="{Binding IsVisibleSyncButton}" HorizontalOptions="CenterAndExpand"  Style="{StaticResource CompletionGeneralButtonStyle}" Command="{Binding ClickCommand}" CommandParameter="HandoverSyncClicked" Text="Sync"/>
+                    <Button IsEnabled="{Binding SyncCancelButtonText}" HorizontalOptions="CenterAndExpand"  Style="{StaticResource CompletionGeneralButtonStyle}" Command="{Binding ClickCommand}" CommandParameter="close" Text="{Binding SyncCancelButtonText}"/>
+                </StackLayout>
+
+            </Grid>
+        </Frame>
+        <!--TestPacks Sync Progress Popup-->
+        <Frame IsVisible="{Binding IsVisibleTestPacksSyncProgressPopup}" Scale="{Binding Devicescale}" CornerRadius="10"  VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#EBF2FA" >
+            <Grid   HorizontalOptions="CenterAndExpand" RowSpacing="0" ColumnSpacing="20" Padding="10" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand">
+                    <Label Text="Sync Test Packs"/>
+                    <StackLayout  Orientation="Horizontal">
+                        <CheckBox Style="{StaticResource CheckBoxStyle}" IsEnabled="{Binding IsSyncCheckBoxEnable}" IsChecked="{Binding IsCheckedSyncITRs}" />
+                        <ProgressBar Progress="{Binding ProgressITRs}" Style="{StaticResource SyncProgressBarStyle}" />
+                    </StackLayout>
+                </StackLayout>
+
+
+                <!--<StackLayout Grid.Row="1" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand">
+                    <Label Text="Sync Punch Lists"/>
+                    <StackLayout   Orientation="Horizontal">
+                        <CheckBox Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding IsCheckedSyncPunchList}"  />
+                        <ProgressBar  Progress="{Binding ProgressPunchList}" Style="{StaticResource SyncProgressBarStyle}" />
+
+                    </StackLayout>
+
+                </StackLayout>-->
+
+                <StackLayout Grid.Row="2"  Grid.Column="1" HorizontalOptions="CenterAndExpand" VerticalOptions="End" Orientation="Horizontal">
+                    <Button IsVisible="{Binding IsVisibleSyncButton}" HorizontalOptions="CenterAndExpand"  Style="{StaticResource CompletionGeneralButtonStyle}" Command="{Binding ClickCommand}" CommandParameter="SyncClicked" Text="Sync"/>
+                    <Button IsEnabled="{Binding SyncCancelButtonText}" HorizontalOptions="CenterAndExpand"  Style="{StaticResource CompletionGeneralButtonStyle}" Command="{Binding ClickCommand}" CommandParameter="close" Text="{Binding SyncCancelButtonText}"/>
+                </StackLayout>
+
+            </Grid>
+        </Frame>
+
+        <Frame IsVisible="{Binding IsVisibleITRSyncProgressPopup}" Scale="{Binding Devicescale}" CornerRadius="10"  VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#EBF2FA" >
+            <Grid   HorizontalOptions="CenterAndExpand" RowSpacing="10" ColumnSpacing="20" Padding="10" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Grid.Row="0" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand">
+                    <Label Text="Sync ITR's"/>
+                    <StackLayout  Orientation="Horizontal">
+                        <!--<CheckBox Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding IsCheckedSyncITRs}" />-->
+                        <ProgressBar Progress="{Binding ProgressITRs}" Style="{StaticResource SyncProgressBarStyle}" />
+                    </StackLayout>
+                </StackLayout>
+
+
+                <StackLayout Grid.Row="2"  Grid.Column="1" HorizontalOptions="CenterAndExpand" VerticalOptions="End" Orientation="Horizontal">
+                    <Button IsVisible="{Binding IsVisibleSyncButton}" HorizontalOptions="CenterAndExpand"  Style="{StaticResource CompletionGeneralButtonStyle}" Command="{Binding ClickCommand}" CommandParameter="SyncClicked" Text="Sync"/>
+                    <Button IsEnabled="{Binding IsEnableCancelButton}" HorizontalOptions="CenterAndExpand"  Style="{StaticResource CompletionGeneralButtonStyle}" Command="{Binding ClickCommand}" CommandParameter="close" Text="{Binding SyncCancelButtonText}"/>
+                </StackLayout>
+
+            </Grid>
+        </Frame>
+    </Grid>
+</pages:PopupPage>

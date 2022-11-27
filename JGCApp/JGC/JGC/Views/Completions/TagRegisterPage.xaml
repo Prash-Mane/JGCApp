@@ -1,0 +1,543 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+			 xmlns:flex="clr-namespace:Flex.Controls;assembly=Flex"
+			 xmlns:custom="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:customviewctrl="clr-namespace:JGC.Views.Completions"
+			 prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+			 BackgroundColor="#1AA3B3"
+             xmlns:conv="clr-namespace:JGC.Common.Converters" xmlns:behavior="clr-namespace:JGC.Common.ColorChanged"
+             x:Class="JGC.Views.Completions.TagRegisterPage"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Resources>
+        <conv:BoolInvertConverter x:Key="BoolInvertConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout  x:Name="Stack1" Orientation="Horizontal">
+                <Frame x:Name="Frame1"  BackgroundColor="#EBF2FA" Margin="-10,10,20,10" CornerRadius="10">
+
+                    <Grid>
+                        <StackLayout HorizontalOptions="StartAndExpand" VerticalOptions="StartAndExpand">
+                            <Label TextColor="DarkSlateGray" HorizontalOptions="Center" FontAttributes="Bold" FontSize="Medium" Text="Tag Register"/>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Frame Style="{StaticResource TagFrameStyle}"  >
+                                    <Label x:Name="lblFilterSystem" VerticalOptions="Center"  Text="System"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="ChooseSystem" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+
+                                <Frame Grid.Column="1" Style="{StaticResource TagFrameStyle}">
+                                    <Label x:Name="lblFilterFC_Lev_1" Text="FC Lev-1"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="ChooseFC_Lev_1" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                <!--<Frame Grid.Column="1" Style="{StaticResource TagFrameStyle}" >
+                                    <Label x:Name="lblFilterClass" VerticalOptions="Center" Text="Class"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="ChooseClass" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>-->
+
+                                <Frame Grid.Row="3" Grid.Column="1" Style="{StaticResource TagFrameStyle}">
+                                    <Label x:Name="lblFilterTag" Text="Tag"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer  CommandParameter="ChooseTag" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                <!--<Frame Grid.Row="1" Style="{StaticResource TagFrameStyle}">
+                                    <Label x:Name="lblFilterSubSystem" Text="SubSystem"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="ChooseSubSystem" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>-->
+                                <Frame Grid.Row="1"  Grid.Column="1" Style="{StaticResource TagFrameStyle}">
+                                    <Label x:Name="lblFilterFC_Lev_2" Text="FC Lev-2"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="ChooseFC_Lev_2" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                <!--<Frame Grid.Row="1" Grid.Column="1" Style="{StaticResource TagFrameStyle}">
+                                    <Label x:Name="lblFilterFC_Lev_1" Text="FC Lev-1"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="ChooseFC_Lev_1" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>-->
+                                <Frame Grid.Row="0" Grid.Column="2" Style="{StaticResource TagFrameStyle}">
+                                    <Label x:Name="lblFilterITR" Text="ITR"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="ChooseITR" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+
+                                <Frame Grid.Row="1"  Style="{StaticResource TagFrameStyle}">
+                                    <Label x:Name="lblFilterFWBS" Text="FWBS"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="ChooseFWBS" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                <Frame Grid.Row="2"  Grid.Column="1" Style="{StaticResource TagFrameStyle}">
+                                    <Label x:Name="lblFilterFC_Lev_3" Text="FC Lev-3"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="ChooseFC_Lev_3" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                <Frame Grid.Row="1"  Grid.Column="2" Style="{StaticResource TagFrameStyle}">
+                                    <Label x:Name="lblFilterDrawings" Text="Drawings"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="ChooseDrawings" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                <Frame Grid.Row="2" Style="{StaticResource TagFrameStyle}">
+                                    <Label x:Name="lblFilterPCWBS" Text="PCWBS"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="ChoosePCWBS" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                <Frame Grid.Row="3" Style="{StaticResource TagFrameStyle}">
+                                    <Label x:Name="lblFilterWorkPack" Text="WorkPack"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="ChooseWorkPack" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                                <Frame Grid.Row="2"  Grid.Column="2" Style="{StaticResource TagFrameStyle}">
+                                    <Label x:Name="lblFilterDrawingRevision" Text="DrawingRevision"/>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer CommandParameter="ChooseDrawingRevision" Tapped="TapGestureRecognizer_Tapped" />
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+
+                                <StackLayout  Grid.Row="4" Grid.ColumnSpan="2"  Orientation="Horizontal" HorizontalOptions="EndAndExpand" >
+                                    <CheckBox Color="DeepPink" CheckedChanged="CheckBox_CheckedChanged"></CheckBox>
+                                    <Label VerticalOptions="Center"  Text="Hide Completed"/>
+                                </StackLayout>
+                            </Grid>
+                            <!--<ScrollView>-->
+                            <StackLayout>
+                                <OnIdiom x:TypeArguments="View">
+                                    <OnIdiom.Phone>
+                                        <!--<ScrollView Orientation="Vertical" >-->
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="FillAndExpand" Spacing="5" >
+                                            <Label FontSize="9" x:Name="TagsCount" TextColor="DarkSlateGray" Text="Tags:0"/>
+                                            <flex:FlexButton Style="{StaticResource FlexButtonStyle}" BackgroundColor="Gray" BorderColor="Gray" WidthRequest="12" HeightRequest="12" CornerRadius="18" />
+                                            <Label FontSize="9" Text="Not Started"/>
+                                            <flex:FlexButton Style="{StaticResource FlexButtonStyle}" BackgroundColor="#FF8000" BorderColor="#FF8000" WidthRequest="12" HeightRequest="12" CornerRadius="18" />
+                                            <Label FontSize="9" Text="In Progress"/>
+                                            <flex:FlexButton Style="{StaticResource FlexButtonStyle}" BackgroundColor="#ff2a2a" BorderColor="#ff2a2a" WidthRequest="12" HeightRequest="12" CornerRadius="18" />
+                                            <Label FontSize="9" Text="Rejected"/>
+                                            <flex:FlexButton Style="{StaticResource FlexButtonStyle}" BackgroundColor="#00FF00" BorderColor="#00FF00" WidthRequest="12" HeightRequest="12" CornerRadius="18" />
+                                            <Label FontSize="9" Text="Completed"/>
+                                        </StackLayout>
+                                        <!--</ScrollView>-->
+                                    </OnIdiom.Phone>
+                                    <OnIdiom.Tablet>
+                                        <StackLayout Orientation="Horizontal" Spacing="5" >
+                                            <Label FontSize="Micro" TextColor="DarkSlateGray" Text="Tags:0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            <flex:FlexButton Style="{StaticResource FlexButtonStyle}" BackgroundColor="Gray" BorderColor="Gray" WidthRequest="25" HeightRequest="45" CornerRadius="20"/>
+                                            <Label FontSize="Micro" Text="Not Started" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            <flex:FlexButton Style="{StaticResource FlexButtonStyle}" BackgroundColor="#FF8000" BorderColor="#FF8000" WidthRequest="25" HeightRequest="45" CornerRadius="20"/>
+                                            <Label FontSize="Micro" Text="In Progress" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            <flex:FlexButton Style="{StaticResource FlexButtonStyle}" BackgroundColor="#ff2a2a" BorderColor="#ff2a2a" WidthRequest="25" HeightRequest="45" CornerRadius="20"/>
+                                            <Label FontSize="Micro" Text="Rejected" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            <flex:FlexButton Style="{StaticResource FlexButtonStyle}" BackgroundColor="#00FF00" BorderColor="#00FF00" WidthRequest="25" HeightRequest="45" CornerRadius="20"/>
+                                            <Label FontSize="Micro" Text="Completed" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        </StackLayout>
+                                    </OnIdiom.Tablet>
+                                    <OnIdiom.Desktop>
+                                        <StackLayout Orientation="Horizontal" Spacing="5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                            <Label FontSize="Small" TextColor="DarkSlateGray" Text="Tags:0"/>
+                                            <flex:FlexButton Style="{StaticResource FlexButtonStyle}" BackgroundColor="Gray" BorderColor="Gray"/>
+                                            <Label FontSize="Small" Text="Not Started"/>
+                                            <flex:FlexButton Style="{StaticResource FlexButtonStyle}" BackgroundColor="#FF8000" BorderColor="#FF8000"/>
+                                            <Label FontSize="Small" Text="In Progress" />
+                                            <flex:FlexButton Style="{StaticResource FlexButtonStyle}" BackgroundColor="#ff2a2a" BorderColor="#ff2a2a"/>
+                                            <Label FontSize="Small" Text="Rejected" />
+                                            <flex:FlexButton Style="{StaticResource FlexButtonStyle}" BackgroundColor="#00FF00" BorderColor="#00FF00"/>
+                                            <Label FontSize="Small" Text="Completed" />
+                                        </StackLayout>
+                                    </OnIdiom.Desktop>
+                                </OnIdiom>
+
+                                <OnIdiom x:TypeArguments="View">
+                                    <OnIdiom.Phone>
+                                        <ListView RowHeight="30" SeparatorColor="White"  VerticalOptions="FillAndExpand"  ItemsSource="{Binding ItemSourceTagList}" SelectedItem="{Binding SelectedTag, Mode=TwoWay}" SelectionMode="Single" >
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+
+                                                    <ViewCell x:Name="viewList"  Tapped="ViewCell_Tapped">
+                                                        <ViewCell.View>
+                                                            <Frame  Padding="-5" CornerRadius="0" HeightRequest="25" Margin="0,2,0,0"  BackgroundColor="{Binding StatusColor, Mode=TwoWay}" HasShadow="False">
+                                                                <Label LineBreakMode="WordWrap"  Text="{Binding name}" FontSize="15" FontAttributes="Bold"  VerticalOptions="Center" Margin="10,0,0,0" TextColor="Black">
+                                                                    <Label.Triggers>
+                                                                        <DataTrigger  TargetType="Label" Binding="{Binding Source={x:Reference viewList}, Path=View.BackgroundColor}" Value="#304D61">
+                                                                            <Setter Property="TextColor" Value="White"/>
+                                                                        </DataTrigger>
+                                                                    </Label.Triggers>
+                                                                    <Label.Padding>
+                                                                        <OnPlatform x:TypeArguments="Thickness">
+                                                                            <On Platform="Android" Value="10, 5, 0, 0"/>
+                                                                        </OnPlatform>
+                                                                    </Label.Padding>
+                                                                </Label>
+                                                            </Frame>
+                                                        </ViewCell.View>
+                                                    </ViewCell>
+
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                            <ListView.Footer>
+                                                <Label />
+                                            </ListView.Footer>
+                                        </ListView>
+                                    </OnIdiom.Phone>
+                                    <OnIdiom.Tablet>
+                                        <ListView  SeparatorColor="White"  VerticalOptions="FillAndExpand" ItemsSource="{Binding ItemSourceTagList}" SelectedItem="{Binding SelectedTag}" SelectionMode="Single" >
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <ViewCell x:Name="viewList"  Tapped="ViewCell_Tapped">
+                                                        <ViewCell.View>
+                                                            <Frame  Padding="-5" CornerRadius="0"  BackgroundColor="{Binding StatusColor}"  HeightRequest="45" Margin="0,0,0,0"   HasShadow="False">
+                                                                <Label LineBreakMode="WordWrap"  Text="{Binding name}" FontSize="15" FontAttributes="Bold"  VerticalOptions="Center" Margin="10,0,0,0" TextColor="Black">
+                                                                    <Label.Triggers>
+                                                                        <DataTrigger  TargetType="Label" Binding="{Binding Source={x:Reference viewList}, Path=View.BackgroundColor}" Value="#304D61">
+                                                                            <Setter Property="TextColor" Value="White"/>
+                                                                        </DataTrigger>
+                                                                    </Label.Triggers>
+                                                                    <Label.Padding>
+                                                                        <OnPlatform x:TypeArguments="Thickness">
+                                                                            <On Platform="Android" Value="10, 5, 0, 0"/>
+                                                                        </OnPlatform>
+                                                                    </Label.Padding>
+                                                                </Label>
+                                                            </Frame>
+                                                        </ViewCell.View>
+                                                    </ViewCell>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                            <ListView.Footer>
+                                                <Label />
+                                            </ListView.Footer>
+                                        </ListView>
+                                    </OnIdiom.Tablet>
+                                    <OnIdiom.Desktop>
+                                        <ListView x:Name="listview" SeparatorColor="White"  VerticalOptions="FillAndExpand"  ItemsSource="{Binding ItemSourceTagList}" SelectedItem="{Binding SelectedTag}" SelectionMode="Single" >
+                                            <ListView.ItemTemplate>
+                                                <DataTemplate >
+                                                    <ViewCell x:Name="viewList"  Tapped="ViewCell_Tapped" AutomationId="{Binding StatusColor}">
+                                                        <ViewCell.View>
+                                                            <Frame  Padding="-5" CornerRadius="0"  BackgroundColor="{Binding StatusColor}" HeightRequest="45" Margin="0,2,0,0"   HasShadow="False">
+                                                                <Label LineBreakMode="WordWrap" Text="{Binding name}" FontSize="15" FontAttributes="Bold"  VerticalOptions="Center" Margin="10,0,0,0" TextColor="Black">
+                                                                    <Label.Triggers>
+                                                                        <DataTrigger  TargetType="Label" Binding="{Binding Source={x:Reference viewList}, Path=View.BackgroundColor}" Value="#304D61">
+                                                                            <Setter Property="TextColor" Value="White"/>
+                                                                        </DataTrigger>
+                                                                    </Label.Triggers>
+                                                                    <Label.Padding>
+                                                                        <OnPlatform x:TypeArguments="Thickness">
+                                                                            <On Platform="Android" Value="10, 10, 0, 0"/>
+                                                                        </OnPlatform>
+                                                                    </Label.Padding>
+                                                                </Label>
+
+
+                                                            </Frame>
+                                                        </ViewCell.View>
+                                                    </ViewCell>
+                                                </DataTemplate>
+                                            </ListView.ItemTemplate>
+                                            <ListView.Footer>
+                                                <Label />
+                                            </ListView.Footer>
+                                        </ListView>
+                                    </OnIdiom.Desktop>
+                                </OnIdiom>
+
+                                <Button Text="SCAN TAG BARCODE" Clicked="BtnBarcodeScanClicked" HorizontalOptions="Center" TextColor="White" BackgroundColor="#1AA3B3" Scale="0.8"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+                <Frame x:Name="Frame2" Grid.Column="1" BackgroundColor="#EBF2FA" Margin="10,10,-10,10" CornerRadius="10">
+
+                    <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="StartAndExpand">
+                        <Label Text="{Binding SelectedTag.name}" TextColor="DarkSlateGray"  HorizontalOptions="Center"  FontSize="Medium"/>
+                        <StackLayout Orientation="Horizontal">
+                            <Label  TextColor="DarkSlateGray" HorizontalOptions="Center"  Text="Check Sheets for tag"/>
+                        </StackLayout>
+                        <ListView x:Name="CheckSheetList"  SeparatorColor="White" ItemsSource="{Binding ItemSourceCheckSheets}"  ItemTapped="ListView_ItemSelected"  SelectedItem="{Binding SelectedCheckSheet, Mode=TwoWay}" SelectionMode="Single" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <ViewCell.View>
+                                            <Frame  Padding="-5" Margin="0,2,0,0"  BackgroundColor="{Binding StatusColor}" CornerRadius="10"  BorderColor="Teal" HasShadow="False">
+                                                <Label LineBreakMode="WordWrap" Margin="15,0,0,0" Text="{Binding description}" VerticalOptions="Center" HorizontalOptions="StartAndExpand" TextColor="Black"/>
+                                            </Frame>
+                                        </ViewCell.View>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            <ListView.Footer>
+                                <Label />
+                            </ListView.Footer>
+                        </ListView>
+                        <Button CornerRadius="10" Text="View Punch List" Command="{Binding ClickCommand}" CommandParameter="ViewPunchList" HorizontalOptions="FillAndExpand" TextColor="White" BackgroundColor="#1AA3B3" Scale="0.8"/>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+            <Grid ColumnSpacing="20" x:Name="Stack2" VerticalOptions="FillAndExpand" Margin="0,20,10,20" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="6*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Frame Grid.Column="0" Grid.RowSpan="2" CornerRadius="10"  Margin="-10,0,0,0" BackgroundColor="#EBF2FA" VerticalOptions="FillAndExpand">
+                    <StackLayout>
+                        <Label Text="{Binding SelectedTag.name}" HorizontalOptions="Center" TextColor="#404040"></Label>
+                        <StackLayout Orientation="Horizontal">
+                            <flex:FlexButton Style="{StaticResource FlexButtonStyle}" BackgroundColor="Teal" />
+                            <Label Text="Header"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <flex:FlexButton x:Name="QuetionsHighlight" Style="{StaticResource FlexButtonStyle}"  />
+                            <Label Text="Questions"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <flex:FlexButton x:Name="FormsHighlight" Style="{StaticResource FlexButtonStyle}"  />
+                            <Label Text="Forms"/>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal">
+                            <flex:FlexButton x:Name="SignOffHighlight" Style="{StaticResource FlexButtonStyle}"  />
+                            <Label Text="Sign Offs"/>
+                        </StackLayout>
+                        <Button BackgroundColor="Transparent" Text="ADD PUNCH ITEM" Command="{Binding ClickCommand}" CommandParameter="AddPunchItem" BorderColor="#006633" BorderWidth="2" CornerRadius="5" HorizontalOptions="Center" />
+                        <Label Text="{Binding SelectedTag.system,  StringFormat='System: {0}'}" TextColor="#303030"/>
+                        <Label Text="{Binding  CurrentCheckSheet.description, StringFormat='Description: {0}'}" TextColor="#404040"/>
+                        <Label Text="{Binding  CurrentCheckSheet.name, StringFormat='ITR No: {0}'}"  TextColor="#404040" />
+                        <Button BackgroundColor="Transparent" Text="EXIT" Clicked="Button_Clicked" BorderColor="#006633" BorderWidth="2" CornerRadius="5"  HorizontalOptions="Center" />
+                    </StackLayout>
+
+                </Frame>
+                <Frame Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" CornerRadius="10"  BackgroundColor="#EBF2FA" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="9.5*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackLayout VerticalOptions="Start">
+                            <Label x:Name="HeaderText" FontSize="18" HorizontalOptions="Center" VerticalOptions="FillAndExpand"/>
+
+                            <ListView IsVisible="{Binding IsStackHeader}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" ItemsSource="{Binding TagSheetHeadersList}"  HasUnevenRows="True" SeparatorVisibility="None">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell >
+                                            <ViewCell.View>
+                                                <Grid Margin="20,0,20,0" BackgroundColor="#EBF2FA" RowSpacing="0" ColumnSpacing="0">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Frame Style="{StaticResource HeaderFrameStyle}">
+                                                        <Label Text="{Binding ColumnKey}" />
+                                                    </Frame>
+                                                    <Frame  Grid.Column="1"  Style="{StaticResource HeaderFrameStyle}">
+                                                        <Grid>
+                                                            <Label Text="{Binding ColumnValue, Mode=TwoWay}" IsVisible="{Binding IsLabel}"/>
+                                                            <custom:RectanglePicker HorizontalOptions="FillAndExpand" VerticalOptions="CenterAndExpand" x:Name="RPDrowingList" Opacity=".8"
+                                                                       SelectedIndexChanged="DrowingNo_SelectionChanged" IsVisible="{Binding IsDropdown}" ItemsSource="{Binding DrawingNoList, Mode=TwoWay}" SelectedItem="{Binding ColumnValue, Mode=TwoWay}">
+                                                                <custom:RectanglePicker.Behaviors>
+                                                                    <behavior:EmptyRectanglePickerValidatorBehavior />
+                                                                </custom:RectanglePicker.Behaviors>
+                                                                <custom:RectanglePicker.Margin>
+                                                                    <OnPlatform x:TypeArguments="Thickness">
+                                                                        <On Platform="Android" Value="0" />
+                                                                        <On Platform="UWP" Value="0,-25,0,0" />
+                                                                    </OnPlatform>
+                                                                </custom:RectanglePicker.Margin>
+                                                            </custom:RectanglePicker>
+                                                        </Grid>
+                                                    </Frame>
+                                                </Grid>
+                                            </ViewCell.View>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                </ListView>
+
+                                <ScrollView Orientation="Vertical">
+                                <StackLayout VerticalOptions="Start">
+
+                                    <ListView x:Name="GridQuetion" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" ItemsSource="{Binding ItemSourceQuetions}"
+                                      SelectedItem="{Binding SelectedSourceQuetions}" HasUnevenRows="True" SeparatorVisibility="None">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <ViewCell>
+                                                    <ViewCell.View>
+                                                        <Grid  BackgroundColor="#EBF2FA">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="auto"/>
+                                                                <RowDefinition Height="auto"/>
+                                                                <RowDefinition Height="auto"/>
+                                                                <RowDefinition Height="auto"/>
+                                                                <RowDefinition Height="auto"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Label TextColor="#006633" FontSize="Medium" x:Name="{Binding id}">
+                                                                <Label.FormattedText>
+                                                                    <FormattedString>
+                                                                        <Span Text="{Binding srNo ,StringFormat='{0}'}" TextColor="Black"/>
+                                                                        <Span Text="{Binding Quetion}" TextColor="Black"/>
+                                                                    </FormattedString>
+                                                                </Label.FormattedText>
+                                                            </Label>
+                                                            <Label x:Name="Qid" Text="{Binding id}" TextColor="#006633" FontSize="Large" IsVisible="False"/>
+
+                                                            <StackLayout Grid.Row="1" Orientation="Horizontal" HeightRequest="45" IsVisible="{Binding IsVisibleAnsField}">
+                                                                <Grid Margin="0,1">
+                                                                    <Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" HorizontalOptions="End" Text="{Binding AnswerType,StringFormat='{0}:'}"/>
+
+                                                                    <flv:FlowListView SeparatorVisibility="None" Grid.Row="0" Grid.Column="1" VerticalOptions="StartAndExpand" RowHeight="40"
+                                                                      VerticalScrollBarVisibility="Never" IsTabStop="False" FlowItemsSource="{Binding answerOptions}">
+                                                                        <flv:FlowListView.FlowColumnTemplate>
+                                                                            <DataTemplate>
+                                                                                <Button x:Name="{Binding id}" CornerRadius="10" Margin="5,0,5,0" Padding="2,0,2,0" Text="{Binding Options}" BackgroundColor="{Binding isSelected, Mode=TwoWay}" 
+                                                                            Clicked="Button_ClickedOnAns" CommandParameter="{Binding ., Mode=TwoWay}"  BorderColor="#006633" BorderWidth="2" FontAttributes="Bold"/>
+                                                                            </DataTemplate>
+                                                                        </flv:FlowListView.FlowColumnTemplate>
+                                                                    </flv:FlowListView>
+                                                                </Grid>
+                                                            </StackLayout>
+                                                            <custom:NestedScroll IsNestedScroll="False"  Grid.Row="2" IsVisible="{Binding IsvisibleAdditionalFields}" ItemsSource="{Binding AdditionalFields}" ItemTapped="OnItemTapped"
+                                                               HorizontalOptions="Start" VerticalOptions="StartAndExpand" RowHeight="50"
+                                                               VerticalScrollBarVisibility="Never" HorizontalScrollBarVisibility="Never" 
+                                                               x:Name="AdditionalField">
+                                                                <ListView.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <ViewCell >
+                                                                            <Grid Margin="0,1" >
+                                                                                <Label Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" HorizontalOptions="End" Text="{Binding FieldName,StringFormat='{0}: '}"/>
+                                                                                <Frame  Grid.Row="0" Grid.Column="1" Padding="0"  BorderColor="Black" IsVisible="{Binding IsVisibleAnsField , Converter={StaticResource BoolInvertConverter}}">
+                                                                                    <Label Margin="5,0,0,0" VerticalTextAlignment="Center" HorizontalOptions="Start" Text="{Binding FieldPlaceHolder }" AutomationId="{Binding ID}"   />
+                                                                                    <Frame.GestureRecognizers>
+                                                                                        <TapGestureRecognizer Tapped="FieldValue_Change_Tapped" CommandParameter="{Binding FieldValue}"/>
+
+                                                                                    </Frame.GestureRecognizers>
+                                                                                </Frame>
+                                                                                <flv:FlowListView SeparatorVisibility="None" Grid.Row="0" Grid.Column="1" VerticalOptions="StartAndExpand" RowHeight="40"
+                                                                                    VerticalScrollBarVisibility="Never" IsTabStop="False" FlowItemsSource="{Binding answerOptions}" IsVisible="{Binding IsVisibleAnsField}">
+                                                                                    <flv:FlowListView.FlowColumnTemplate>
+                                                                                        <DataTemplate>
+                                                                                            <Button x:Name="{Binding id}" CornerRadius="10" Margin="5,0,5,0" Padding="2,0,2,0" Text="{Binding Options}" BackgroundColor="{Binding isSelected, Mode=TwoWay}" 
+                                                                                            Clicked="Button_ClickedOnAns" CommandParameter="{Binding ., Mode=TwoWay}"  BorderColor="#006633" BorderWidth="2" FontAttributes="Bold"/>
+                                                                                        </DataTemplate>
+                                                                                    </flv:FlowListView.FlowColumnTemplate>
+                                                                                </flv:FlowListView>
+
+                                                                            </Grid>
+                                                                        </ViewCell>
+                                                                    </DataTemplate>
+                                                                </ListView.ItemTemplate>
+                                                            </custom:NestedScroll>
+                                                            <StackLayout Grid.Row="3" Orientation="Vertical" HeightRequest="120" HorizontalOptions="FillAndExpand" IsVisible="{Binding IsVisibleImagefield}">
+                                                                <!--<Grid Margin="0,1">-->
+                                                                <!--<Label VerticalOptions="Center" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" HorizontalOptions="End" Text="Imageshere: "/>-->
+
+                                                                <ListView SeparatorVisibility="None"  FlowDirection="MatchParent"  HasUnevenRows="True" VerticalOptions="StartAndExpand"  HorizontalOptions="StartAndExpand"
+                                                                      VerticalScrollBarVisibility="Never" IsTabStop="False" ItemsSource="{Binding CCTRImageList}">
+                                                                    <ListView.ItemTemplate>
+                                                                        <DataTemplate>
+                                                                            <ViewCell>
+                                                                                <ViewCell.View>
+                                                                                    <Image Margin="10,0,0,0" Source="{Binding CCtrimg}" HeightRequest="120" WidthRequest="100" HorizontalOptions="FillAndExpand"   Aspect="AspectFit"/>
+                                                                                </ViewCell.View>
+                                                                            </ViewCell>
+                                                                        </DataTemplate>
+                                                                    </ListView.ItemTemplate>
+                                                                </ListView>
+                                                                <!--</Grid>-->
+                                                            </StackLayout>
+                                                            <customviewctrl:CustomContentViewUI Grid.Row="4" TableFunctionData="{Binding TableFunc_List}" IsVisible="{Binding IsVisibleTableFunction}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="0,10,0,20"/>
+
+
+                                                        </Grid>
+                                                    </ViewCell.View>
+                                                </ViewCell>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+
+
+                                </StackLayout>
+                            </ScrollView>
+                            
+                            <StackLayout x:Name="StackRemark" VerticalOptions="StartAndExpand" HorizontalOptions="Center">
+                                <custom:RectangleDatePicker IsVisible="false" x:Name="pickdate" DateSelected="DateChanged"  Format="dd-MM-yyyy" HorizontalOptions="StartAndExpand" MinimumDate="01/01/2000" />
+                                <!--<Label Text="REMARKS" FontSize="Medium" HorizontalOptions="Start"/>-->
+                                <StackLayout HorizontalOptions="Center" VerticalOptions="Start" Spacing="0">
+                                    <Frame BorderColor="Black" CornerRadius="0">
+                                        <Label Text="REMARKS"  FontSize="Medium"/>
+                                    </Frame>
+                                    <Frame Padding="0" BorderColor="Black" CornerRadius="0">
+                                        <Editor HorizontalOptions="FillAndExpand" Text="{Binding RemarkEntry, Mode=TwoWay}" VerticalOptions="Start" WidthRequest="400" HeightRequest="200" />
+                                    </Frame>
+                                </StackLayout>
+                            </StackLayout>
+
+                            <StackLayout  x:Name="StackSignOff" HorizontalOptions="FillAndExpand"  VerticalOptions="Center">
+                                <Button x:Name="BtnCopyData" BackgroundColor="#006633" Text="Copy ITR data" Command="{Binding ClickCommand}" CommandParameter="CopyITRData" BorderColor="#006633" TextColor="White" BorderWidth="2" CornerRadius="7"  HorizontalOptions="End" />
+
+                                <ListView ItemsSource="{Binding SignOffList}"  BackgroundColor="#EBF2FA"  IsTabStop="True" VerticalOptions="Center" HasUnevenRows="True" WidthRequest="350"  SeparatorVisibility="None" HorizontalOptions="Center">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <ViewCell >
+                                                <StackLayout VerticalOptions="Center" Spacing="50"  BackgroundColor="#EBF2FA" >
+                                                    <Label Text="{Binding Title, Mode=TwoWay}"  FontSize="35" TextColor="#006633" HorizontalOptions="Center"/>
+                                                    <Button Text="{Binding FullName, Mode=TwoWay}" FontSize="Medium" Clicked="SignOffButtonClicked"  CommandParameter="{Binding Title}" BackgroundColor="Transparent" TextColor="#006633" >
+                                                    </Button>
+                                                </StackLayout>
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackLayout>
+                        </StackLayout>
+                        <!--<StackLayout Grid.Row="1" Orientation="Horizontal" >
+                            <Button x:Name="BtnPrevious" IsVisible="False" BackgroundColor="#EBF2FA" Text="PREVIOUS SECTION" BorderColor="#006633"
+						TextColor="#006633"  Clicked="PreviousButtonClicked"  BorderWidth="2" CornerRadius="7"  HorizontalOptions="Start"  />
+                            <Button x:Name="BtnReject" Grid.Row="1" Grid.Column="1" BackgroundColor="#EBF2FA" Text="Reject" BorderColor="#006633"
+						TextColor="#006633"  Clicked="RejectButtonClicked" HorizontalOptions="Center"  BorderWidth="2" CornerRadius="7"    />
+                        </StackLayout>
+                        <Button x:Name="BtnNext" Grid.Row="1" BackgroundColor="#006633" Text="NEXT SECTION" BorderColor="#006633" TextColor="White" 
+						Clicked="NextButtonClicked"  BorderWidth="2" CornerRadius="7"  HorizontalOptions="End" />-->
+
+                        <StackLayout Grid.Row="1" Orientation="Horizontal" >
+                            <Button BackgroundColor="#EBF2FA" Text="PREVIOUS SECTION" BorderColor="#006633" CommandParameter="{Binding PreviousBtnCmd}" IsVisible="{Binding PreviousBtnVisible}"
+                                    TextColor="#006633"  Clicked="ButtonClicked"  BorderWidth="2" CornerRadius="7"  HorizontalOptions="Start"/>
+                            <Button x:Name="BtnReject" Grid.Row="1" Grid.Column="1" BackgroundColor="#EBF2FA" Text="Reject" BorderColor="#006633"
+                                    TextColor="#006633"  Clicked="RejectButtonClicked" HorizontalOptions="Center"  BorderWidth="2" CornerRadius="7"/>
+                        </StackLayout>
+                        <Button x:Name="BtnNext" Grid.Row="1" BackgroundColor="#006633" Text="{Binding NextSaveBtnText}" BorderColor="#006633" TextColor="White" 
+                                Clicked="ButtonClicked"  BorderWidth="2" CornerRadius="7"  HorizontalOptions="End" CommandParameter="{Binding NextBtnCmd}"/>
+                    </Grid>
+                </Frame>
+            </Grid>
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

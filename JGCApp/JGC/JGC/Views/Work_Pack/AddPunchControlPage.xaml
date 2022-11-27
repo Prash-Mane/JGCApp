@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:JGC.Common.Converters"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             mc:Ignorable="d"
+             ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}"
+             x:Class="JGC.Views.Work_Pack.AddPunchControlPage"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms" 
+             xmlns:TEffect="clr-namespace:JGC.UserControls.Touch"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:customControls1="clr-namespace:JGC.UserControls"
+             prism:ViewModelLocator.AutowireViewModel="True">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Construction SV Punch"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+            </Label>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Resources>
+        <converters:StringToStringColorConverter x:Key="StringToStringColorConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <StackLayout Margin="5,5,5,5">
+                    <!-- Add Punch Grid -->
+                    <StackLayout IsVisible="{Binding AddPunchGrid}">
+                        <StackLayout x:Name="Horizontal_Layout" >
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30*"/>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="25*"/>
+                                    <ColumnDefinition Width="60*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <StackLayout Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="0" >
+                                    <!--<Label Text="Punch Layer" HorizontalOptions="/>-->
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                        ItemsSource="{Binding PunchLayersList}" 
+                                        Title="Punch Layer"                         
+                                        SelectedItem="{Binding SelectedPunchLayer, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                </StackLayout>
+                                <StackLayout Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
+                                    <!--<Label Text="CWP Tag" HorizontalOptions="StartAndExpand"/>-->
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                        ItemsSource="{Binding CWPTags}" 
+                                        Title="CWP Tag"                         
+                                        ItemDisplayBinding="{Binding TagNo}"
+                                        SelectedItem="{Binding SelectedCWPTag, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <customControls:CustomPicker Margin="0,0,0,30" 
+                                                                 Title="Select Drawing"
+                                                                ItemDisplayBinding="{Binding Name}"
+                                                                 SelectedIndexChanged="DrawingPicker_SelectedIndexChanged"
+                                        ItemsSource="{Binding DrawingList}"  
+                            SelectedItem="{Binding SelectedDrawing, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <Label Text="Preset Punch Selection" TextColor="Black" Margin="0,0,0,10"
+                           FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+                                    <!--<Label Text="FWBS" HorizontalOptions="StartAndExpand"/>-->
+                                    <customControls:CustomPicker 
+                                        Margin="0,0,0,10"   
+                                        Title="FWBS"
+                                        ItemsSource="{Binding FWBSList}"                            
+                            SelectedItem="{Binding SelectedFWBS, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <!--<Label Text="Punch Type" HorizontalOptions="StartAndExpand"/>-->
+                                    <customControls:CustomPicker 
+                                        Margin="0,0,0,10"
+                                        Title="Punch Type"
+                                        ItemsSource="{Binding PresetPunchTypeList}"                            
+                            SelectedItem="{Binding SelectedpresetpunchType, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <!--<Label Text="Component Category" HorizontalOptions="StartAndExpand"/>-->
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                                                 Title="Component Category"
+                                        ItemsSource="{Binding ComponentCategoryList}"                            
+                            SelectedItem="{Binding SelectedComponentCategory, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <!--<Label Text="Component" HorizontalOptions="StartAndExpand"/>-->
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                          Title="Component"
+                                        ItemsSource="{Binding ComponentList}"                            
+                            SelectedItem="{Binding SelectedComponent, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <!--<Label Text="Action" HorizontalOptions="StartAndExpand"/>-->
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                         Title="Action"
+                                        ItemsSource="{Binding ActionList}"                            
+                            SelectedItem="{Binding SelectedAction, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <Button Text="Select Preset Punch" Command="{Binding BtnCommand}" CommandParameter="SelectPresetPunch" HorizontalOptions="StartAndExpand" CornerRadius="5" BackgroundColor="#3B87C7" TextColor="White"/>
+                                    <Button Text="Save Punch"  Clicked="ClickedOnSavePunch" HorizontalOptions="StartAndExpand" CornerRadius="5" BackgroundColor="#3B87C7" TextColor="White"/>
+                                </StackLayout>
+                                <Label Text="or" FontAttributes="Bold" HorizontalOptions="Center" Grid.Column="1" Grid.Row="1" Margin="10,30,10,0"/>
+                                <StackLayout Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" VerticalOptions="Start">
+                                    <Label Text="Other Component"/>
+                                    <Entry HorizontalOptions="FillAndExpand" Text="{Binding TxtOtherComponent}"/>
+                                    <StackLayout Orientation="Horizontal" Margin="0,10,0,20">
+                                        <Label Text="Take Image" FontSize="Medium" FontAttributes="Bold"/>
+                                        <Image Source="Camera.png" HeightRequest="60" WidthRequest="60">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer  Command="{Binding BtnCommand}" CommandParameter="OpenCameraPage"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </StackLayout>
+                                </StackLayout>
+                                <StackLayout Grid.Row="2" Grid.Column="2" VerticalOptions="Start">
+                                    <Label Text="Punch Detail" TextColor="Black" Margin="0,0,0,10"
+                           FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+                                    <!--<Label Text="Punch Category" HorizontalOptions="StartAndExpand"/>-->
+                                    <customControls:CustomPicker Margin="0,0,0,40"
+                                        Title="Punch Category"
+                                        ItemsSource="{Binding PresetCategoryList}"                            
+                            SelectedItem="{Binding SelectedPresetCategory, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <Label Text="Action By" TextColor="Black" Margin="0,0,0,30"
+                           FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+                                    <!--<Label Text="Component Category Code" HorizontalOptions="StartAndExpand"/>-->
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                                                 Title="Component Category Code"
+                                        ItemsSource="{Binding CompanyCategoryCodes}"                            
+                            SelectedItem="{Binding SelectedCompanyCategoryCodes, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <!--<Label Text="Function Code" HorizontalOptions="StartAndExpand"/>-->
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                        Title="Function Code"
+                                        ItemsSource="{Binding FunctionCodeList}"                            
+                            SelectedItem="{Binding SelectedFunctionCode, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <!--<Label Text="Section Code" HorizontalOptions="StartAndExpand"/>-->
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                        Title="Section Code"
+                                        ItemsSource="{Binding SectionCodeList}"                            
+                            SelectedItem="{Binding SelectedSectionCode, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <Button Text="Cancel" Command="{Binding BtnCommand}" CommandParameter="CancelPunch" HorizontalOptions="StartAndExpand"
+                                    CornerRadius="5" BackgroundColor="#3B87C7" TextColor="White"/>
+                                </StackLayout>
+                                <StackLayout Grid.Row="2" Grid.Column="3" >
+                                    <Label Text="Description" Margin="0,35,0,0"/>
+                                    <Entry HorizontalOptions="FillAndExpand" Text="{Binding PreSetDescription, Mode=TwoWay}" Margin="0,0,0,95"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="50*" />
+                                            <ColumnDefinition Width="50*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout Grid.Column="0">
+                                            <Label Text="Remark(Optional)"/>
+                                            <Editor Text="{Binding PunchRemarks, Mode=TwoWay}" />
+                                        </StackLayout>
+                                        <StackLayout Grid.Column="1">
+                                            <Label Text="Target Date(Optional)"/>
+                                            <customControls1:NullableDatePicker NullableDate="{Binding TargetDAte}" />
+                                        </StackLayout>
+                                    </Grid>
+                                </StackLayout>
+                            </Grid>
+                        </StackLayout>
+                        <StackLayout x:Name="Verticle_Layout">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50*"/>
+                                    <ColumnDefinition Width="5*"/>
+                                    <ColumnDefinition Width="45*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <StackLayout Grid.Column="0" Grid.Row="0" Grid.RowSpan="2">
+
+                                    <Label Text="Punch Layer" HorizontalOptions="StartAndExpand"/>
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                        ItemsSource="{Binding PunchLayersList}" 
+                                        SelectedItem="{Binding SelectedPunchLayer, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+
+                                    <Label Text="CWP Tag" HorizontalOptions="StartAndExpand"/>
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                        ItemsSource="{Binding CWPTags}"     
+                                                                 ItemDisplayBinding="{Binding TagNo}"
+                                        SelectedItem="{Binding SelectedCWPTag, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <customControls:CustomPicker Margin="0,0,0,30" 
+                                                                 Title="Select Drawing"
+                                                                 ItemDisplayBinding="{Binding Name}"
+                                                                    SelectedIndexChanged="DrawingPicker_SelectedIndexChanged"
+                                        ItemsSource="{Binding DrawingList}"                            
+                            SelectedItem="{Binding SelectedDrawing, Mode=TwoWay}" >
+                                    </customControls:CustomPicker>
+                                    <Label Text="Preset Punch Selection" TextColor="Black" Margin="0,0,0,10"
+                           FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+                                    <Label Text="FWBS" HorizontalOptions="StartAndExpand"/>
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                        ItemsSource="{Binding FWBSList}"                            
+                            SelectedItem="{Binding SelectedFWBS, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <Label Text="Punch Type" HorizontalOptions="StartAndExpand"/>
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                        ItemsSource="{Binding PresetPunchTypeList}"                            
+                            SelectedItem="{Binding SelectedpresetpunchType, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <Label Text="Component Category" HorizontalOptions="StartAndExpand"/>
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                      ItemsSource="{Binding ComponentCategoryList}"                            
+                            SelectedItem="{Binding SelectedComponentCategory, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <Label Text="Component" HorizontalOptions="StartAndExpand"/>
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                        ItemsSource="{Binding ComponentList}"                            
+                            SelectedItem="{Binding SelectedComponent, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <Label Text="Action" HorizontalOptions="StartAndExpand"/>
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                        ItemsSource="{Binding ActionList}"                            
+                            SelectedItem="{Binding SelectedAction, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Button Text="Select Preset Punch" Command="{Binding BtnCommand}" CommandParameter="SelectPresetPunch"  HorizontalOptions="StartAndExpand" CornerRadius="5" BackgroundColor="#3B87C7" TextColor="White"/>
+                                        <!--<Button Text="Save Punch" HorizontalOptions="StartAndExpand" CornerRadius="5" BackgroundColor="DarkGray" TextColor="White"/>-->
+                                        <Button Text="Cancel" HorizontalOptions="StartAndExpand" Command="{Binding BtnCommand}" CommandParameter="CancelPunch" CornerRadius="5" BackgroundColor="#3B87C7" TextColor="White"/>
+                                    </StackLayout>
+                                </StackLayout>
+                                <Label Text="or" HorizontalOptions="Center" FontAttributes="Bold" VerticalOptions="Center" Grid.Column="1" Grid.Row="0" Margin="0,60,0,0"/>
+                                <StackLayout Grid.Row="0" Grid.Column="2" VerticalOptions="Start">
+                                    <Label Text=" " HorizontalOptions="Center" FontAttributes="Bold"  Margin="0,60,0,0"/>
+                                    <Label Text="Other Component"/>
+                                    <Entry HorizontalOptions="FillAndExpand" Text="{Binding TxtOtherComponent}"/>
+                                    <StackLayout Orientation="Horizontal" Margin="0,30,0,0">
+                                        <Label Text="Take Image" FontSize="Medium" FontAttributes="Bold"/>
+                                        <Image Source="Camera.png" HeightRequest="60" WidthRequest="60">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer  Command="{Binding BtnCommand}" CommandParameter="OpenCameraPage"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </StackLayout>
+                                </StackLayout>
+                                <StackLayout Grid.Row="1" Grid.Column="2" VerticalOptions="Start">
+                                    <Label Text="Punch Detail" TextColor="Black" Margin="0,0,0,10"
+                           FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+                                    <Label Text="Punch Category" HorizontalOptions="StartAndExpand"/>
+                                    <customControls:CustomPicker Margin="0,0,0,20"
+                                        ItemsSource="{Binding PresetCategoryList}"                            
+                            SelectedItem="{Binding SelectedPresetCategory, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <Label Text="Action By" TextColor="Black" Margin="0,0,0,50"
+                           FontAttributes="Bold" HorizontalOptions="StartAndExpand"/>
+                                    <Label Text="Component Category Code" HorizontalOptions="StartAndExpand"/>
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                        ItemsSource="{Binding CompanyCategoryCodes}"                            
+                            SelectedItem="{Binding SelectedCompanyCategoryCodes, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <Label Text="Function Code" HorizontalOptions="StartAndExpand"/>
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                        ItemsSource="{Binding FunctionCodeList}"                            
+                            SelectedItem="{Binding SelectedFunctionCode, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                    <Label Text="Section Code" HorizontalOptions="StartAndExpand"/>
+                                    <customControls:CustomPicker Margin="0,0,0,10"
+                                        ItemsSource="{Binding SectionCodeList}"                            
+                            SelectedItem="{Binding SelectedSectionCode, Mode=TwoWay}">
+                                    </customControls:CustomPicker>
+                                </StackLayout>
+                            </Grid>
+                            <StackLayout >
+
+                                <Label Text="Description" HorizontalOptions="StartAndExpand"/>
+                                <Entry HorizontalOptions="FillAndExpand" Text="{Binding PreSetDescription, Mode=TwoWay}" Margin="0,0,0,20"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="50*" />
+                                        <ColumnDefinition Width="50*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackLayout Grid.Column="0">
+                                        <Label Text="Remark(Optional)"/>
+                                        <Editor Text="{Binding PunchRemarks, Mode=TwoWay}"/>
+                                    </StackLayout>
+                                    <StackLayout Grid.Column="1">
+                                        <Label Text="Target Date(Optional)"/>
+                                        <customControls1:NullableDatePicker NullableDate="{Binding TargetDAte}" />
+                                    </StackLayout>
+                                </Grid>
+                            </StackLayout>
+                            <Button Text="Save Punch" HorizontalOptions="StartAndExpand"  Clicked="ClickedOnSavePunch"  CornerRadius="5" BackgroundColor="#3B87C7" TextColor="White"/>
+                        </StackLayout>
+                    </StackLayout>
+                    <!-- Camera Grid -->
+                    <!--Display PDF-->
+                    <Grid IsVisible="{Binding PDFGrid}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <StackLayout Grid.Row="0" Orientation="Horizontal">
+                            <Label Text="{Binding SelectedPDF}" FontAttributes="Bold" HorizontalOptions="StartAndExpand"  TextColor="#3a6b8b" />
+
+                            <Button x:Name="Drawpoints" Clicked="Enable_Functionality" IsVisible="False" HorizontalOptions="End" BackgroundColor="#3B87C7" FontAttributes="Bold" TextColor="White"/>
+                        </StackLayout>
+
+                        <Grid Grid.Row="1">
+                            <skia:SKCanvasView Grid.Row="0"  x:Name="PdfcanvasView" PaintSurface="OnCanvasViewPaintSurface" />
+                            <Grid.Effects Grid.Row="0" >
+                                <TEffect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
+                            </Grid.Effects>
+                        </Grid>
+
+                        <StackLayout Orientation="Horizontal" Grid.Row="2">
+                            <Button BackgroundColor="#3B87C7"
+                        BorderColor="LightGray" 
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="NewPunch" 
+                        FontAttributes="Bold" 
+                        HorizontalOptions="FillAndExpand" 
+                        Text="Select To Markup" 
+                        TextColor="White"
+                                  />
+
+                            <Button BackgroundColor="#3B87C7"
+                        BorderColor="LightGray" 
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="BackFromPDF" 
+                        FontAttributes="Bold" 
+                        HorizontalOptions="FillAndExpand"
+                        Text="Close Drawing" 
+                        TextColor="White"/>
+                        </StackLayout>
+                    </Grid>
+
+                </StackLayout>
+            </ScrollView>
+            <!-- Camera Grid -->
+            <Grid IsVisible="{Binding CameraGrid}" 
+                  ColumnSpacing="10" 
+                  RowSpacing="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label FontAttributes="Bold"
+                       Grid.Column="0"
+                       HorizontalOptions="StartAndExpand"
+                       Text="List of photos" 
+                       TextColor="#1A5276"
+                       VerticalTextAlignment="Center" />
+                <Label FontAttributes="Bold"
+                       Grid.Column="1" 
+                       Grid.Row="0"  
+                       HorizontalOptions="StartAndExpand"
+                       Text="Select Camera" 
+                       TextColor="#1A5276"
+                       VerticalTextAlignment="Center"/>
+                <customControls:CustomPicker
+                         x:Name="ImageFiles"
+                         Grid.Column="0" 
+                         Grid.Row="1"
+                         HorizontalOptions="FillAndExpand"                         
+                         SelectedIndexChanged="PImage_SelectedIndexChanged"
+                         VerticalOptions="Center" >
+                    <!--ItemsSource="{Binding ImageFiles}"-->
+                </customControls:CustomPicker>
+
+                <customControls:CustomPicker
+                         Grid.Column="1" 
+                         Grid.Row="1"
+                         HorizontalOptions="FillAndExpand"
+                         ItemsSource="{Binding CameraItems}"
+                         SelectedItem="{Binding SelectedCameraItem, Mode=TwoWay}"
+                         SelectedIndexChanged="Cameraclick"
+                         VerticalOptions="Center" >
+                </customControls:CustomPicker>
+                <Button BackgroundColor="#3B87C7"                         
+                        FontAttributes="Bold"
+                        Grid.Column="2" 
+                        Grid.Row="1"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Add From File"  
+                        TextColor="#ffffff"
+                        Clicked="Clicked_PickImage"
+                        VerticalOptions="EndAndExpand" />
+                <!--Clicked="Clicked_PickImage"-->
+
+
+                <Grid ColumnSpacing="10"
+                       Grid.ColumnSpan="3" 
+                       Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <skia:SKCanvasView Grid.Row="0" x:Name="CameracanvasView" PaintSurface="OnCameraCanvasViewPaintSurface"/>
+                        <Grid.Effects Grid.Row="0" >
+                            <TEffect:TouchEffect Capture="True" TouchAction="OnCameraTouchEffectAction" />
+                        </Grid.Effects>
+                    </Grid>
+
+                    <StackLayout  Grid.Row="1" Orientation="Horizontal" VerticalOptions="End" HorizontalOptions="FillAndExpand" IsVisible="{Binding Showbuttons}">
+                        <Button BackgroundColor="#3B87C7"  
+                                Clicked="ClickedOn_ClearImage"
+                                FontAttributes="Bold"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Clear"  
+                                TextColor="#ffffff"
+                                VerticalOptions="FillAndExpand"/>
+                      
+                        <Button BackgroundColor="#3B87C7"
+                                Clicked="Clicked_SaveCaptureImage"
+                                FontAttributes="Bold"
+                                HorizontalOptions="FillAndExpand"
+                                IsVisible="{Binding IsSaveVisible}"
+                                Text="Save" 
+                                TextColor="#ffffff"
+                                VerticalOptions="FillAndExpand"/>
+                        <Button BackgroundColor="#3B87C7" 
+                                FontAttributes="Bold"
+                                HorizontalOptions="FillAndExpand"
+                                IsVisible="{Binding IsSaveVisible, Converter={StaticResource BoolInvertConverter}}"
+                                Text="Rename" 
+                               Clicked="Clicked_Rename"
+                                TextColor="#ffffff"
+                                VerticalOptions="FillAndExpand"/>
+                        <Button BackgroundColor="#3B87C7" 
+                                Clicked="ClickedOnAddMArkup"
+                                IsVisible="{Binding IsSaveVisible}"
+                                FontAttributes="Bold"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Select To Markup"  
+                                TextColor="#ffffff"
+                                VerticalOptions="FillAndExpand"/>
+                        <Button BackgroundColor="#3B87C7"  
+                                IsVisible="{Binding IsSaveVisible, Converter={StaticResource BoolInvertConverter}}"
+                                FontAttributes="Bold"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Delete"  
+                                Clicked="Clicked_DeleteImage"
+                                TextColor="#ffffff"
+                            VerticalOptions="FillAndExpand"/>
+                       
+                    </StackLayout>
+                    <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="FillAndExpand" IsVisible="{Binding Showbuttons, Converter={StaticResource BoolInvertConverter}}">
+                        <customControls:CustomEntry x:Name="RenameEntry"  HorizontalOptions="FillAndExpand" />
+                        <Button BackgroundColor="#3B87C7" 
+                                Clicked="Clicked_SaveImageName"
+                                FontAttributes="Bold"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Save"  
+                                TextColor="#ffffff"/>
+                        <Button 
+                                BackgroundColor="#3B87C7" 
+                                Clicked="clicked_CancleRename" 
+                                FontAttributes="Bold"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Cancel"  
+                                TextColor="#ffffff"/>
+                    </StackLayout>
+                    <StackLayout Grid.Row="2" Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Button BackgroundColor="#3B87C7"  
+                                IsVisible="{Binding IsSaveVisible}"
+                                FontAttributes="Bold"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Enable Drawing"
+                                x:Name="EnableDisableDrawing" 
+                                Clicked="Clicked_EnableDisableDrawCamera"
+                                TextColor="#ffffff"
+                            VerticalOptions="FillAndExpand"/>
+                        <Button BackgroundColor="#3B87C7" 
+                                Command="{Binding BtnCommand}" 
+                                CommandParameter="BackfromCameraGrid" 
+                                FontAttributes="Bold"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Back"  
+                                IsVisible="{Binding Showbuttons}"
+                                TextColor="#ffffff"
+                                VerticalOptions="EndAndExpand"/>
+                    </StackLayout>
+                </Grid>
+            </Grid>
+          
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

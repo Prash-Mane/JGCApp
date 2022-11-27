@@ -1,0 +1,500 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>pdbonly</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Converters\**" />
+    <Compile Remove="PopupPages\**" />
+    <Compile Remove="UserControls\PopupControlsViewModel\**" />
+    <EmbeddedResource Remove="Converters\**" />
+    <EmbeddedResource Remove="PopupPages\**" />
+    <EmbeddedResource Remove="UserControls\PopupControlsViewModel\**" />
+    <None Remove="Converters\**" />
+    <None Remove="PopupPages\**" />
+    <None Remove="UserControls\PopupControlsViewModel\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\Extentions\EventExtensions.cs" />
+    <Compile Remove="Common\Helpers\PinchAndPanContainer.cs" />
+    <Compile Remove="Common\Helpers\UserDetails.cs" />
+    <Compile Remove="Common\Helpers\UserProjects.cs" />
+    <Compile Remove="Common\Interfaces\IDownloadManager.cs" />
+    <Compile Remove="Common\Services\DownloadManager.cs" />
+    <Compile Remove="DataBase\DataTables\T_CMR.cs" />
+    <Compile Remove="DataBase\DataTables\T_CMRDetail.cs" />
+    <Compile Remove="DataBase\DataTables\T_CMRHHStorageArea.cs" />
+    <Compile Remove="DataBase\DataTables\T_CMRStorageAreas.cs" />
+    <Compile Remove="DataBase\DataTables\T_CMRSummary.cs" />
+    <Compile Remove="DataBase\DataTables\T_DWRRow.cs" />
+    <Compile Remove="DataBase\DBConnection.cs" />
+    <Compile Remove="MainPage.xaml.cs" />
+    <Compile Remove="Models\Completions\CustomContentView.cs" />
+    <Compile Remove="UserControls\CustomControls\BindableRadioGroup.cs" />
+    <Compile Remove="UserControls\CustomControls\CustomRadioButton.cs" />
+    <Compile Remove="UserControls\CustomControls\FileManager.cs" />
+    <Compile Remove="UserControls\PopupControls\ProgressPopup.xaml.cs" />
+    <Compile Remove="UserControls\Zoom\MatrixDisplay.cs" />
+    <Compile Remove="ViewModels\E-Reporter\DWR_EReporterViewModel.cs" />
+    <Compile Remove="ViewModels\E-Reporter\SpoolDrawingListViewModel.cs" />
+    <Compile Remove="ViewModels\E-Test_Package\ColorPick.cs" />
+    <Compile Remove="ViewModels\E-Test_Package\ColorPickerBaseViewModel.cs" />
+    <Compile Remove="ViewModels\E-Test_Package\ColorPickerViewModel.cs" />
+    <Compile Remove="ViewModels\HomeViewModel.cs" />
+    <Compile Remove="ViewModels\MainPageViewModel.cs" />
+    <Compile Remove="Views\ColorPickerView.xaml.cs" />
+    <Compile Remove="Views\GeneratePDF.xaml.cs" />
+    <Compile Remove="Views\E-Reporter\DWR_EReporterPage.xaml.cs" />
+    <Compile Remove="Views\E-Reporter\SpoolDrawingListPage.xaml.cs" />
+    <Compile Remove="Views\HomePage.xaml.cs" />
+    <Compile Remove="Views\MasterPage\MainMasterDetailPageDetail.xaml.cs" />
+    <Compile Remove="Views\MasterPage\MainMasterDetailPageMaster.xaml.cs" />
+    <Compile Remove="Views\MasterPage\MainMasterDetailPageMenuItem.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="MainPage.xaml" />
+    <EmbeddedResource Remove="UserControls\PopupControls\ProgressPopup.xaml" />
+    <EmbeddedResource Remove="Views\ColorPickerView.xaml" />
+    
+    <EmbeddedResource Remove="Views\E-Reporter\DWR_EReporterPage.xaml" />
+    <EmbeddedResource Remove="Views\E-Reporter\SpoolDrawingListPage.xaml" />
+    <EmbeddedResource Remove="Views\HomePage.xaml" />
+    <EmbeddedResource Remove="Views\GeneratePDF.xaml" />
+    <EmbeddedResource Remove="Views\MasterPage\MainMasterDetailPageDetail.xaml" />
+    <EmbeddedResource Remove="Views\MasterPage\MainMasterDetailPageMaster.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="teams.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Images\act.png" />
+    <EmbeddedResource Include="Images\ccms.png" />
+    <EmbeddedResource Include="Images\dwg.png" />
+    <EmbeddedResource Include="Images\ereporter.png" />
+    <EmbeddedResource Include="Images\etestpack.png" />
+    <EmbeddedResource Include="Images\jgc.png" />
+    <EmbeddedResource Include="Images\JI.png" />
+    <EmbeddedResource Include="Images\jobpack.png" />
+    <EmbeddedResource Include="Images\main.png" />
+    <EmbeddedResource Include="Images\mi.png" />
+    <EmbeddedResource Include="Images\mods.png" />
+    <EmbeddedResource Include="Images\tracker.png" />
+    <EmbeddedResource Include="Images\vmenterprise.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs" Version="7.0.4" />
+    <PackageReference Include="Autofac" Version="4.9.4" />
+    <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
+    <PackageReference Include="Forms.Controls.FlexButton" Version="0.11.0" />
+    <PackageReference Include="itext7" Version="7.1.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Plugin.CrossPlatformTintedImage" Version="1.0.0" />
+    <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
+    <PackageReference Include="Prism.Autofac.Forms" Version="7.1.0.431" />
+    <PackageReference Include="Prism.Core" Version="7.1.0.431" />
+    <PackageReference Include="Prism.Forms" Version="7.1.0.431" />
+    <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
+    <PackageReference Include="SkiaSharp" Version="1.68.1.1" />
+    <PackageReference Include="SkiaSharp.Views" Version="1.68.1.1" />
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.1.1" />
+    <PackageReference Include="sqlite-net-pcl" Version="1.5.166-beta" />
+    <PackageReference Include="SQLiteNetExtensions" Version="2.0.0" />
+    <PackageReference Include="SQLiteNetExtensions.Async" Version="2.0.0" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="1.1.9" />
+    <PackageReference Include="SQLitePCLRaw.core" Version="1.1.9" />
+    <PackageReference Include="Syncfusion.Xamarin.Pdf" Version="17.1.0.43" />
+    <PackageReference Include="System.Collections" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel" Version="4.3.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.5.0" />
+    <PackageReference Include="System.ComponentModel.TypeConverter" Version="4.3.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.0.19" />
+    <PackageReference Include="System.ObjectModel" Version="4.3.0" />
+    <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
+    <PackageReference Include="System.Runtime" Version="4.3.1" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.3.1" />
+    <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
+    <PackageReference Include="Xam.Plugin.FilePicker" Version="1.1.0" />
+    <PackageReference Include="Xam.Plugin.LatestVersion" Version="2.0.0-beta.76" />
+    <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
+    <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.0.0" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.Forms" Version="4.3.0.991211" />
+    <PackageReference Include="Xamarin.Forms.DataGrid" Version="3.0.0-pre1" />
+    <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
+    <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Windows.Foundation.UniversalApiContract">
+      <HintPath>C:\Program Files (x86)\Windows Kits\10\References\10.0.18362.0\Windows.Foundation.UniversalApiContract\8.0.0.0\Windows.Foundation.UniversalApiContract.winmd</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="UserControls\HeaderUC.xaml.cs">
+      <DependentUpon>HeaderUC.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UserControls\PopupControls\ColorSelection_CustomColor\ColorPickerPopup.xaml.cs">
+      <DependentUpon>ColorPickerPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\E-Reporter\DownloadPage.xaml.cs">
+      <DependentUpon>DownloadPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\E-Reporter\DWRControlLogPage.xaml.cs">
+      <DependentUpon>DWRControlLogPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\E-Reporter\DWRPopup.xaml.cs">
+      <DependentUpon>DWRPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\E-Test_Package\PackageDetailPage.xaml.cs">
+      <DependentUpon>PackageDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\E-Test_Package\PunchOverviewPage.xaml.cs">
+      <DependentUpon>PunchOverviewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\E-Test_Package\PunchViewPage.xaml.cs">
+      <DependentUpon>PunchViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\E-Test_Package\TestRecordPage.xaml.cs">
+      <DependentUpon>TestRecordPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\FreeDrawPage.xaml.cs">
+      <DependentUpon>FreeDrawPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\Completions\CustomContentViewUI.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UserControls\FooterUC.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UserControls\HeaderUC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UserControls\PageHeaderControls\HeaderUC.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UserControls\PopupControls\ColorSelection_CustomColor\ColorPickerPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UserControls\PopupControls\ColorSelection_CustomColor\ColorSelectionPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UserControls\PopupControls\NetworkErrorPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UserControls\PopupControls\ShowWrapTextPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\CMR_EReporterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Completions\CopyITRData.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Completions\ITRPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Completions\NewPunchPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Completions\TableFunctionTypePopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Completions\UnEditableFilterPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\DownloadPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\DrawLinePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\E-Reporter\AttachmentPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\E-Reporter\DropDownEntryPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\E-Reporter\DWRControlLogPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\E-Reporter\DWRDrawingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\E-Reporter\DWRPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\E-Reporter\DWR_AddJointPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\E-Reporter\DWR_InspectJointPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\E-Reporter\InspectJointPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\E-Reporter\SignOffPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\E-Test_Package\ControlLogPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\E-Test_Package\PackageDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\E-Test_Package\PostTestRecordPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\E-Test_Package\PreTestRecordPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MasterPage\MainMasterDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MasterPage\MasterNavigationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ModulesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MRR_EReporterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PDFviever.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\DWR_EReporterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\EReportSelectionPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\FingerDrawingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ProjectListPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\RIR_EReporterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SettingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\UplaodDoc.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\UploadPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Work_Pack\AddPunchControlPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Work_Pack\CWPTagStatusPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Work_Pack\DrawingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Work_Pack\DrawingsPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Work_Pack\EditPunchControlPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Work_Pack\FilterPopup.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Work_Pack\IWPControlLogPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Work_Pack\IWPPdfPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Work_Pack\IWPSelectionPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Work_Pack\ManPowerResourcePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Work_Pack\PredecessorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Work_Pack\PunchControlPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Work_Pack\SuccessorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="UserControls\CustomControls\ImageButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="UserControls\FooterUC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="UserControls\HeaderUC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="UserControls\PopupControls\ColorSelection_CustomColor\ColorPickerPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="UserControls\PopupControls\ColorSelection_CustomColor\ColorSelectionPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="UserControls\PopupControls\NetworkErrorPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="UserControls\PopupControls\ShowWrapTextPopup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\CaptureImagePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Reporter\CMR_EReporterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Reporter\DashboardPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Reporter\DownloadPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Reporter\DWR_EReporterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Reporter\EReportSelectionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Reporter\LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Reporter\ModulesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Reporter\MRR_EReporterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Reporter\PDFviever.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Reporter\ProjectListPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Reporter\RIR_EReporterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Reporter\SettingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Reporter\UploadPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Test_Package\ControlLogPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Test_Package\DrainRecord.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Test_Package\ETestPackageList.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Test_Package\PackageDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Test_Package\PandidPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Test_Package\PunchOverviewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Test_Package\PunchViewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\E-Test_Package\TestRecordPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\FreeDrawPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\LoginPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\MasterPage\MainMasterDetailPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\MasterPage\MasterNavigationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\ModulesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\PDFviever.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\ReportDetailsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\SettingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\UplaodDoc.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\Work_Pack\CWPTagStatusPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\Work_Pack\DrawingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\Work_Pack\IWPControlLogPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\Work_Pack\IWPPdfPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\Work_Pack\IWPSelectionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\Work_Pack\ManPowerResourcePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\Work_Pack\PredecessorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\Work_Pack\PunchControlPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="Views\Work_Pack\SuccessorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
+</Project>

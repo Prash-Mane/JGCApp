@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}"
+             x:Class="JGC.Views.E_Test_Package.PreTestRecordPage"
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Pre-Test Record"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+
+            </Label>
+            <Image Source="searchbar.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="ETestPackageList"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <StackLayout Margin="10,0">
+            <!-- Main Grid -->
+            <!--  <StackLayout IsVisible="{Binding MainGrid}"> -->
+                <StackLayout IsVisible="False">
+                    <Grid RowSpacing="10" >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                          
+                            <Grid Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                                <Grid.RowDefinitions>
+                            <RowDefinition Height="10*"/>
+                            <RowDefinition Height="40*"/>
+                            <RowDefinition Height="10*"/>
+                                   
+                                </Grid.RowDefinitions>
+                                <Label 
+                        Text="Remarks" 
+                        Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" FontAttributes="Bold"/>
+                                <Editor VerticalOptions="FillAndExpand" BackgroundColor="LightGray"
+                            Text="{Binding DrainRecordRemarks, Mode=TwoWay}"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Grid.Row="1" 
+                            Grid.RowSpan="2"/>
+                            </Grid>
+                        </Grid>
+            
+                    <StackLayout Orientation="Horizontal" VerticalOptions="End" >
+                        <Button 
+                        Text="Save Remarks" 
+                        TextColor="White"
+                        Command="{Binding BtnCommand}"
+                         HorizontalOptions="FillAndExpand"
+                            VerticalOptions="End"
+                        CommandParameter="SaveRemarks"
+                        BackgroundColor="#C4BB46" />
+                        <Button 
+                    Text="Edit Signatures"
+                    TextColor="White"
+                    HorizontalOptions="FillAndExpand"
+                        VerticalOptions="End"
+                    Command="{Binding BtnCommand}"
+                    CommandParameter="SignatureGrid"
+                    BackgroundColor="#C4BB46" />
+                    </StackLayout>
+                </StackLayout>
+            
+
+
+            <!-- SIGNATURE Grid -->
+            <!--   <StackLayout   IsVisible="{Binding SignatureGrid}"> -->
+          
+                <StackLayout   IsVisible="True">
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="40*"/>
+                            <RowDefinition Height="40*"/>
+                        </Grid.RowDefinitions>
+                        <Label 
+                    FontAttributes="Bold" 
+                    HorizontalOptions="StartAndExpand"
+                 
+                    Text="{Binding TestPackage}" 
+                    TextColor="#3a6b8b"  
+                    VerticalTextAlignment="Center"/>
+                        <Grid ColumnSpacing="10" Grid.Row="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label 
+                    FontAttributes="Bold" 
+                    HorizontalOptions="StartAndExpand"
+                  
+                    Text="Content" 
+                    TextColor="#3a6b8b"  
+                    VerticalTextAlignment="Center"/>
+
+                            <Grid Grid.Row="2"
+                      ColumnSpacing="10"
+                  IsVisible="{Binding DetailsGrid}" 
+                  RowSpacing="0" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <dg:DataGrid ActiveRowColor="#8899AA"  
+                               BorderColor="#CCCCCC" 
+                             ColumnSpacing="1"
+                             HeaderBackground="#FFFFFF"
+                             HeaderBordersVisible="True" 
+                             HeaderHeight="35" 
+                             HeaderTextColor="#3a6b8b"
+                             ItemsSource="{Binding RecordConfirmationSource}"
+                             Margin="0,10,0,0"  
+                             SelectionEnabled="True" 
+                             SelectedItem="{Binding SelectedConfirmationSource}" >
+                                    <x:Arguments>
+                                        <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                                    </x:Arguments>
+                                    <dg:DataGrid.HeaderFontSize>
+                                        <OnIdiom  x:TypeArguments="x:Double">
+                                            <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                            <OnIdiom.Phone>8</OnIdiom.Phone>
+                                        </OnIdiom>
+                                    </dg:DataGrid.HeaderFontSize>
+                                    <dg:DataGrid.FontSize>
+                                        <OnIdiom  x:TypeArguments="x:Double">
+                                            <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                            <OnIdiom.Phone>8</OnIdiom.Phone>
+                                        </OnIdiom>
+                                    </dg:DataGrid.FontSize>
+                                    <dg:DataGrid.Columns>
+                                        
+                                        <dg:DataGridColumn HorizontalContentAlignment="Center" Width="4*" PropertyName="OrderNo" SortingEnabled="False" Title="#" VerticalContentAlignment="StartAndExpand"/>
+                                    <dg:DataGridColumn Title="" PropertyName="{Binding }" Width="6*" SortingEnabled="False">
+                                            <dg:DataGridColumn.CellTemplate>
+                                                <DataTemplate>
+                                                <Image Source="Grayradio.png" HorizontalOptions="Center" VerticalOptions="Start">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="Button_Clicked" CommandParameter="{Binding }"/>
+                                                    </Image.GestureRecognizers>
+                                                    <Image.Triggers>
+                                                        <DataTrigger TargetType="Image" Binding="{Binding Signed}" Value="True">
+                                                            <Setter Property="Source" Value="Greenradio.png" />
+                                                        </DataTrigger>
+                                                    </Image.Triggers>
+                                                </Image>
+                                            </DataTemplate>
+                                            </dg:DataGridColumn.CellTemplate>
+                                        </dg:DataGridColumn>
+                                    <!--<dg:DataGridColumn HorizontalContentAlignment="Center" Width="30*"   PropertyName="Description" SortingEnabled="False" Title="Description" VerticalContentAlignment="StartAndExpand"/>-->
+                                    <dg:DataGridColumn HorizontalContentAlignment="Center" Width="20*" PropertyName="Description"  SortingEnabled="True" Title="Description" VerticalContentAlignment="FillAndExpand">
+                                        <dg:DataGridColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Text="{Binding }" HorizontalOptions="Center" VerticalOptions="Center" LineBreakMode="TailTruncation" FontSize="Default">
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_TappedDescription" CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+                                            </DataTemplate>
+                                        </dg:DataGridColumn.CellTemplate>
+                                    </dg:DataGridColumn>
+                                    <dg:DataGridColumn HorizontalContentAlignment="Center" Width="15*"  PropertyName="SignedBy" SortingEnabled="False" Title="Name" VerticalContentAlignment="StartAndExpand"/>
+                                    <!--<dg:DataGridColumn HorizontalContentAlignment="Center" Width="15*"  PropertyName="SignedOn" SortingEnabled="False" Title="Date" VerticalContentAlignment="StartAndExpand"/>-->
+                                    <dg:DataGridColumn SortingEnabled="False" Title="Signed On" Width="15*" PropertyName="{Binding }" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                                        <dg:DataGridColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Text="{Binding SignedOn, StringFormat='{}{0:dd-MMM-yyyy}'}" IsVisible="{Binding Signed}"  HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
+                                            </DataTemplate>
+                                        </dg:DataGridColumn.CellTemplate>
+                                    </dg:DataGridColumn>
+                                    <dg:DataGridColumn HorizontalContentAlignment="Center" Width="10*"  PropertyName="PIC" SortingEnabled="False" Title="PIC" VerticalContentAlignment="StartAndExpand"/>
+                                    <dg:DataGridColumn Title="" Width="15*" PropertyName="{Binding }" HorizontalContentAlignment="Center" VerticalContentAlignment="Start" SortingEnabled="False">
+                                            <dg:DataGridColumn.CellTemplate>
+                                                <DataTemplate>
+                                                <Button Text="{Binding btnNASign}" Clicked="Button_Clicked"  CommandParameter="{Binding }" HorizontalOptions="Center"  VerticalOptions="StartAndExpand"  FontSize="Small" />
+                                                </DataTemplate>
+                                            </dg:DataGridColumn.CellTemplate>
+                                        </dg:DataGridColumn>
+                                    </dg:DataGrid.Columns>
+                                    <dg:DataGrid.RowsBackgroundColorPalette>
+                                        <dg:PaletteCollection>
+                                            <Color>#FFFFFF</Color>
+                                            <Color>#FFFFFF</Color>
+                                        </dg:PaletteCollection>
+                                    </dg:DataGrid.RowsBackgroundColorPalette>
+                                
+                            </dg:DataGrid>
+                            </Grid>
+                        </Grid>
+
+                        <Grid ColumnSpacing="10" Grid.Row="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label 
+                    FontAttributes="Bold" 
+                    HorizontalOptions="StartAndExpand"
+                  
+                    Text="Accepted by" 
+                    TextColor="#3a6b8b"  
+                    VerticalTextAlignment="Center"/>
+
+                            <Grid Grid.Row="2"
+                      ColumnSpacing="10"
+                  IsVisible="{Binding DetailsGrid}" 
+                  RowSpacing="0" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <dg:DataGrid ActiveRowColor="#8899AA"  
+                             BorderColor="#CCCCCC" 
+                             ColumnSpacing="1"
+                             HeaderBackground="#FFFFFF"
+                             HeaderBordersVisible="True" 
+                             HeaderHeight="35" 
+                             HeaderTextColor="#3a6b8b"
+                             ItemsSource="{Binding RecordAcceptedBySource}"
+                             Margin="0,10,0,0"  
+                             SelectionEnabled="True" 
+                             SelectedItem="{Binding SelectedNextReport}" >
+                                    <x:Arguments>
+                                        <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                                    </x:Arguments>
+                                    <dg:DataGrid.HeaderFontSize>
+                                        <OnIdiom  x:TypeArguments="x:Double">
+                                            <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                            <OnIdiom.Phone>8</OnIdiom.Phone>
+                                        </OnIdiom>
+                                    </dg:DataGrid.HeaderFontSize>
+                                    <dg:DataGrid.FontSize>
+                                        <OnIdiom  x:TypeArguments="x:Double">
+                                            <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                            <OnIdiom.Phone>8</OnIdiom.Phone>
+                                        </OnIdiom>
+                                    </dg:DataGrid.FontSize>
+                                    <dg:DataGrid.Columns>
+                                        <dg:DataGridColumn HorizontalContentAlignment="Center" Width="4*" PropertyName="OrderNo" SortingEnabled="False" Title="#" VerticalContentAlignment="StartAndExpand"/>
+                                    <dg:DataGridColumn Title="" PropertyName="{Binding }" Width="6*"  SortingEnabled="False">
+                                            <dg:DataGridColumn.CellTemplate>
+                                                <DataTemplate>
+                                                <Image Source="Grayradio.png" HorizontalOptions="Center" VerticalOptions="Start">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="{Binding }"/>
+                                                    </Image.GestureRecognizers>
+                                                    <Image.Triggers>
+                                                        <DataTrigger TargetType="Image" Binding="{Binding Signed}" Value="True">
+                                                            <Setter Property="Source" Value="Greenradio.png" />
+                                                        </DataTrigger>
+                                                    </Image.Triggers>
+                                                </Image>
+                                            </DataTemplate>
+                                            </dg:DataGridColumn.CellTemplate>
+                                        </dg:DataGridColumn>
+                                    <dg:DataGridColumn HorizontalContentAlignment="Center" Width="15*" PropertyName="Description" SortingEnabled="False" Title="Description" VerticalContentAlignment="StartAndExpand"/>
+                                    <dg:DataGridColumn HorizontalContentAlignment="Center" Width="15*" PropertyName="SignedBy" SortingEnabled="False" Title="Name" VerticalContentAlignment="StartAndExpand"/>
+                                    <!--<dg:DataGridColumn HorizontalContentAlignment="Center" Width="10*" PropertyName="SignedOn" SortingEnabled="False" Title="Date" VerticalContentAlignment="StartAndExpand"/>-->
+                                    <dg:DataGridColumn SortingEnabled="False" Title="Signed On" Width="10*" PropertyName="{Binding }" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                                        <dg:DataGridColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Text="{Binding SignedOn, StringFormat='{}{0:dd-MMM-yyyy}'}" IsVisible="{Binding Signed}"  HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand"/>
+                                            </DataTemplate>
+                                        </dg:DataGridColumn.CellTemplate>
+                                    </dg:DataGridColumn>
+                                </dg:DataGrid.Columns>
+                                    <dg:DataGrid.RowsBackgroundColorPalette>
+                                        <dg:PaletteCollection>
+                                            <Color>#FFFFFF</Color>
+                                            <Color>#FFFFFF</Color>
+                                        </dg:PaletteCollection>
+                                    </dg:DataGrid.RowsBackgroundColorPalette>
+                                </dg:DataGrid>
+                            </Grid>
+                        </Grid>
+                        <!--<Button BackgroundColor="#C4BB46"
+                        BorderColor="LightGray" 
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="BackfromSignatureGrid" 
+                       
+                        FontAttributes="Bold" 
+                        Grid.Row="3"
+                        HorizontalOptions="FillAndExpand" 
+                        Text="Back" 
+                        TextColor="White"/>-->
+
+                    </Grid>
+                    <!--<Button BackgroundColor="#C4BB46"
+                        BorderColor="LightGray" 
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="BackfromSignatureGrid" 
+                        VerticalOptions="End"
+                        FontAttributes="Bold" 
+                        HorizontalOptions="FillAndExpand" 
+                        Text="Back" 
+                        TextColor="White"/>-->
+                </StackLayout>
+           
+        </StackLayout>
+
+
+    </ContentPage.Content>
+</ContentPage>

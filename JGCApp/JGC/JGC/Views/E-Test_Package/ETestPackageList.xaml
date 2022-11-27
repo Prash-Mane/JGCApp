@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JGC.Views.ETestPackageList"
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+             ControlTemplate="{StaticResource HeaderFooterPageTemplate}"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:converters="clr-namespace:JGC.Common.Converters"
+              NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Resources>
+        <converters:StringToStringColorConverter x:Key="StringToStringColorConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid Margin="10" RowSpacing="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Frame BackgroundColor="Transparent" Grid.ColumnSpan="6" Padding="5" BorderColor="#A0A0A0" HasShadow="True">
+                <ScrollView>
+                    <Grid BackgroundColor="#DCDCDC">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid Grid.ColumnSpan="3">
+                            <Label Text="PCWBS" />
+                            <Label Grid.Column="1" Grid.Row="0" Text="Test Package" />
+                        </Grid>
+                        <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1">
+                            <Entry Text="{Binding PCWBS}" />
+                            <Entry Grid.Column="1" Grid.Row="0" Text="{Binding TestPackage}"/>
+                        </Grid>
+                        <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="2">
+                            <Label Text="Action By" />
+                            <Label Grid.Column="1" Grid.Row="0" Text="Pending Action"/>
+                        </Grid>
+                        <Grid Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3">
+                            <customControls:CustomPicker ItemsSource="{Binding ActionByList}" SelectedItem="{Binding SelectedActionBy, Mode=TwoWay}"/>
+                            <customControls:CustomPicker Grid.Column="1" Grid.Row="0" ItemsSource="{Binding PendingActionList}" 
+                                                         SelectedItem="{Binding SelectedPendingAction, Mode=TwoWay}"/>
+                        </Grid>
+
+                        <Label Text="Priority" 
+                               Grid.Column="0"
+                               Grid.Row="4"/>
+                        <Label Text="Sub Contractor"
+                               Grid.Column="1"
+                               Grid.Row="4"/>
+                        <Label Text="Test Method"
+                               Grid.Column="2"
+                               Grid.Row="4"/>
+
+                        <customControls:CustomPicker 
+                               Grid.Column="0"
+                               Grid.Row="5"
+                               ItemsSource="{Binding PriorityList}" 
+                               SelectedItem="{Binding SelectedPriority, Mode=TwoWay}"/>
+                        <customControls:CustomPicker 
+                                Grid.Column="1"
+                                Grid.Row="5"
+                                ItemsSource="{Binding SubContractorList}" 
+                                SelectedItem="{Binding SelectedSubContractor, Mode=TwoWay}"/>
+                        <customControls:CustomPicker 
+                               Grid.Column="2"
+                               Grid.Row="5"
+                               ItemsSource="{Binding TestMethodList}" 
+                               SelectedItem="{Binding SelectedTestMethod, Mode=TwoWay}"/>
+
+                        <Grid Grid.Row="6" Grid.ColumnSpan="3">
+                            <Button Text="Search"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                Command="{Binding SearchBtnCommand}"
+                                BackgroundColor="#C4BB46"/>
+                        </Grid>
+
+                    </Grid>
+                </ScrollView>
+            </Frame>
+
+            <dg:DataGrid ItemsSource="{Binding ETestPackages, Mode=TwoWay}" SelectedItem="{Binding SelectedETP, Mode=TwoWay}" SelectionEnabled="True"
+						     RowHeight="40" HeaderHeight="45" BorderColor="#CCCCCC" HeaderBackground="#FFFFFF" ActiveRowColor="#8899AA"  
+                             HeaderTextColor="#3a6b8b" Grid.ColumnSpan="6"  Grid.Row="1" Margin="0,10,0,0"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"
+                             IsVisible="{Binding NoDataIsVisible, Converter={StaticResource BoolInvertConverter}}">
+                <x:Arguments>
+                    <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                </x:Arguments>
+                <dg:DataGrid.HeaderFontSize>
+                    <OnIdiom  x:TypeArguments="x:Double">
+                        <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                        <OnIdiom.Phone>8</OnIdiom.Phone>
+                    </OnIdiom>
+                </dg:DataGrid.HeaderFontSize>
+                <dg:DataGrid.FontSize>
+                    <OnIdiom  x:TypeArguments="x:Double">
+                        <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                        <OnIdiom.Phone>8</OnIdiom.Phone>
+                    </OnIdiom>
+                </dg:DataGrid.FontSize>
+                <dg:DataGrid.Columns>
+                    <dg:DataGridColumn 
+                                Title="PCWBS"
+                                PropertyName="PCWBS"
+                                HorizontalContentAlignment="CenterAndExpand" 
+                                SortingEnabled="False"
+                                VerticalContentAlignment="Center">
+                        <dg:DataGridColumn.Width>
+                            <OnIdiom x:TypeArguments="GridLength" Phone="12*" Tablet="15*" Desktop="*" />
+                        </dg:DataGridColumn.Width>
+                    </dg:DataGridColumn>
+                    <dg:DataGridColumn 
+                                Title="Test Package" 
+                                PropertyName="TestPackage"                                
+                                HorizontalContentAlignment="Center" 
+                                VerticalContentAlignment="Center">
+                        <dg:DataGridColumn.Width>
+                            <OnIdiom x:TypeArguments="GridLength" Phone="38*" Tablet="47*" Desktop="3*" />
+                        </dg:DataGridColumn.Width>
+                    </dg:DataGridColumn>
+                    <dg:DataGridColumn
+                                Title="Action By"
+                                PropertyName="ActionBy"                        
+                                HorizontalContentAlignment="FillAndExpand"
+                                SortingEnabled="False">
+                        <dg:DataGridColumn.Width>
+                            <OnIdiom x:TypeArguments="GridLength" Phone="8*" Tablet="10*" Desktop="*" />
+                        </dg:DataGridColumn.Width>
+                    </dg:DataGridColumn>
+                    <dg:DataGridColumn
+                                Title="Pending Action"
+                                PropertyName="Status"
+                                SortingEnabled="False"
+                                HorizontalContentAlignment="Center">
+                        <dg:DataGridColumn.Width>
+                            <OnIdiom x:TypeArguments="GridLength" Phone="10*" Tablet="12*" Desktop="*" />
+                        </dg:DataGridColumn.Width>
+                    </dg:DataGridColumn>
+                    <!--<dg:DataGridColumn
+                                Title="Priority"
+                                PropertyName="Priority"
+                                HorizontalContentAlignment="Center"/>-->
+                    <dg:DataGridColumn Title="Priority" PropertyName="Priority"  SortingEnabled="False" HorizontalContentAlignment="FillAndExpand">
+                        <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <Label Text="0" HorizontalOptions="Center" VerticalOptions="Center" FontSize="Micro">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding }" Value="True">
+                                            <Setter Property="Text" Value="1" />
+                                            <Setter Property="FontSize" Value="Micro" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                        <dg:DataGridColumn.Width>
+                            <OnIdiom x:TypeArguments="GridLength" Phone="8*" Tablet="8*" Desktop="*" />
+                        </dg:DataGridColumn.Width>
+                    </dg:DataGridColumn>
+                    <dg:DataGridColumn
+                                Title="Sub Contractor"
+                                PropertyName="SubContractor"
+                                HorizontalContentAlignment="FillAndExpand"
+                                SortingEnabled="False">
+                        <dg:DataGridColumn.Width>
+                            <OnIdiom x:TypeArguments="GridLength" Phone="10*" Tablet="15*" Desktop="*" />
+                        </dg:DataGridColumn.Width>
+                    </dg:DataGridColumn>
+
+                    <dg:DataGridColumn Title="Updated" PropertyName="Updated"  SortingEnabled="False">
+                        <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="update.png" Margin="0,5" IsVisible="{Binding}" HorizontalOptions="Center" VerticalOptions="Start" />
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                        <dg:DataGridColumn.Width>
+                            <OnIdiom x:TypeArguments="GridLength" Phone="7*" Tablet="9*" Desktop="*" />
+                        </dg:DataGridColumn.Width>
+                    </dg:DataGridColumn>
+
+                    <dg:DataGridColumn
+                                Title="Test Method"
+                                PropertyName="TestMedia"
+                                HorizontalContentAlignment="FillAndExpand"
+                                SortingEnabled="False">
+                        <dg:DataGridColumn.Width>
+                            <OnIdiom x:TypeArguments="GridLength" Phone="8*" Tablet="11*" Desktop="*" />
+                        </dg:DataGridColumn.Width>
+                    </dg:DataGridColumn>
+
+                    <!--<dg:DataGridColumn SortingEnabled="False">
+                        <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="dlt2.png" Margin="0,5" HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                        <dg:DataGridColumn.Width>
+                            <OnIdiom x:TypeArguments="GridLength"  Phone="8*" Tablet="10*" Desktop="*"/>
+                        </dg:DataGridColumn.Width>
+                    </dg:DataGridColumn>-->
+                </dg:DataGrid.Columns>
+                <dg:DataGrid.RowsBackgroundColorPalette>
+                    <dg:PaletteCollection>
+                        <Color>#FFFFFF</Color>
+                        <Color>#FFFFFF</Color>
+                    </dg:PaletteCollection>
+                </dg:DataGrid.RowsBackgroundColorPalette>
+            </dg:DataGrid>
+
+            <Label IsVisible="{Binding NoDataIsVisible}" HorizontalOptions="Center" Grid.Row="1" Grid.ColumnSpan="6" FontSize="Medium" FontAttributes="Bold" TextColor="Black" 
+                       Text="No E-Test package data downloaded, download using the download icon before continuing"/>
+            <Button 
+                    Grid.Row="2" 
+                    Text="Next"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    BackgroundColor="#C4BB46" 
+                    Grid.Column="0"
+                    Command="{Binding NextBtnCommand}"
+                    Grid.ColumnSpan="6"/>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

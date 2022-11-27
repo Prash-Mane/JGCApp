@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JGC.Views.Work_Pack.DrawingsPage"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}"             
+             xmlns:PDF="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:TEffect="clr-namespace:JGC.UserControls.Touch"  
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Drawings"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+
+            </Label>
+            <Image Source="searchbar.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="IWPSelectionPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <Grid IsVisible="{Binding MainGrid}" Margin="10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition>
+                    <RowDefinition.Height>
+                        <OnPlatform x:TypeArguments="GridLength">
+                             <On Platform="Android, iOS, UWP" Value="1000*" />
+                        </OnPlatform>
+                    </RowDefinition.Height>
+                </RowDefinition>
+            </Grid.RowDefinitions>
+            <StackLayout Grid.Row="0" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Start"  Margin="0,0,0,10">
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,40,0">
+                    <Image HeightRequest="20" WidthRequest="20" Source="{Binding ShowPDFs}"/>
+                    <Label Text="PDF(s)" FontAttributes="Bold" TextColor="#3a6b8b" Margin="0,0,10,0"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BtnCommand}" CommandParameter="ShowPDFs"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                    <Image HeightRequest="20" WidthRequest="20" Source="{Binding ShowImages}"/>
+                    <Label Text="Image(s)" FontAttributes="Bold" TextColor="#3a6b8b" Margin="0,0,10,0"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BtnCommand}" CommandParameter="ShowImages"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" Grid.Row="1" >
+                <customControls:CustomPicker
+                            HorizontalOptions="FillAndExpand"
+                            ItemDisplayBinding="{Binding FileName}"
+                            ItemsSource="{Binding DrawingsList}"                            
+                            SelectedIndexChanged="ClickedOn_SelectedItem" SelectedItem="{Binding SelectedDrawings}">
+                    <!--SelectedItem="{Binding SelectedDrawings}"-->
+                </customControls:CustomPicker>
+
+                <Button BackgroundColor="Black"
+                            TextColor="White"
+                            Text="View in full screen"
+                            IsVisible="{Binding PDFview}"
+                            Command="{Binding BtnCommand}"
+                            CommandParameter="PdfFullScreen"/>
+            </StackLayout>
+
+            <PDF:CustomPDF Grid.Row="2" IsVisible="{Binding PDFview}" Uri="{Binding PdfUrl}"  />
+            <Grid Grid.Row="2">
+                <skia:SKCanvasView Grid.Row="0" x:Name="CanvasView" PaintSurface="OnCanvasViewPaintSurface"/>
+                <Grid.Effects Grid.Row="0">
+                    <TEffect:TouchEffect Capture="True" TouchAction="OnTouchEffectAction" />
+                </Grid.Effects>
+            </Grid>
+        </Grid>
+
+    </ContentPage.Content>
+</ContentPage>

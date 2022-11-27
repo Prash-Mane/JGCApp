@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             BackgroundColor="#1AA3B3"
+             x:Class="JGC.Views.Completions.CompletionsDashboard"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Content>
+        <Grid ColumnSpacing="50" Scale="{Binding Devicescale}" HorizontalOptions="FillAndExpand"  Margin="2,10,2,2" RowSpacing="50" VerticalOptions="Start">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition>
+                    <ColumnDefinition.Width>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android, iOS" Value="*" />
+                            <On Platform="UWP" Value="*" />
+                        </OnPlatform>
+                    </ColumnDefinition.Width>
+                </ColumnDefinition>
+                <ColumnDefinition>
+                    <ColumnDefinition.Width>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android, iOS" Value="*" />
+                            <On Platform="UWP" Value="*" />
+                        </OnPlatform>
+                    </ColumnDefinition.Width>
+                </ColumnDefinition>
+                <ColumnDefinition>
+                    <ColumnDefinition.Width>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android, iOS" Value="*" />
+                            <On Platform="UWP" Value="*" />
+                        </OnPlatform>
+                    </ColumnDefinition.Width>
+                </ColumnDefinition>
+                <ColumnDefinition>
+                    <ColumnDefinition.Width>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android, iOS" Value="*" />
+                            <On Platform="UWP" Value="*" />
+                        </OnPlatform>
+                    </ColumnDefinition.Width>
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition>
+                    <RowDefinition.Height>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android, iOS" Value="*" />
+                            <On Platform="UWP" Value="*" />
+                        </OnPlatform>
+                    </RowDefinition.Height>
+                </RowDefinition>
+                <RowDefinition>
+                    <RowDefinition.Height>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android, iOS" Value="*" />
+                            <On Platform="UWP" Value="*" />
+                        </OnPlatform>
+                    </RowDefinition.Height>
+                </RowDefinition>
+                <RowDefinition>
+                    <RowDefinition.Height>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android, iOS" Value="*" />
+                            <On Platform="UWP" Value="*" />
+                        </OnPlatform>
+                    </RowDefinition.Height>
+                </RowDefinition>
+                <RowDefinition>
+                    <RowDefinition.Height>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android, iOS" Value="*" />
+                            <On Platform="UWP" Value="*" />
+                        </OnPlatform>
+                    </RowDefinition.Height>
+                </RowDefinition>
+                <RowDefinition>
+                    <RowDefinition.Height>
+                        <OnPlatform x:TypeArguments="GridLength">
+                            <On Platform="Android, iOS" Value="10" />
+                            <On Platform="UWP" Value="10" />
+                        </OnPlatform>
+                    </RowDefinition.Height>
+                </RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackLayout HorizontalOptions="Start" Grid.ColumnSpan="2" >
+                <Frame CornerRadius="15" HeightRequest="40" Margin="-15,0,0,0" BackgroundColor="White">
+                    <Image  Source="Completions_logo.png" />
+                </Frame>
+            </StackLayout>
+            
+            <StackLayout HorizontalOptions="End"  Grid.Column="3"  Margin="0,0,10,0">
+                <Image Source="settings_icon.png" HeightRequest="40"/>
+                <!--<Label Style="{StaticResource CompletionGeneralLabelStyle}" Text="Setting" />-->
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapedCommand}" CommandParameter="Setting"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="End" Grid.Row="2" >
+                <Image Source="CCS.png" HeightRequest="80"/>
+                <Label Style="{StaticResource CompletionGeneralLabelStyle}" Text="CCS" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapedCommand}" CommandParameter="TagRegister"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+
+            <StackLayout Grid.Column="2" Grid.Row="2" VerticalOptions="End" HorizontalOptions="FillAndExpand">
+                <Image Source="folder_image.png" HeightRequest="80"/>
+                <Label Style="{StaticResource CompletionGeneralLabelStyle}" Text="Punch List" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapedCommand}" CommandParameter="PunchList"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+
+            <StackLayout Grid.Column="3" Grid.Row="2" VerticalOptions="End" HorizontalOptions="FillAndExpand">
+                <Image Source="document_image.png" HeightRequest="80"/>
+                <Label Style="{StaticResource CompletionGeneralLabelStyle}" Text="Sync" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapedCommand}" CommandParameter="Sync"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+
+            <!--<StackLayout Grid.Row="2"  HorizontalOptions="FillAndExpand">
+                <Image Source="tablet_pen_icon.png"/>
+                <Label Style="{StaticResource CompletionGeneralLabelStyle}" Text="Drawings" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapedCommand}" CommandParameter="Drawings"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+
+            <StackLayout Grid.Column="1" Grid.Row="2"  HorizontalOptions="FillAndExpand">
+                <Image Source="document_stack_image.png"/>
+                <Label Style="{StaticResource CompletionGeneralLabelStyle}" Text="Handover" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapedCommand}" CommandParameter="handover"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+
+            <StackLayout Grid.Column="2" Grid.Row="2"  HorizontalOptions="FillAndExpand">
+                <Image Source="checkbox_image.png"/>
+                <Label Style="{StaticResource CompletionGeneralLabelStyle}" Text="Test Packs" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapedCommand}" CommandParameter="TestPacks"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>-->
+
+            <StackLayout Grid.Row="2" Grid.Column="1" VerticalOptions="End" HorizontalOptions="FillAndExpand">
+                <Image Source="ITR_icon.png" HeightRequest="80"/>
+                <Label Style="{StaticResource CompletionGeneralLabelStyle}" Text="ITR" />
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding TapedCommand}" CommandParameter="ITR"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

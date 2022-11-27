@@ -1,0 +1,878 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JGC.Views.MRR_EReporterPage"
+             xmlns:UC="clr-namespace:JGC.UserControls"
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:PDF="clr-namespace:JGC.UserControls.CustomControls"
+             ControlTemplate="{StaticResource HeaderFooterPageTemplate}"
+             xmlns:converters="clr-namespace:JGC.Common.Converters"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <ContentPage.Resources>
+        <converters:BoolInvertConverter x:Key="BoolInvertConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout Margin="10,0">
+            <!-- Main Grid -->
+            <Grid RowSpacing="0" IsVisible="{Binding MainGrid}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="110*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label 
+                    FontAttributes="Bold"
+                    HorizontalOptions="StartAndExpand" 
+                    Margin="0,10,0,0"
+                    Text="{Binding MRRitem}" 
+                    TextColor="#3a6b8b"  
+                    VerticalTextAlignment="Center"/>
+                <Grid 
+                    ColumnSpacing="10"
+                    Grid.Row="1" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button BackgroundColor="#FB1610"
+                            BorderColor="LightGray" 
+                            BorderWidth="1" 
+                            Command="{Binding BtnCommand}" 
+                            CommandParameter="Details" 
+                            FontAttributes="Bold" 
+                            HorizontalOptions="FillAndExpand" 
+                            Text="Details" 
+                            TextColor="White"/>
+                    <Button BackgroundColor="#FB1610" 
+                            BorderColor="LightGray"  
+                            BorderWidth="1" 
+                            Command="{Binding BtnCommand}" 
+                            CommandParameter="Signatures" 
+                            FontAttributes="Bold" 
+                            Grid.Column="1"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Signature" 
+                            TextColor="White"/>
+                    <Button BackgroundColor="#FB1610" 
+                            BorderColor="LightGray"  
+                            BorderWidth="1" 
+                            Command="{Binding BtnCommand}"
+                            CommandParameter="Attachments"
+                            FontAttributes="Bold" 
+                            Grid.Column="2" 
+                            HorizontalOptions="FillAndExpand" 
+                            Text="Attachments" 
+                            TextColor="White"/>
+                </Grid>
+                <Grid Grid.Row="2"  Margin="0,-8,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image 
+                        HorizontalOptions="Center" 
+                        IsVisible="{Binding DetailsArrow}" 
+                        Source="arrow.png" 
+                        VerticalOptions="Start" />
+                    <Image HorizontalOptions="Center" 
+                           Grid.Column="1" 
+                           IsVisible="{Binding SignaturesArrow}" 
+                           Source="arrow.png" 
+                           VerticalOptions="Start" />
+                    <Image HorizontalOptions="Center" 
+                           Grid.Column="2" 
+                           IsVisible="{Binding AttachmentsArrow}" 
+                           Source="arrow.png" 
+                           VerticalOptions="Start" />
+
+                </Grid>
+
+                <!-- Details Grid -->
+                <Grid Grid.Row="3" 
+                      IsVisible="{Binding DetailsGrid}" 
+                      RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <customControls:CustomEntry  Placeholder="Search..." Text="{Binding SearchText, Mode=TwoWay}"/>
+                    <dg:DataGrid ActiveRowColor="#8899AA"  
+                                 BorderColor="#CCCCCC" 
+                                 ColumnSpacing="1"
+                                 Grid.Row="1"
+                                 HeaderBackground="#FFFFFF"
+                                 HeaderBordersVisible="True" 
+                                 HeaderHeight="45" 
+                                 HeaderTextColor="#3a6b8b"
+                                 ItemsSource="{Binding MRRRows, Mode=TwoWay}"
+                                 Margin="0,10,0,0" 
+                                 SelectionEnabled="True" 
+                                 SelectedItem="{Binding SelectedMRRRows}">
+                        <x:Arguments>
+                            <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                        </x:Arguments>
+
+                        <dg:DataGrid.HeaderFontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>8</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.HeaderFontSize>
+                        <dg:DataGrid.FontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>8</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.FontSize>
+
+                        <dg:DataGrid.Columns>
+                            <dg:DataGridColumn Title="Updated" PropertyName="Updated"  SortingEnabled="False">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="update.png" Margin="0,5" IsVisible="{Binding}" HorizontalOptions="Center" VerticalOptions="Start" />
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+
+                            <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="PO_No" SortingEnabled="False" Title="PO No." VerticalContentAlignment="FillAndExpand"/>
+                            <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="PJ_Sub_Commodity" SortingEnabled="True" Title="PJ Sub Commodity" VerticalContentAlignment="FillAndExpand"/>
+                            <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="Item_No"  SortingEnabled="False" StringFormat="{}{0:dd-MMM-yyyy}" Title="Item No" VerticalContentAlignment="FillAndExpand"/>
+                            <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="PT_No" SortingEnabled="True" Title="PT No" VerticalContentAlignment="FillAndExpand"/>
+                            <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="Description"  SortingEnabled="True" Title="Description" VerticalContentAlignment="FillAndExpand">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding }" HorizontalOptions="Center" VerticalOptions="Center" LineBreakMode="TailTruncation" FontSize="Default">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                        </dg:DataGrid.Columns>
+                        <dg:DataGrid.RowsBackgroundColorPalette>
+                            <dg:PaletteCollection>
+                                <Color>#FFFFFF</Color>
+                                <Color>#FFFFFF</Color>
+                            </dg:PaletteCollection>
+                        </dg:DataGrid.RowsBackgroundColorPalette>
+                    </dg:DataGrid>
+
+                </Grid>
+
+                <!-- Edit MRR Grid-->
+                <ScrollView Grid.Row="3" 
+                      IsVisible="{Binding EditMRRGrid}" >
+                  <Frame BackgroundColor="Transparent" BorderColor="#A0A0A0" HasShadow="True">
+                        <Grid RowSpacing="15">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.ColumnSpan="5"
+                           HorizontalOptions="FillAndExpand"
+                           Text="{Binding PONo}"
+                           TextColor="#1A5276"/>
+                            <Label Grid.ColumnSpan="5"
+                           Grid.Row="1"
+                           HorizontalOptions="FillAndExpand"
+                           Text="{Binding PTNO}"
+                           TextColor="#1A5276"/>
+                            <Label Grid.ColumnSpan="5"
+                           Grid.Row="2"
+                           Text="{Binding ReceivedQuantity}"
+                           TextColor="#1A5276"/>
+                            <StackLayout Grid.Row="3" Orientation="Horizontal" Grid.ColumnSpan="5" >
+                                <Label Text="Good"
+                             TextColor="#1A5276"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="Center"/>
+                                <Label Text="Damage"
+                             TextColor="#1A5276"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="Center"/>
+                                <Label Text="Off-spec."
+                             TextColor="#1A5276"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="Center"/>
+                                <Label Text="Short"
+                             TextColor="#1A5276"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="Center"/>
+                                <Label Text="Over"
+                             TextColor="#1A5276"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="Center"/>
+                            </StackLayout>
+                            <StackLayout Grid.Row="4" Orientation="Horizontal" Grid.ColumnSpan="5" >
+                                <Label Text="{Binding Good}" TextColor="Green" FontSize="Small" FontAttributes="Bold" HorizontalOptions="FillAndExpand"/>
+                                <Entry BackgroundColor="White" Text="{Binding Damage, StringFormat='{0:N3}'}" HorizontalOptions="FillAndExpand"/>
+                                <Entry BackgroundColor="White" Text="{Binding Off_Spec, StringFormat='{0:N3}'}" HorizontalOptions="FillAndExpand"/>
+                                <customControls:CustomEntry  BackgroundColor="White" IsReadOnly="True" Text="{Binding Short, StringFormat='{0:N3}', Mode=TwoWay}" HorizontalOptions="FillAndExpand"/>
+                                <customControls:CustomEntry  BackgroundColor="White" IsReadOnly="True" Text="{Binding Over, StringFormat='{0:N3}', Mode=TwoWay}" HorizontalOptions="FillAndExpand"/>
+                            </StackLayout>
+
+                            <StackLayout Grid.Row="5" Orientation="Horizontal" Grid.ColumnSpan="5" >
+                                <Button BackgroundColor="#ff0000"
+                             BorderColor="#99CCFF"
+                             BorderWidth="1"
+                             Command="{Binding BtnCommand}"
+                             CommandParameter="StorageAreaGrid"
+                             HorizontalOptions="FillAndExpand"
+                             Text="Storage Area Details"
+                             TextColor="White"/>
+                                <Button BackgroundColor="#ff0000"
+                             BorderColor="#99CCFF"
+                             BorderWidth="1"
+                             Command="{Binding BtnCommand}"
+                             CommandParameter="HeatNoGrid"
+                             HorizontalOptions="FillAndExpand"
+                             Text="Heat Nos Details"
+                             TextColor="White"/>
+                            </StackLayout>
+
+                            <Label FontSize="15"
+                           Grid.Row="6"
+                           Text="Remarks:"
+                           TextColor="#1A5276"/>
+                            <Editor BackgroundColor="LightGray"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="4"
+                            Grid.Row="6"
+                            MaxLength="300"
+                            Text="{Binding Remark}"/>
+
+                            <Label FontSize="15"
+                           Grid.Row="7"
+                           Text="Remarks 2:"
+                           TextColor="#1A5276"/>
+                            <Editor BackgroundColor="LightGray"
+                            Grid.Column="1"
+                            Grid.ColumnSpan="4"
+                            Grid.Row="7"
+                             MaxLength="300"
+                            Text="{Binding Remark2}"/>
+
+                            <Label Grid.Row="8"
+                           Text="Client"
+                           TextColor="#1A5276"
+                           VerticalOptions="Center"/>
+                            <StackLayout Grid.Column="1" Grid.ColumnSpan="4" Grid.Row="8" Orientation="Horizontal">
+                                <Button BackgroundColor="{Binding AcceptBGColor}"
+                              BorderColor="#99CCFF"
+                              BorderWidth="1"
+                              Command="{Binding BtnCommand}"
+                              CommandParameter="Accept"
+                              HorizontalOptions="FillAndExpand"
+                              Text="ACC"
+                              TextColor="{Binding AcceptTextColor}"/>
+                                <Button BorderColor="Red"
+                              BackgroundColor="{Binding RejectBGColor}"
+                              BorderWidth="1"
+                              Command="{Binding BtnCommand}"
+                              CommandParameter="Reject"
+                              HorizontalOptions="FillAndExpand"
+                              Text="REJ"
+                              TextColor="{Binding RejectTextColor}"/>
+                                <Button BorderColor="#ff0000"
+                              BackgroundColor="#ff0000"
+                              BorderWidth="1"
+                              Command="{Binding BtnCommand}"
+                              CommandParameter="BacktoDetails"
+                              HorizontalOptions="FillAndExpand"
+                              Text="Back"
+                              TextColor="#ffffff"/>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </ScrollView>
+              
+                <!--Signature  Grid -->
+                <Grid Grid.Row="3"
+                      IsVisible="{Binding SignaturesGrid}" 
+                      RowSpacing="0">
+                    <dg:DataGrid ActiveRowColor="#8899AA"  
+                                 BorderColor="#CCCCCC" 
+                                 ColumnSpacing="1"
+                                 HeaderBackground="#FFFFFF"
+                                 HeaderBordersVisible="True" 
+                                 HeaderHeight="35" 
+                                 HeaderTextColor="#3a6b8b"
+                                 ItemsSource="{Binding SignatureList, Mode=TwoWay}"
+                                 Margin="0,10,0,0"
+                                 SelectionEnabled="True"                                 
+                                 SelectedItem="{Binding SelectedSignatureItem}">
+                     
+                        <x:Arguments>
+                            <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                        </x:Arguments>
+
+                        <dg:DataGrid.HeaderFontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>8</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.HeaderFontSize>
+                        <dg:DataGrid.FontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>8</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.FontSize>
+
+                        <dg:DataGrid.Columns>
+                            <dg:DataGridColumn Title="N/A" PropertyName="{Binding Signed}"  SortingEnabled="False">
+
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="Grayradio.png" HorizontalOptions="Center" VerticalOptions="Start">
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer  Tapped="TapGestureRecognizer_Tapped1"  CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                            </Image.GestureRecognizers>
+                                            <Image.Triggers>
+                                                <DataTrigger TargetType="Image" Binding="{Binding Signed}" Value="True">
+                                                    <Setter Property="Source" Value="Greenradio.png" />
+                                                </DataTrigger>
+                                            </Image.Triggers>
+                                        </Image>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="DisplaySignatureName" SortingEnabled="False" Title="Signature" VerticalContentAlignment="Center"/>
+                            <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="SignedByFullName"  SortingEnabled="True" Title="Signed By" VerticalContentAlignment="Center"/>
+                            <!--<dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="SignedOn" SortingEnabled="True"  StringFormat="{}{0:dd-MMM-yyyy HH:mm}" Title="Signed On" VerticalContentAlignment="Center"/>-->
+                            <dg:DataGridColumn SortingEnabled="True" Title="Signed On" HorizontalContentAlignment="CenterAndExpand" VerticalContentAlignment="Center">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding SignedOn, StringFormat='{}{0:dd-MMM-yyyy HH:mm}'}" IsVisible="{Binding Signed}" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+
+                        </dg:DataGrid.Columns>
+                        <dg:DataGrid.RowsBackgroundColorPalette>
+                            <dg:PaletteCollection>
+                                <Color>#FFFFFF</Color>
+                                <Color>#FFFFFF</Color>
+                            </dg:PaletteCollection>
+                        </dg:DataGrid.RowsBackgroundColorPalette>
+
+                    </dg:DataGrid>
+                </Grid>
+
+                <!--Attachment  Grid -->
+                <Grid Grid.Row="3" 
+                      IsVisible="{Binding AttachmentsGrid}" 
+                      RowSpacing="0" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <!--<RowDefinition Height="9*"/>-->
+                        <RowDefinition>
+                            <RowDefinition.Height>
+                                <OnPlatform x:TypeArguments="GridLength">
+                                    <On Platform="Android, iOS" Value="9*" />
+                                    <On Platform="UWP" Value="1000*" />
+                                </OnPlatform>
+                            </RowDefinition.Height>
+                        </RowDefinition>
+                    </Grid.RowDefinitions>
+                    <StackLayout Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="Start"  Margin="0,0,0,10">
+                        <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Margin="0,0,40,0">
+                            <Image HeightRequest="20" WidthRequest="20" Source="{Binding ShowPDFs}"/>
+                            <Label Text="PDF(s)" FontAttributes="Bold" TextColor="#3a6b8b" Margin="0,0,10,0"/>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BtnCommand}" CommandParameter="ShowPDFs"/>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal" VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                            <Image HeightRequest="20" WidthRequest="20" Source="{Binding ShowImages}"/>
+                            <Label Text="Image(s)" FontAttributes="Bold" TextColor="#3a6b8b" Margin="0,0,10,0"/>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BtnCommand}" CommandParameter="ShowImages"/>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </StackLayout>
+                    <customControls:CustomPicker
+                           Grid.Row="1"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding AttachmentList}"                            
+                            SelectedItem="{Binding SelectedAttachedItem, Mode=TwoWay}">
+                    </customControls:CustomPicker>
+                    <Button BackgroundColor="Black"
+                            Command="{Binding BtnCommand}"
+                            CommandParameter="PdfFullScreen"
+                            Grid.Column="1"
+                            Grid.Row="1"
+                            TextColor="White"
+                            Text="View in full screen"/>
+                   <StackLayout IsVisible="{Binding PDFview}" Grid.ColumnSpan="2" Grid.Row="2">
+                        <PDF:CustomPDF 
+                            x:Name="Attachment"
+                            HorizontalOptions="FillAndExpand"
+                            Uri="{Binding PdfUrl}"  
+                            VerticalOptions="FillAndExpand" />
+
+                    </StackLayout>
+
+                    <StackLayout IsVisible="{Binding ImagesView}" Grid.ColumnSpan="2" Grid.Row="2">
+                        <Image x:Name="AttachmentImage"
+                        Aspect="AspectFit" 
+                        HorizontalOptions="FillAndExpand"
+                        Source="{Binding AttachmentImage}"   
+                        VerticalOptions="FillAndExpand"/>
+
+                    </StackLayout>
+                </Grid>
+
+              <StackLayout Grid.Row="4" Orientation="Horizontal" VerticalOptions="End">                
+                    <Image HeightRequest="40"
+                           Margin="10,0"
+                           IsVisible="{Binding cameraIsVisible}"
+                           Source="{Binding CameraIcon}"
+                           HorizontalOptions="Center"
+                           WidthRequest="40">
+                           <Image.GestureRecognizers>
+                             <TapGestureRecognizer 
+                                 Command="{Binding BtnCommand}" 
+                                 CommandParameter="Camera"/>
+                           </Image.GestureRecognizers>
+                    </Image>                
+                    <Button BackgroundColor="#FB1610"
+                        BorderColor="LightGray"  
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="RPR"
+                        HorizontalOptions="FillAndExpand"                                             
+                        FontAttributes="Bold" 
+                        IsVisible="{Binding btnRPR}"
+                        Text="Request Partial Receiving" 
+                        TextColor="White" />
+                    <Button BackgroundColor="#FB1610" 
+                        BorderColor="LightGray"  
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="{Binding BtnName}"
+                        HorizontalOptions="FillAndExpand"                     
+                        FontAttributes="Bold" 
+                        IsVisible="{Binding btnSaveEdit}"
+                        Text="{Binding BtnName}" 
+                        TextColor="White" />
+                    <Button BackgroundColor="{Binding ColorSaveNext}" 
+                        BorderColor="LightGray"  
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="Save"
+                        HorizontalOptions="FillAndExpand"                  
+                        FontAttributes="Bold" 
+                        IsVisible="{Binding btnSave}"
+                        Text="Save" 
+                        TextColor="White"/>
+                </StackLayout>
+                
+            </Grid>
+
+          <!-- Camera Grid -->
+          <Grid ColumnSpacing="10"
+                IsVisible="{Binding CameraGrid}"
+                Margin="0,10"
+                RowSpacing="5">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="auto"/>
+              <RowDefinition Height="auto"/>
+              <RowDefinition Height="70*"/>
+              <RowDefinition Height="auto"/>
+              <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Label  FontAttributes="Bold"
+                    HorizontalOptions="StartAndExpand"
+                    Text="List of photos"
+                    TextColor="#1A5276"
+                    VerticalTextAlignment="Center"/>
+            <Label
+                    FontAttributes="Bold"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    HorizontalOptions="StartAndExpand"
+                    Text="Select Camera"
+                    TextColor="#1A5276"
+                    VerticalTextAlignment="Center"/>
+
+            <customControls:CustomPicker
+                     Grid.Column="0"
+                     Grid.Row="1"
+                     HorizontalOptions="FillAndExpand"
+                     ItemsSource="{Binding ImageFiles}"
+                     SelectedItem="{Binding SelectedImageFiles, Mode=TwoWay}">
+            </customControls:CustomPicker>
+            <customControls:CustomPicker
+                     Grid.Column="1"
+                     Grid.Row="1"
+                     HorizontalOptions="FillAndExpand"
+                     ItemsSource="{Binding CameraItems}"
+                     SelectedItem="{Binding SelectedCameraItem, Mode=TwoWay}">
+            </customControls:CustomPicker>
+            <Button BackgroundColor="#ff0000"
+                    Command="{Binding BtnCommand}"
+                    CommandParameter="AddFromFile"
+                    FontAttributes="Bold"
+                    Grid.Column="2"
+                    Grid.Row="1"
+                    HorizontalOptions="FillAndExpand"
+                    Text="Add From File"
+                    TextColor="#ffffff"/>
+
+                <Image x:Name="CaptureImage"
+                  Grid.Row="2"
+                  Grid.ColumnSpan="3"
+                  Aspect="AspectFill"
+                  HorizontalOptions="FillAndExpand"
+                  Source="{Binding CapturedImage}"
+                  VerticalOptions="Fill"/>
+              
+            <StackLayout Grid.ColumnSpan="3" Grid.Row="3" Orientation="Horizontal" VerticalOptions="EndAndExpand" IsVisible="{Binding Showbuttons}">
+                <Button BackgroundColor="#ff0000"
+                        Command="{Binding BtnCommand}"
+                        CommandParameter="Clear"
+                        FontAttributes="Bold"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Clear"
+                        TextColor="#ffffff"/>
+                <Button BackgroundColor="#ff0000"
+                        Command="{Binding BtnCommand}"
+                        CommandParameter="RenameImage"
+                        FontAttributes="Bold"
+                        HorizontalOptions="FillAndExpand"
+                        IsVisible="{Binding RenameImage}"
+                        Text="Rename Image"
+                        TextColor="#ffffff"/>
+                <Button BackgroundColor="#ff0000"
+                        Command="{Binding BtnCommand}"
+                        CommandParameter="CaptureImageSave"
+                        FontAttributes="Bold"
+                        HorizontalOptions="FillAndExpand"
+                        Text="{Binding btnSaveDelete}"
+                        TextColor="#ffffff"/>
+                <Button
+                        BackgroundColor="#ff0000"
+                        Command="{Binding BtnCommand}"
+                        CommandParameter="Back"
+                        FontAttributes="Bold"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Back"
+                        TextColor="#ffffff"/>
+              </StackLayout>            
+            <StackLayout Grid.ColumnSpan="3" Grid.Row="4" Orientation="Horizontal" VerticalOptions="EndAndExpand" IsVisible="{Binding ShowRename}">
+                
+              <customControls:CustomEntry Text="{Binding NewImageName, Mode=TwoWay}" HorizontalOptions="FillAndExpand" />
+                <Button BackgroundColor="#ff0000"
+                        Command="{Binding BtnCommand}"
+                        CommandParameter="SaveRename"
+                        FontAttributes="Bold"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Save"
+                        TextColor="#ffffff"/>
+                <Button
+                        BackgroundColor="#ff0000"
+                        Command="{Binding BtnCommand}"
+                        CommandParameter="CancelRename"
+                        FontAttributes="Bold"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Cancel"
+                        TextColor="#ffffff"/>
+              </StackLayout>
+           
+          </Grid>
+          <!-- Storage Area Grid -->
+            <Grid IsVisible="{Binding StorageAreaGrid}" 
+                  Margin="0,10,0,0" 
+                  RowSpacing="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+
+             
+                <!--<Grid>
+                   
+                     <Label Grid.ColumnSpan="2"
+                            Text="Storage Area"
+                            TextColor="#1A5276"
+                            VerticalOptions="End"/>
+                     <Label Grid.Column="2"
+                            Grid.ColumnSpan="2"
+                            Grid.Row="0"
+                            HorizontalOptions="Start"
+                            Text="Quantity" 
+                            TextColor="#1A5276"
+                            VerticalOptions="End"/>
+                    
+                    <customControls:CustomPicker
+                                Grid.ColumnSpan="2"
+                                Grid.Row="1"
+                                HorizontalOptions="FillAndExpand"
+                                ItemsSource="{Binding ddlStorageAreas}"                            
+                                SelectedItem="{Binding SelectedStorageAreas, Mode=TwoWay}">
+                    </customControls:CustomPicker>
+                    <customControls:CustomEntry 
+                                Grid.Column="2" 
+                                Grid.Row="1" 
+                                Text="{Binding StoragGQty, Mode=TwoWay}"/>
+                    <Button BackgroundColor="#1A5276"
+                                    BorderWidth="1"
+                                    Command="{Binding BtnCommand}" 
+                                    CommandParameter="AddStorageArea"
+                                    Grid.Column="3"
+                                    Grid.Row="1"                            
+                                    Text="Add" 
+                                    TextColor="#ffffff"/>
+                </Grid>-->
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.ColumnSpan="2"
+                           Text="Storage Area"
+                           TextColor="#1A5276"
+                           VerticalOptions="End"/>
+                    <customControls:CustomPicker
+                                Grid.ColumnSpan="2"
+                                Grid.Row="1"
+                                HorizontalOptions="FillAndExpand"
+                                IsVisible="{Binding ShowHideStorageArea}"
+                                ItemsSource="{Binding ddlStorageAreas}"                            
+                                SelectedItem="{Binding SelectedStorageAreas, Mode=TwoWay}">  
+                    </customControls:CustomPicker>
+                    <customControls:CustomEntry Text="{Binding EditStorageArea, Mode=TwoWay}" IsVisible="{Binding ShowHideStorageArea, Converter={StaticResource BoolInvertConverter}}" 
+                                                Grid.ColumnSpan="2" Grid.Row="1" HorizontalOptions="FillAndExpand"/>
+                    
+                    <Button BackgroundColor="#FB1610"
+                                    BorderWidth="1"
+                                    Command="{Binding BtnCommand}" 
+                                    CommandParameter="EditDoneStorageArea"
+                                    Grid.Column="2"
+                                    Grid.Row="1"                            
+                                    Text="{Binding EditDoneText}" 
+                                    TextColor="#ffffff"/>
+                   
+                    
+
+                    <Label Grid.ColumnSpan="2"
+                            Grid.Row="2"
+                            HorizontalOptions="Start"
+                            Text="Quantity" 
+                            TextColor="#1A5276"
+                            VerticalOptions="End"/>                   
+                    <customControls:CustomEntry 
+                                Grid.ColumnSpan="2" 
+                                Grid.Row="3" 
+                                Text="{Binding StoragGQty, Mode=TwoWay}"/>
+                    <Button BackgroundColor="#FB1610"
+                                    BorderWidth="1"
+                                    Command="{Binding BtnCommand}" 
+                                    CommandParameter="AddStorageArea"
+                                    Grid.Column="2"
+                                    Grid.Row="3"                            
+                                    Text="Add" 
+                                    TextColor="#ffffff"/>
+                    
+                </Grid>
+                <dg:DataGrid ActiveRowColor="#8899AA"  
+                                 BorderColor="#CCCCCC" 
+                                 ColumnSpacing="1"
+                                 Grid.Row="1"
+                                 HeaderBackground="#FFFFFF"
+                                 HeaderBordersVisible="True" 
+                                 HeaderHeight="35" 
+                                 HeaderTextColor="#3a6b8b"
+                                 ItemsSource="{Binding StorageAreas, Mode=TwoWay}"
+                                 Margin="0,10,0,0" 
+                                 RowHeight="35"
+                                 SelectedItem="{Binding SelectedStorageArea}"
+                                 SelectionEnabled="True">
+                    <x:Arguments>
+                        <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                    </x:Arguments>
+
+                    <dg:DataGrid.HeaderFontSize>
+                        <OnIdiom  x:TypeArguments="x:Double">
+                            <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                            <OnIdiom.Phone>8</OnIdiom.Phone>
+                        </OnIdiom>
+                    </dg:DataGrid.HeaderFontSize>
+                    <dg:DataGrid.FontSize>
+                        <OnIdiom  x:TypeArguments="x:Double">
+                            <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                            <OnIdiom.Phone>8</OnIdiom.Phone>
+                        </OnIdiom>
+                    </dg:DataGrid.FontSize>
+
+                    <dg:DataGrid.Columns>
+                        <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="Storage_Area" SortingEnabled="False" Title="Storage Area" VerticalContentAlignment="StartAndExpand"/>
+                        <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="Good_Quantity" SortingEnabled="True" Title="Good Qty" VerticalContentAlignment="StartAndExpand"/>
+
+                        <dg:DataGridColumn SortingEnabled="False">
+                            <dg:DataGridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="dlt2.png" Margin="0,5" HorizontalOptions="Center" VerticalOptions="Start" >
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_TappedDelete" CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </DataTemplate>
+                            </dg:DataGridColumn.CellTemplate>
+                        </dg:DataGridColumn>
+                    </dg:DataGrid.Columns>
+                    <dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:PaletteCollection>
+                            <Color>#FFFFFF</Color>
+                            <Color>#FFFFFF</Color>
+                        </dg:PaletteCollection>
+                    </dg:DataGrid.RowsBackgroundColorPalette>
+
+                </dg:DataGrid>
+                <Button BackgroundColor="{Binding ColorSaveNext}" 
+                        BorderColor="LightGray"  
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="BackfromStorageGrid"                        
+                        FontAttributes="Bold" 
+                        Grid.Row="2"  
+                        Text="Back" 
+                        VerticalOptions="End"
+                        TextColor="White"/>
+            </Grid>
+            
+            <!-- Heat Nos Grid -->
+            <Grid IsVisible="{Binding HeatNoGrid}" 
+                  Margin="0,10,0,0" 
+                  RowSpacing="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Label Grid.ColumnSpan="2"
+                           Text="Heat No"
+                           TextColor="#1A5276"
+                           VerticalOptions="End"/>
+                    <Label Grid.Column="2"
+                           Grid.ColumnSpan="2"
+                           Grid.Row="0"
+                           HorizontalOptions="Start"
+                           Text="Quantity" 
+                           TextColor="#1A5276"
+                           VerticalOptions="End"/>
+               
+                    <customControls:CustomEntry 
+                                Grid.ColumnSpan="2"
+                                Grid.Row="1"
+                                HorizontalOptions="FillAndExpand"
+                                Text="{Binding HeatNo, Mode=TwoWay}"/>
+                    <customControls:CustomEntry 
+                                Grid.Column="2" 
+                                Grid.Row="1" 
+                                Text="{Binding HeatGQty, Mode=TwoWay}"/>
+                    <Button BackgroundColor="#FB1610"
+                                    BorderWidth="1"
+                                    Command="{Binding BtnCommand}" 
+                                    CommandParameter="AddHeat"
+                                    Grid.Column="3"
+                                    Grid.Row="1"
+                                    Text="Add" 
+                                    TextColor="#ffffff"/>
+                </Grid>
+
+                <dg:DataGrid ActiveRowColor="#8899AA"  
+                                 BorderColor="#CCCCCC" 
+                                 ColumnSpacing="1"
+                                 Grid.Row="1"
+                                 HeaderBackground="#FFFFFF"
+                                 HeaderBordersVisible="True" 
+                                 HeaderHeight="35" 
+                                 HeaderTextColor="#3a6b8b"
+                                 ItemsSource="{Binding HeatNos, Mode=TwoWay}"
+                                 Margin="0,10,0,0" 
+                                 SelectedItem="{Binding SelectedHeatNo}"
+                                 SelectionEnabled="True"
+						         RowHeight="35" >
+                    <x:Arguments>
+                        <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                    </x:Arguments>
+
+                    <dg:DataGrid.HeaderFontSize>
+                        <OnIdiom  x:TypeArguments="x:Double">
+                            <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                            <OnIdiom.Phone>8</OnIdiom.Phone>
+                        </OnIdiom>
+                    </dg:DataGrid.HeaderFontSize>
+                    <dg:DataGrid.FontSize>
+                        <OnIdiom  x:TypeArguments="x:Double">
+                            <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                            <OnIdiom.Phone>8</OnIdiom.Phone>
+                        </OnIdiom>
+                    </dg:DataGrid.FontSize>
+
+                    <dg:DataGrid.Columns>
+                        <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="Heat_No" SortingEnabled="False" Title="Heat No" VerticalContentAlignment="StartAndExpand"/>
+                        <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="Quantity" SortingEnabled="True" Title="Qty" VerticalContentAlignment="StartAndExpand"/>
+                        <dg:DataGridColumn SortingEnabled="False">
+                            <dg:DataGridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="dlt2.png" Margin="0,5" HorizontalOptions="Center" VerticalOptions="Start">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_TappedHeatDelete" CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </DataTemplate>
+                            </dg:DataGridColumn.CellTemplate>
+                        </dg:DataGridColumn>
+                    </dg:DataGrid.Columns>
+                    <dg:DataGrid.RowsBackgroundColorPalette>
+                        <dg:PaletteCollection>
+                            <Color>#FFFFFF</Color>
+                            <Color>#FFFFFF</Color>
+                        </dg:PaletteCollection>
+                    </dg:DataGrid.RowsBackgroundColorPalette>
+
+                </dg:DataGrid>
+                <Button BackgroundColor="{Binding ColorSaveNext}" 
+                        BorderColor="LightGray"  
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="BackfromHeatGrid"                        
+                        FontAttributes="Bold" 
+                        Grid.Row="2"  
+                        Text="Back" 
+                        VerticalOptions="End"
+                        TextColor="White"/>
+            </Grid>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

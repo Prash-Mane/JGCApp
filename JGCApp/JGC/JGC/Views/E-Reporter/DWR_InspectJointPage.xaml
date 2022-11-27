@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="JGC.Views.E_Reporter.DWR_InspectJointPage"
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:converters="clr-namespace:JGC.Common.Converters"
+             ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Download page"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+
+            </Label>
+
+            <Image Source="HomeHeadericon.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="EReportSelectionPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Source="searchbar.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="JointDetailsPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Resources>
+        <converters:BoolToImageConverter x:Key="BoolToImageConverter" />
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid Padding="10,10,10,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="1000*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <StackLayout IsVisible="{Binding IsVisbleInspectList}">
+                <Frame BackgroundColor="LightGray" VerticalOptions="Start" BorderColor="#A0A0A0" Padding="10" Grid.Row="1">
+                    <ScrollView>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Column="0" Grid.Row="0" Text="Test Pack No." TextColor="Black"/>
+                            <Label Grid.Column="1" Grid.Row="0" Text="Spool DWG No." TextColor="Black"/>
+
+                            <Entry Grid.Column="0" Grid.Row="1" Placeholder="Input" Text="{Binding TestPack}"/>
+                            <Entry Grid.Column="1" Grid.Row="1" Placeholder="Input" Text="{Binding SpoolDWGNo}"/>
+
+                            <Label Text="Joint No." Grid.Column="0" Grid.Row="2" TextColor="Black"/>
+
+                            <Entry Placeholder="Input" Grid.Column="0" Grid.Row="3" Text="{Binding JointNo}"/>
+                            <Button  Text="Search" FontAttributes="Bold" Grid.Column="1" Grid.Row="3" HorizontalOptions="FillAndExpand" Command="{Binding OnBtnClickCommand}" CommandParameter="searchdownloadList"
+                                     TextColor="White" BackgroundColor="Red" BorderColor="LightGray"  HeightRequest="30"  BorderWidth="1"/>
+                        </Grid>
+                    </ScrollView>
+                </Frame>
+            </StackLayout>
+            
+            <dg:DataGrid  IsVisible="{Binding IsVisbleInspectList}" Grid.Row="1" HeightRequest="50" ItemsSource="{Binding InspectDWRDownLoadList}" HorizontalOptions="FillAndExpand"
+                          VerticalOptions="FillAndExpand" HeaderBordersVisible="True" BorderColor="#CCCCCC" HeaderBackground="#FFFFFF" HeaderHeight="45" SelectedItem="{Binding SelectedInspectDWRItem}">
+
+                <dg:DataGrid.HeaderFontSize>
+                    <OnIdiom  x:TypeArguments="x:Double">
+                        <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                        <OnIdiom.Phone>13</OnIdiom.Phone>
+                    </OnIdiom>
+                </dg:DataGrid.HeaderFontSize>
+                <dg:DataGrid.Columns>
+                    <dg:DataGridColumn Title="Select" PropertyName="{Binding Selected}"  SortingEnabled="False" Width="75" HorizontalContentAlignment="Center">
+                        <dg:DataGridColumn.CellTemplate>
+                            <DataTemplate>
+                                <customControls:CustomCheckBox IsChecked="{Binding Selected}" Type="Check" Color="Green"/>
+                            </DataTemplate>
+                        </dg:DataGridColumn.CellTemplate>
+                    </dg:DataGridColumn>
+                    <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="TestPackage" SortingEnabled="False" Title="Test Pack No." VerticalContentAlignment="Center"/>
+                    <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="SpoolDrawingNo" SortingEnabled="True" Title="Spool Drawing No." VerticalContentAlignment="Center"/>
+                    <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="JointNo"  SortingEnabled="False"  Title="Joint No" VerticalContentAlignment="Center"/>
+                </dg:DataGrid.Columns>
+                <dg:DataGrid.RowsBackgroundColorPalette>
+                    <dg:PaletteCollection>
+                        <Color>#FFFFFF</Color>
+                        <Color>#FFFFFF</Color>
+                    </dg:PaletteCollection>
+                </dg:DataGrid.RowsBackgroundColorPalette>
+            </dg:DataGrid>
+            
+            <dg:DataGrid  IsVisible="{Binding IsVisbleSelectedDownloadDWR}" Grid.Row="1" HeightRequest="50" ItemsSource="{Binding SelectedDWRList}" 
+                          HeaderBordersVisible="True" BorderColor="#CCCCCC" HeaderBackground="#FFFFFF" HeaderHeight="45">
+                <dg:DataGrid.HeaderFontSize>
+                    <OnIdiom  x:TypeArguments="x:Double">
+                        <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                        <OnIdiom.Phone>13</OnIdiom.Phone>
+                    </OnIdiom>
+                </dg:DataGrid.HeaderFontSize>
+                <dg:DataGrid.Columns>
+                    <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="TestPackage" SortingEnabled="False" Title="Test Pack No." VerticalContentAlignment="Center"/>
+                    <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="SpoolDrawingNo" SortingEnabled="True" Title="Spool Drawing No." VerticalContentAlignment="Center"/>
+                    <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="JointNo"  SortingEnabled="False"  Title="Joint No" VerticalContentAlignment="Center"/>
+                </dg:DataGrid.Columns>
+                <dg:DataGrid.RowsBackgroundColorPalette>
+                    <dg:PaletteCollection>
+                        <Color>#FFFFFF</Color>
+                        <Color>#FFFFFF</Color>
+                    </dg:PaletteCollection>
+                </dg:DataGrid.RowsBackgroundColorPalette>
+            </dg:DataGrid>
+
+            <Frame Margin="0,0,0,10" Grid.Row="1" IsVisible="{Binding IsVisibleDownloadingProgressList}">
+                <StackLayout>
+                    <Label Text="{Binding DownloadingFor ,StringFormat='Downloading {0}'}" TextColor="#3a6b8b" FontAttributes="Bold"/>
+                    <ListView SelectionMode="None" SeparatorVisibility="None" ItemsSource="{Binding DownloadingProgressList}"  SeparatorColor="White"   HasUnevenRows="True"  >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <StackLayout Margin="0,10,0,10"  VerticalOptions="Center">
+                                        <Label LineBreakMode="WordWrap" Text="{Binding .}"  FontAttributes="Bold" TextColor="Black"/>
+                                    </StackLayout>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </Frame>
+
+            <StackLayout  Grid.Row="2" Orientation="Horizontal" VerticalOptions="End">
+                <Button IsVisible="{Binding IsVisbleInspectList}" Text="Add All" FontAttributes="Bold" Command="{Binding OnBtnClickCommand}" CommandParameter="AddAll"
+                        TextColor="White" BackgroundColor="Red" BorderColor="LightGray" BorderWidth="1" HorizontalOptions="FillAndExpand"/>
+                <Button IsVisible="{Binding IsVisbleInspectList}" Text="Add To Download List" Command="{Binding OnBtnClickCommand}" CommandParameter="AddToDownload" 
+                        FontAttributes="Bold" TextColor="White" BackgroundColor="Red" BorderColor="LightGray" BorderWidth="1" HorizontalOptions="FillAndExpand"/>
+
+                <Button IsVisible="{Binding IsVisbleSelectedDownloadDWR}" Text="Download" FontAttributes="Bold" Command="{Binding DownloadCommand}"
+                        TextColor="White" BackgroundColor="Red" BorderColor="LightGray" BorderWidth="1" HorizontalOptions="FillAndExpand"/>
+                <Button IsVisible="{Binding IsVisbleSelectedDownloadDWR}" Text="Add More" FontAttributes="Bold" Command="{Binding OnBtnClickCommand}" CommandParameter="AddMore"
+                        TextColor="White" BackgroundColor="Red" BorderColor="LightGray" BorderWidth="1" HorizontalOptions="FillAndExpand"/>
+
+                <StackLayout IsVisible="{Binding IsVisibleDownloadingProgressList}" HorizontalOptions="FillAndExpand">
+                    <Button x:Name="Close" IsVisible="{Binding IsVisibleCloseBtn}" Command="{Binding CloseCommand}" Text="Close"
+                         FontAttributes="Bold" TextColor="White" BackgroundColor="Red" HorizontalOptions="FillAndExpand"/>
+                    <ProgressBar HorizontalOptions="FillAndExpand" IsVisible="{Binding IsVisibleProgressBar}" Progress="{Binding ProgressValue}" ProgressColor="Red" />
+                </StackLayout>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

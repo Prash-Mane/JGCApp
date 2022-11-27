@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="JGC.Views.Completions.SignOffPopup"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation   
+                      PositionIn="Center"  
+                      PositionOut="Center"  
+                      ScaleIn="1.2"  
+                      ScaleOut="0.8"  
+                      DurationIn="400"  
+                      DurationOut="300"  
+                      EasingIn="SinOut"  
+                      EasingOut="SinIn"  
+      HasBackgroundAnimation="False"/>
+    </pages:PopupPage.Animation>
+
+    <Frame  IsVisible="{Binding IsVisibleSyncPopup}" Scale="{Binding Devicescale}"  CornerRadius="15" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="#EBF2FA" >
+
+        <StackLayout WidthRequest="350">
+            <Label Text="{Binding LoginHeaderText}"  TextColor="Gray" FontSize="Small" FontAttributes="Bold" HorizontalTextAlignment="Center" />
+            <Entry Text="{Binding UserCred.UserName, Mode=TwoWay}" Placeholder="Username" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand" />
+            <Entry Grid.Row="1" Text="{Binding UserCred.Password, Mode=TwoWay}" Placeholder="Password" IsPassword="True" Grid.ColumnSpan="3" HorizontalOptions="FillAndExpand"  />
+            <Button  Grid.ColumnSpan="3" Grid.Row="2" HorizontalOptions="Center" Command="{Binding OKCommand}" Style="{StaticResource CompletionGeneralButtonStyle}" CommandParameter="close" Text="{Binding LoginButtonText}"/>
+        </StackLayout>
+        <!--</Grid>-->
+    </Frame>
+
+
+</pages:PopupPage>

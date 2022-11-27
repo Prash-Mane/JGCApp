@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<autofac:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:autofac="clr-namespace:Prism.Autofac;assembly=Prism.Autofac.Forms"
+             x:Class="JGC.App"
+             xmlns:UC="clr-namespace:JGC.UserControls"
+             xmlns:converters="clr-namespace:JGC.Common.Converters;assembly=JGC"
+             xmlns:flex="clr-namespace:Flex.Controls;assembly=Flex">
+    <Application.Resources>
+            <ResourceDictionary>
+            <!--  App Colors  -->
+            <Color x:Key="TransparentWhite">#D9FFFFFF</Color>
+            <converters:BoolInvertConverter x:Key="BoolInvertConverter" />
+            <Style x:Key="GeneralButtonStyle" TargetType="Button">
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="TextColor" Value="#FAFAFA" />
+                <Setter Property="BackgroundColor" Value="#4076B7" />
+                <Setter Property="Font" Value="AcademyEngravedLetPlain" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="WidthRequest" Value="175" />
+                <Setter Property="BorderRadius" Value="8" />
+            </Style>
+
+            <Style x:Key="GeneralLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="#000000" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="12" />
+            </Style>
+            <ControlTemplate x:Key="HeaderFooterPageTemplate">
+                <Grid  BindingContext="{TemplateBinding BindingContext}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <UC:HeaderUC Grid.Row="0" VerticalOptions="Start"/>
+                    <ContentPresenter Grid.Row="1" VerticalOptions="Start"/>
+                    <UC:FooterUC Grid.Row="2" VerticalOptions="End"/>
+                </Grid>
+            </ControlTemplate>
+            <ControlTemplate x:Key="MenuHeaderFooterPageTemplate">
+                <Grid BindingContext="{TemplateBinding BindingContext}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="8*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ContentPresenter Grid.Row="1" VerticalOptions="Start"/>
+                    <UC:FooterUC Grid.Row="2" VerticalOptions="End"/>
+                </Grid>
+            </ControlTemplate>
+           
+            <Style x:Key="CompletionGeneralButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="#1AA3B3" />
+            </Style>
+            <Style x:Key="CompletionGeneralLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="#FFFFFF" />
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="HorizontalTextAlignment"  Value="Center" />
+            </Style>
+            <Style x:Key="SyncLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="#1AA3B3" />
+                <Setter Property="HorizontalTextAlignment"  Value="Center" />
+            </Style>
+            <Style x:Key="SyncProgressBarStyle" TargetType="ProgressBar">
+                <Setter Property="ProgressColor" Value="DeepPink" />
+                <Setter Property="HorizontalOptions"  Value="FillAndExpand" />
+                <Setter Property="VerticalOptions"  Value="Center" />
+                <Setter Property="WidthRequest" >
+                    <OnPlatform x:TypeArguments="x:Double">
+                        <On Platform="UWP" >400</On>
+                        <On Platform="Android">400</On>
+                    </OnPlatform>
+                </Setter>
+            </Style>
+            <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
+                <Setter Property="Color" Value="DeepPink" />
+                <Setter Property="WidthRequest"  Value="30" />
+            </Style>
+            <Style x:Key="TagFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#D3D3D3" />
+                <Setter Property="CornerRadius"  Value="0" />
+                <Setter Property="Padding"  Value="5,5,5,5" />
+                <Setter Property="BorderColor"  Value="SlateGray" />
+            </Style>
+            <Style x:Key="HeaderFrameStyle" TargetType="Frame">
+                <Setter Property="CornerRadius"  Value="0" />
+                <Setter Property="Padding"  Value="2,2,2,2" />
+                <Setter Property="BorderColor"  Value="Gray" />
+                <Setter Property="BackgroundColor" Value="#EBF2FA"/>
+            </Style>
+            <Style x:Key="ItrHeaderFrameStyle" TargetType="Frame">
+                <Setter Property="CornerRadius"  Value="0" />
+                <Setter Property="Padding"  Value="5,2,2,2" />
+                <Setter Property="Margin" Value="-3,-3"/>
+                <Setter Property="BorderColor"  Value="Gray" />
+                <Setter Property="BackgroundColor" Value="#EBF2FA"/>
+            </Style>
+            <Style x:Key="FlexButtonStyle" TargetType="flex:FlexButton">
+                <Setter Property="WidthRequest" Value="20" />
+                <Setter Property="HeightRequest" Value="20" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="ForegroundColor" Value="#ffffff" />
+                <Setter Property="BorderColor" Value="Teal" />
+                <Setter Property="BorderThickness" Value="2" />
+                <Setter Property="BackgroundColor" Value="#EBF2FA" />
+                <Setter Property="CornerRadius" Value="10" />
+            </Style>
+            <Style x:Key="HeaderLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="#3a6b8b" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="HorizontalTextAlignment" Value="Center" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</autofac:PrismApplication>

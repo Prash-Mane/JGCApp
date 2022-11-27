@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JGC.Views.E_Test_Package.PackageDetailPage"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Punch Overview"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+
+            </Label>
+            <Image Source="searchbar.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="ETestPackageList"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <StackLayout Margin="10,0">
+            <!-- Main Grid -->
+            <Grid RowSpacing="0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label 
+                    FontAttributes="Bold" 
+                    HorizontalOptions="StartAndExpand"
+                    Margin="0,15,0,0"
+                    Text="{Binding SelectedETPTitle}" 
+                    TextColor="#3a6b8b"  
+                    VerticalTextAlignment="Center"/>
+
+                <Button BackgroundColor="#C4BB46"
+                        BorderColor="LightGray" 
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="Punchoverview" 
+                        Padding="10"
+                        FontAttributes="Bold" 
+                        Grid.Row="1"
+                        HorizontalOptions="FillAndExpand" 
+                        Margin="0,10,0,0"
+                        Text="PUNCH OVERVIEW" 
+                        TextColor="White"/>
+
+                <Button BackgroundColor="#C4BB46"
+                        BorderColor="LightGray" 
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="PunchView" 
+                        Padding="10"
+                        FontAttributes="Bold" 
+                        Grid.Row="2"
+                        HorizontalOptions="FillAndExpand"
+                        Margin="0,10,0,0"
+                        Text="PUNCH VIEW" 
+                        TextColor="White"/>
+
+                <Button BackgroundColor="#C4BB46"
+                        BorderColor="LightGray" 
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="ControlLog" 
+                        Padding="10"
+                        FontAttributes="Bold" 
+                        Grid.Row="3"
+                        HorizontalOptions="FillAndExpand" 
+                        Margin="0,10,0,0"
+                        Text="CONTROL LOG" 
+                        TextColor="White"/>
+
+                <Button BackgroundColor="#C4BB46"
+                        BorderColor="LightGray" 
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="Pandid" 
+                        Padding="10"
+                        FontAttributes="Bold" 
+                        Grid.Row="4"
+                        HorizontalOptions="FillAndExpand" 
+                        Margin="0,10,0,0"
+                        Text="PANDID" 
+                        TextColor="White"/>
+
+                <Button BackgroundColor="#C4BB46"
+                        BorderColor="LightGray" 
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="TestRecord" 
+                        Padding="10"
+                        FontAttributes="Bold" 
+                        Grid.Row="5"
+                        HorizontalOptions="FillAndExpand" 
+                        Margin="0,10,0,0"
+                        Text="TEST RECORD" 
+                        TextColor="White"/>
+
+
+                <Button BackgroundColor="#C4BB46"
+                        BorderColor="LightGray" 
+                        BorderWidth="1" 
+                        Command="{Binding BtnCommand}" 
+                        CommandParameter="Details" 
+                        Padding="10"
+                        FontAttributes="Bold" 
+                        Grid.Row="6"
+                        HorizontalOptions="FillAndExpand" 
+                        Margin="0,10,0,0"
+                        Text="DRAIN RECORD" 
+                        TextColor="White"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

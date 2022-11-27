@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+    <pages:PopupPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+     xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+       BackgroundColor="#AA000000" 
+             x:Class="JGC.Views.Work_Pack.FilterPopup">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation   
+                      PositionIn="Center"  
+                      PositionOut="Center"  
+                      ScaleIn="1.2"  
+                      ScaleOut="0.8"  
+                      DurationIn="400"  
+                      DurationOut="300"  
+                      EasingIn="SinOut"  
+                      EasingOut="SinIn"  
+      HasBackgroundAnimation="False"/>
+    </pages:PopupPage.Animation>
+
+    <Frame  IsVisible="{Binding IsVisibleSyncPopup}" Scale="{Binding Devicescale}"  CornerRadius="10" VerticalOptions="Center" HorizontalOptions="Center" BackgroundColor="#EBF2FA" >
+        <Grid x:Name="SyncMainGrid"  ColumnSpacing="2" Padding="2" HorizontalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Entry Text="{Binding InputString, Mode=TwoWay}" />
+            <Button  Grid.Column="1"  HorizontalOptions="Center" Command="{Binding CancelCommand}" TextColor="White" BackgroundColor="#1AA3B3" CommandParameter="close" Text="Clear"/>
+            <Button  Grid.Column="2" HorizontalOptions="Center" Command="{Binding OKCommand}" TextColor="White" BackgroundColor="#1AA3B3" CommandParameter="close" Text="Ok"/>
+
+            <StackLayout Grid.ColumnSpan="3" Grid.Row="1" HorizontalOptions="Fill">
+                <Frame BorderColor="Black" CornerRadius="0"  HeightRequest="100" WidthRequest="400" >
+
+                    <ListView HasUnevenRows="True" SelectedItem="{Binding SelectedInput}" ItemsSource="{Binding ListviewSource}" SeparatorColor="Black"    SelectionMode="Single" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <ViewCell.View>
+                                        <!--<Frame  Padding="-5" CornerRadius="0"    BorderColor="LightGray" HasShadow="False">-->
+                                        <Label LineBreakMode="WordWrap" FontSize="18" Text="{Binding .}" VerticalOptions="Center" Margin="10,0,0,0" TextColor="Black"/>
+                                        <!--</Frame>-->
+                                    </ViewCell.View>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.Footer>
+                            <Label />
+                        </ListView.Footer>
+                    </ListView>
+
+                </Frame>
+            </StackLayout>
+        </Grid>
+    </Frame>
+</pages:PopupPage>

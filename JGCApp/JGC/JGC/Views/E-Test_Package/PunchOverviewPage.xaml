@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             xmlns:dg="clr-namespace:Xamarin.Forms.DataGrid;assembly=Xamarin.Forms.DataGrid"
+             x:Class="JGC.Views.PunchOverviewPage"
+             ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}">
+
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Punch Overview"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+
+            </Label>
+            <Image Source="searchbar.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="ETestPackageList"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <StackLayout Margin="10,0">
+            <!-- Main Grid -->
+            <Grid RowSpacing="0" IsVisible="{Binding MainGrid}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="40*"/>
+                </Grid.RowDefinitions>
+                <Label 
+                    FontAttributes="Bold" 
+                    HorizontalOptions="StartAndExpand"
+                    Margin="0,15,0,0"
+                    Text="{Binding SelectedETPTitle}" 
+                    TextColor="#3a6b8b"  
+                    VerticalTextAlignment="Center"/>
+                <Grid ColumnSpacing="10" Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label 
+                    FontAttributes="Bold" 
+                    HorizontalOptions="StartAndExpand"
+                    Margin="0,10,0,0"
+                    Text="Layer Name" 
+                    TextColor="#3a6b8b"  
+                    VerticalTextAlignment="Center"/>
+                    <Label 
+                    FontAttributes="Bold" 
+                    Grid.Column="1"
+                    HorizontalOptions="StartAndExpand"
+                    Margin="0,10,0,0"
+                    Text="Category" 
+                    TextColor="#3a6b8b"  
+                    VerticalTextAlignment="Center"/>
+                    <Label 
+                    FontAttributes="Bold"
+                    Grid.Column="2"
+                    HorizontalOptions="StartAndExpand"
+                    Margin="0,10,0,0"
+                    Text="Status" 
+                    TextColor="#3a6b8b"  
+                    VerticalTextAlignment="Center"/>
+                </Grid>
+                <Grid ColumnSpacing="10" Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <customControls:CustomPicker
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding LayerNameList}"                            
+                            SelectedItem="{Binding SelectedLayerName, Mode=TwoWay}">
+                    </customControls:CustomPicker>
+                    <customControls:CustomPicker
+                            Grid.Column="1"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding CategoryList}"                            
+                            SelectedItem="{Binding SelectedCategory, Mode=TwoWay}">
+                    </customControls:CustomPicker>
+                    <customControls:CustomPicker
+                            Grid.Column="2"
+                            HorizontalOptions="FillAndExpand"
+                            ItemsSource="{Binding StatusList}"                            
+                            SelectedItem="{Binding SelectedStatus, Mode=TwoWay}">
+                    </customControls:CustomPicker>
+                </Grid>
+                <!-- Details Grid -->
+                <StackLayout Grid.Row="3" Orientation="Horizontal">
+                    <Image Source="Yellow.png" Aspect="AspectFit"></Image>
+                    <Label VerticalOptions="Center" Text="Open" />
+                    <Image Source="Greenradio.png" Aspect="AspectFit" />
+                    <Label VerticalOptions="Center" Text="Closed"/>
+                    <Image Source="Redradio.png" Aspect="AspectFit" />
+                    <Label VerticalOptions="Center"  Text="Rejected"/>
+
+                </StackLayout>
+                <Grid Grid.Row="4" 
+                  IsVisible="{Binding DetailsGrid}" 
+                  RowSpacing="0" >
+                   
+                    <dg:DataGrid ActiveRowColor="#FFFFFF"  
+                             BorderColor="#CCCCCC" 
+                             ColumnSpacing="1"
+                             HeaderBackground="#FFFFFF"
+                             HeaderBordersVisible="True" 
+                             HeaderHeight="35" 
+                             HeaderTextColor="#3a6b8b"
+                             ItemsSource="{Binding PunchOverviewList}"
+                             Margin="0,10,0,0"  
+                             SelectionEnabled="True" 
+                             SelectedItem="{Binding SelectedPunchOverview}" >
+                        <x:Arguments>
+                            <ListViewCachingStrategy>RetainElement</ListViewCachingStrategy>
+                        </x:Arguments>
+                        <dg:DataGrid.HeaderFontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>8</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.HeaderFontSize>
+                        <dg:DataGrid.FontSize>
+                            <OnIdiom  x:TypeArguments="x:Double">
+                                <OnIdiom.Tablet>15</OnIdiom.Tablet>
+                                <OnIdiom.Phone>8</OnIdiom.Phone>
+                            </OnIdiom>
+                        </dg:DataGrid.FontSize>
+                        <dg:DataGrid.Columns>
+                            <dg:DataGridColumn HorizontalContentAlignment="CenterAndExpand" PropertyName="{Binding .}" SortingEnabled="False" Title="Layer" VerticalContentAlignment="StartAndExpand">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding LayerName}" HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White" LineBreakMode="WordWrap" FontSize="Default">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"  CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn HorizontalContentAlignment="CenterAndExpand" PropertyName="{Binding .}" SortingEnabled="False" Title="Drawing" VerticalContentAlignment="StartAndExpand">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding DisplayName}" HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White" LineBreakMode="CharacterWrap" FontSize="Default">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"  CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="{Binding .}" SortingEnabled="False" Title="Category" VerticalContentAlignment="StartAndExpand">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding Category}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center"  BackgroundColor="White" LineBreakMode="TailTruncation" FontSize="Default">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"  CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="{Binding .}" SortingEnabled="False" Title="Punch ID" VerticalContentAlignment="StartAndExpand">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding PunchID}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White" LineBreakMode="TailTruncation" FontSize="Default">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"  CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <!--<dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="Description" SortingEnabled="False" Title="Description" VerticalContentAlignment="StartAndExpand"/>-->
+                            <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="Description"  SortingEnabled="True" Title="Description" VerticalContentAlignment="StartAndExpand">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding }" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White" LineBreakMode="TailTruncation" FontSize="Default">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_TappedDescription" CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn HorizontalContentAlignment="Center" PropertyName="{Binding .}" SortingEnabled="False" Title="Status" VerticalContentAlignment="StartAndExpand">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding Status}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" BackgroundColor="White" LineBreakMode="TailTruncation" FontSize="Default">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"  CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn Title="" PropertyName="{Binding .}"  SortingEnabled="False">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="{Binding StatusImage}"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFit" BackgroundColor="White" >
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>
+                            <dg:DataGridColumn Title="Updated" PropertyName="{Binding .}" SortingEnabled="False">
+                                <dg:DataGridColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Image Source="update.png" IsVisible="{Binding Updated}" Margin="0,5" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Aspect="AspectFit" BackgroundColor="White" >
+                                            <Image.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="{Binding ., Mode=TwoWay}"/>
+                                            </Image.GestureRecognizers>
+                                        </Image>
+                                    </DataTemplate>
+                                </dg:DataGridColumn.CellTemplate>
+                            </dg:DataGridColumn>                            
+                        
+                        </dg:DataGrid.Columns>
+                        <dg:DataGrid.RowsBackgroundColorPalette>
+                            <dg:PaletteCollection>
+                                <Color>#FFFFFF</Color>
+                                <Color>#FFFFFF</Color>
+                            </dg:PaletteCollection>
+                        </dg:DataGrid.RowsBackgroundColorPalette>
+                    </dg:DataGrid>
+                </Grid>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

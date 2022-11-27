@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls"
+             mc:Ignorable="d"
+              ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}"
+             x:Class="JGC.Views.DWRDrawingPage">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Drawing"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+
+            </Label>
+
+            <Image Source="HomeHeadericon.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="EReportSelectionPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Source="searchbar.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="JointDetailsPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <StackLayout Padding="10,10,10,10" VerticalOptions="Start" HorizontalOptions="FillAndExpand">
+
+                <!--<StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <Label Text="PDF" VerticalOptions="Center"  HorizontalTextAlignment="Start"/>
+                    <Image  Source="{Binding RadioBtnSourcePdf}"  HorizontalOptions="Start"  >
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BtnCommand}" CommandParameter="pdf"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Label  Text="Images"  HorizontalOptions="End" VerticalOptions="Center"  />
+                    <Image  Source="{Binding RadioBtnSourceImage}"   HorizontalOptions="StartAndExpand" >
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BtnCommand}" CommandParameter="Images"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Button Text="Back" IsVisible="{Binding IsShowBackButton}"  HorizontalOptions="End" Command="{Binding BtnCommand}" CommandParameter="BackToMain" TextColor="White" BackgroundColor="Red" BorderColor="LightGray">
+                    </Button>
+
+                </StackLayout>-->
+                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                    <customControls:CustomPicker HorizontalOptions="FillAndExpand"
+                                                 ItemsSource="{Binding AttachmentList}"                            
+                                                 SelectedItem="{Binding SelectedAttachedItem, Mode=TwoWay}">
+                    </customControls:CustomPicker>
+                    <Button Text="Back" Command="{Binding BtnCommand}" CommandParameter="BackBtn" HorizontalOptions="End" TextColor="White" BackgroundColor="Red" BorderColor="LightGray"/>
+                    <Button Text="FullScreen"  Command="{Binding BtnCommand}" CommandParameter="PdfFullScreen"  HorizontalOptions="End" TextColor="White" BackgroundColor="Red"/>
+                </StackLayout>
+               
+               
+            </StackLayout>
+            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Margin="10">
+                <!--<Image HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" HeightRequest="200" WidthRequest="200" BackgroundColor="Gray"></Image>-->
+                <customControls:CustomPDF x:Name="DrwaingsControl" HorizontalOptions="FillAndExpand"  VerticalOptions="FillAndExpand"
+                                   Uri="{Binding PdfUrl, Mode=TwoWay}"/>
+            </StackLayout>
+           
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

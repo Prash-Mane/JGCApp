@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JGC.Views.Work_Pack.CWPTagStatusPage"
+             ControlTemplate="{StaticResource MenuHeaderFooterPageTemplate}"
+             xmlns:converters="clr-namespace:JGC.Common.Converters"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+             xmlns:TEffect="clr-namespace:JGC.UserControls.Touch"
+             xmlns:customControls="clr-namespace:JGC.UserControls.CustomControls">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label Text="CWP Tag Status"
+                   HorizontalOptions="StartAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color">
+                        <On Platform="iOS" Value="White" />
+                        <On Platform="Android" Value="White" />
+                        <On Platform="UWP" Value="Black" />
+                    </OnPlatform>
+                </Label.TextColor>
+
+            </Label>
+            <Image Source="searchbar.png"
+                   VerticalOptions="CenterAndExpand"
+                   HorizontalOptions="End"
+                   Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding FooterCommand}" CommandParameter="IWPSelectionPage"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    <ContentPage.Resources>
+        <converters:BoolInvertConverter x:Key="BoolInvertConverter" />
+        <converters:DateToColorConverter x:Key="DateToColorConverter" />
+    </ContentPage.Resources>
+    <StackLayout Margin="10,0">
+        <Label Text="Please Select Your CWP Tag from Drop Down Selection" />
+        <StackLayout IsVisible="{Binding CameraGrid, Converter={StaticResource BoolInvertConverter}}" >
+            <!--<customControls:CustomPicker
+                                HorizontalOptions="Fill"
+                                ItemsSource="{Binding CWPTags}"
+                                SelectedItem="{Binding SelectedCWPTags, Mode=TwoWay}">
+                </customControls:CustomPicker>-->
+
+            <StackLayout Orientation="Horizontal"  Margin="0,10,0,10">
+
+                <StackLayout HorizontalOptions="FillAndExpand">
+                    <Label  VerticalOptions="Center" Text="{Binding SelectedCWPTags, TargetNullValue='Select CWP Tag'}" />
+                    <BoxView HeightRequest="1" BackgroundColor="Black"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer CommandParameter="Selectedcwptag"  Command="{Binding BtnCommand}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding IsVisibleTagMemberUi}"  VerticalOptions="FillAndExpand" >
+                <Label Text="Please Select Your CWP Tag Member from List" />
+                <StackLayout Orientation="Horizontal">
+                    <Entry Placeholder="Search" Text="{Binding SerachString, Mode=TwoWay}" HorizontalOptions="FillAndExpand"/>
+                    <Button BackgroundColor="#3B87C7" TextColor="White" Text="Search" Command="{Binding BtnCommand}" CommandParameter="Search" HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+            </StackLayout>
+
+            <!--<ScrollView HorizontalOptions="Start" VerticalOptions="Start"  IsVisible="{Binding IsVisibleTagMemberUi}">-->
+            <Grid HorizontalOptions="Start" VerticalOptions="Start"  IsVisible="{Binding IsVisibleTagMemberUi}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="30*"/>                    
+                </Grid.ColumnDefinitions>
+                <ListView ItemsSource="{Binding CWPTagStatusLists}"  VerticalScrollBarVisibility="Never" SeparatorVisibility="None"  SelectedItem="{Binding SelectedCWPTag}" HasUnevenRows="True" HorizontalOptions="FillAndExpand">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell Height="50">
+                                <!--<Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                    </Grid.ColumnDefinitions>-->
+                                <Frame BackgroundColor="#3B87C7" CornerRadius="0" Padding="0" Margin="5">
+                                    <Label HorizontalOptions="FillAndExpand" IsTabStop="True"   FontAttributes="Bold" Text="{Binding TagMember}" TextColor="White" 
+                                           VerticalOptions="Center" >
+                                    </Label>
+                                </Frame>
+
+                                <!--</Grid>-->
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.Footer>
+                        <Label/>
+                    </ListView.Footer>
+                </ListView>
+            </Grid>
+            <!--</ScrollView>-->
+
+            <ScrollView Orientation="Horizontal" IsVisible="{Binding IsVisibleTagStatus}">
+                <ListView ItemsSource="{Binding CWPTagStatusLists}" SelectedItem="{Binding SelectedCWPTag}" Grid.Row="1" HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="400*"/>
+                                        <ColumnDefinition Width="100*"/>
+                                        <ColumnDefinition Width="100*"/>
+                                        <ColumnDefinition Width="400*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label LineBreakMode="NoWrap" HorizontalOptions="StartAndExpand" VerticalOptions="Center">
+                                        <Label.FormattedText>
+                                            <FormattedString>
+                                                <Span FontSize="15" Text="{Binding Milestone}" TextColor="Black"/>
+                                                <Span FontSize="15" Text="{Binding MilestoneAtri,StringFormat=' {0}'}" TextColor="Black"/>
+                                            </FormattedString>
+                                        </Label.FormattedText>
+                                    </Label>
+
+                                    <Image Grid.Row="0" Grid.Column="1" Source="Grayradio.png" HorizontalOptions="FillAndExpand" VerticalOptions="Center" WidthRequest="30" HeightRequest="30">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="TappedOnRadiobtn"  CommandParameter="{Binding .}"/>
+                                        </Image.GestureRecognizers>
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image" Binding="{Binding SignedInVM}" Value="True">
+                                                <Setter Property="Source" Value="Greenradio.png" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Image" Binding="{Binding SignedInCMS}" Value="True">
+                                                <Setter Property="Source" Value="OrangeRadio.png" />
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                    <Image Grid.Row="0" Grid.Column="2" Source="{Binding CameraImage}" HorizontalOptions="FillAndExpand" VerticalOptions="Center" WidthRequest="30" HeightRequest="30">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer  Tapped="TappedOnCameraBtn" CommandParameter="{Binding .}"/>
+                                        </Image.GestureRecognizers>
+                                        <Image.Triggers>
+                                            <DataTrigger TargetType="Image" Binding="{Binding Signed}" Value="True">
+                                                <Setter Property="Source" Value="Greencam.png" />
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+
+                                    <DatePicker x:Name="MyDatePicker" Format="dd-MMM-yyyy" HorizontalOptions="Fill"  VerticalOptions="Center" Grid.Row="0" Grid.Column="3"
+                                                Date="{Binding StatusValue}" TextColor="Black" FontAttributes="Bold"
+                                                IsVisible="{Binding IsSinged}"   />
+
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollView>
+            <StackLayout Orientation="Horizontal" VerticalOptions="End">
+                <Button Text="{Binding BtnText}" TextColor="White" Command="{Binding BtnCommand}" CommandParameter="Save"  BackgroundColor="#3B87C7" HorizontalOptions="FillAndExpand" />
+                <Button Text="Back" IsVisible="{Binding ISVisibleBackbtn}" TextColor="White" Command="{Binding BtnCommand}" CommandParameter="Backfrommilestone"  BackgroundColor="#3B87C7" HorizontalOptions="FillAndExpand" />
+
+            </StackLayout>
+        </StackLayout>
+
+        <!-- Camera Grid -->
+        <Grid ColumnSpacing="10" 
+                  IsVisible="{Binding CameraGrid}" 
+                  RowSpacing="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Label  FontAttributes="Bold"
+                        HorizontalOptions="StartAndExpand"
+                        Text="List of photos" 
+                        TextColor="#1A5276"
+                        VerticalTextAlignment="Center"/>
+            <Label 
+                        FontAttributes="Bold"
+                        Grid.Column="1" 
+                        Grid.Row="0"  
+                        HorizontalOptions="StartAndExpand"
+                        Text="Select Camera" 
+                        TextColor="#1A5276"
+                        VerticalTextAlignment="Center"/>
+
+            <customControls:CustomPicker
+                         Grid.Column="0" 
+                         Grid.Row="1"
+                         HorizontalOptions="FillAndExpand"
+                         ItemsSource="{Binding ImageFiles}"
+                         SelectedIndex="0"
+                         SelectedIndexChanged="PImage_SelectedIndexChanged"
+                         SelectedItem="{Binding SelectedImageFiles, Mode=TwoWay}">
+            </customControls:CustomPicker>
+            <customControls:CustomPicker
+                         Grid.Column="1" 
+                         Grid.Row="1"
+                         HorizontalOptions="FillAndExpand"
+                         ItemsSource="{Binding CameraItems}"
+                         SelectedItem="{Binding SelectedCameraItem, Mode=TwoWay}"
+                       SelectedIndexChanged="SelectedCameraItemChanged"
+                 >
+
+            </customControls:CustomPicker>
+            <Button BackgroundColor="#3B87C7" 
+                        Clicked="AddFromFileClicked"
+                        FontAttributes="Bold"
+                        Grid.Column="2" 
+                        Grid.Row="1"
+                        HorizontalOptions="FillAndExpand"
+                        Text="Add From File"  
+                        TextColor="White"/>
+
+            <!--<Image x:Name="CaptureImage"
+                   Aspect="AspectFill" 
+                   Grid.ColumnSpan="3" 
+                   Grid.Row="2"
+                   HorizontalOptions="FillAndExpand"
+                   Source="{Binding CapturedImage}"   
+                   VerticalOptions="FillAndExpand"/>-->
+
+            <Grid  Grid.ColumnSpan="3" 
+                   Grid.Row="2">
+                <skia:SKCanvasView Grid.Row="0" x:Name="CameracanvasView" PaintSurface="OnCameraCanvasViewPaintSurface"/>
+                <Grid.Effects Grid.Row="0" >
+                    <TEffect:TouchEffect Capture="True" TouchAction="OnCameraTouchEffectAction" />
+                </Grid.Effects>
+            </Grid>
+
+            <StackLayout Grid.ColumnSpan="3" 
+                         Grid.Row="3" Orientation="Horizontal" IsVisible="{Binding ShowSaveRename, Converter={StaticResource BoolInvertConverter}}">
+                <Button BackgroundColor="#3B87C7" 
+                            Command="{Binding BtnCommand}" 
+                            CommandParameter="Clear" 
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Clear"  
+                            TextColor="White"/>
+                <Button BackgroundColor="#3B87C7" 
+                            Command="{Binding BtnCommand}" 
+                            CommandParameter="{Binding btnSaveRename}" 
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{Binding btnSaveRename}"  
+                            TextColor="White"/>
+                <Button BackgroundColor="#3B87C7" 
+                            Command="{Binding BtnCommand}" 
+                            CommandParameter="DeleteImage" 
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Delete"  
+                            TextColor="White"/>
+                <Button BackgroundColor="#3B87C7" 
+                            Command="{Binding BtnCommand}" 
+                            CommandParameter="CameraBack" 
+                            FontAttributes="Bold"
+                            HorizontalOptions="FillAndExpand"
+                            Text="Back"  
+                            TextColor="White"/>
+            </StackLayout>
+            <StackLayout Grid.ColumnSpan="3" Orientation="Horizontal" HorizontalOptions="FillAndExpand"
+                         Grid.Row="3" IsVisible="{Binding ShowSaveRename}">
+                <customControls:CustomEntry Text="{Binding NewImageName, Mode=TwoWay}" HorizontalOptions="FillAndExpand"/>
+                <Button BackgroundColor="#3B87C7" 
+                                Command="{Binding BtnCommand}" 
+                                CommandParameter="SaveRename" 
+                                FontAttributes="Bold"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Save"  
+                                TextColor="White"/>
+                <Button 
+                                BackgroundColor="#3B87C7" 
+                                Command="{Binding BtnCommand}" 
+                                CommandParameter="CancelRename" 
+                                FontAttributes="Bold"
+                                HorizontalOptions="FillAndExpand"
+                                Text="Cancel"  
+                                TextColor="White"/>
+            </StackLayout>
+        </Grid>
+    </StackLayout>
+</ContentPage>

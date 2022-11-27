@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="JGC.UserControls.PopupControls.NetworkErrorPopup"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             BackgroundColor="Black"
+             HasSystemPadding="false">
+    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>       
+        <Label
+            Margin="40"
+            FontSize="18"
+            HorizontalOptions="Center"
+            HorizontalTextAlignment="Center"
+            Text="You're offline, please connect to the internet and try again."
+            TextColor="White"
+            VerticalOptions="Center" />
+        <Button
+            Margin="30"
+            Clicked="OnContinue"
+            HorizontalOptions="Fill"
+            Text="CONTINUE"
+            VerticalOptions="End" />
+    </Grid>
+</pages:PopupPage>

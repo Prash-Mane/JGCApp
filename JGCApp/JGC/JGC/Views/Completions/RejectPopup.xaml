@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="JGC.Views.Completions.RejectPopup"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
+             NavigationPage.HasNavigationBar="False" NavigationPage.HasBackButton="False">
+    <pages:PopupPage.Animation>
+        <animations:ScaleAnimation   
+                      PositionIn="Center"  
+                      PositionOut="Center"  
+                      ScaleIn="1.2"  
+                      ScaleOut="0.8"  
+                      DurationIn="400"  
+                      DurationOut="300"  
+                      EasingIn="SinOut"  
+                      EasingOut="SinIn"  
+      HasBackgroundAnimation="False"/>
+    </pages:PopupPage.Animation>
+
+    <Frame  IsVisible="{Binding IsVisibleSyncPopup}" Scale="{Binding Devicescale}" Padding="0,0,0,20" CornerRadius="0" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" BackgroundColor="White" >
+        <Grid   ColumnSpacing="2" Padding="0" HorizontalOptions="CenterAndExpand"  >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="60*"/>
+                <RowDefinition Height="15*"/>
+            </Grid.RowDefinitions>
+
+            <BoxView Grid.ColumnSpan="3" BackgroundColor="#1AA3B3"></BoxView>
+            <Label Margin="5,0,0,0" VerticalOptions="Center" Grid.ColumnSpan="3" Text="REJECTION REASON" TextColor="White" FontSize="Medium" FontAttributes="Bold" ></Label>
+            <Editor Grid.Row="1"  Grid.ColumnSpan="3" Margin="5" Text="{Binding RejectComment, Mode=TwoWay}"  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+
+            <StackLayout Grid.Column="2" Grid.Row="2" Orientation="Horizontal">
+                <Button  Grid.ColumnSpan="3" Grid.Row="2" HorizontalOptions="StartAndExpand" Command="{Binding OKCommand}" TextColor="White" BackgroundColor="#006633" CornerRadius="7"  CommandParameter="close" Text="OK"/>
+                <Button  Grid.ColumnSpan="3" Grid.Row="2"  Command="{Binding CancelCommand}" BackgroundColor="#EBF2FA" TextColor="#006633" Margin="0,0,5,0" CornerRadius="7" CommandParameter="close" Text="CANCEL"/>
+
+            </StackLayout>
+        </Grid>
+    </Frame>
+
+</pages:PopupPage>
